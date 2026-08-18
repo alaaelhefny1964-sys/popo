@@ -1,0 +1,2075 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مستر / علاء الحفني - نظام إدارة المراكز والحجز الإلكتروني</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ============ لوحة الألوان الجديدة: أخضر زُمردي داكن + نحاسي دافئ ============ */
+        :root {
+            --bg-body: #0b201e;
+            --bg-body-2: #0a1a18;
+            --bg-card: #123330;
+            --bg-card-2: #163a36;
+            --bg-input: #0e2624;
+            --border-color: #235049;
+            --primary: #2f9e8f;
+            --primary-dark: #1f7c70;
+            --accent: #d98c3f;
+            --accent-2: #e8b45f;
+            --text-main: #f4ecdc;
+            --text-muted: #9fbab3;
+            --danger: #e0605a;
+            --success: #45b07c;
+            --radius: 14px;
+            --shadow: 0 10px 28px rgba(0,0,0,0.35);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+        body {
+            background:
+                radial-gradient(circle at 100% 0%, rgba(217,140,63,0.08), transparent 45%),
+                radial-gradient(circle at 0% 100%, rgba(47,158,143,0.10), transparent 45%),
+                var(--bg-body);
+            color: var(--text-main); min-height: 100vh;
+        }
+        h1,h2,h3,h4 { font-family: 'Cairo', sans-serif; }
+
+        /* شاشة تسجيل الدخول */
+        .login-page { display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .login-box {
+            background: linear-gradient(180deg, var(--bg-card), var(--bg-card-2));
+            border: 1px solid var(--border-color); padding: 34px 30px;
+            border-radius: var(--radius); width: 100%; max-width: 400px; text-align: center;
+            box-shadow: var(--shadow); position: relative; overflow: hidden;
+        }
+        .login-box::before {
+            content:''; position:absolute; top:0; right:0; left:0; height:5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+        .login-icon { width:64px; height:64px; border-radius:50%; background:rgba(217,140,63,0.15); border:2px solid var(--accent);
+            display:flex; align-items:center; justify-content:center; margin:0 auto 14px; font-size:26px; color:var(--accent-2); }
+
+        .form-group { margin-bottom: 15px; text-align: right; }
+        .form-group label { display: block; margin-bottom: 5px; color: var(--text-muted); font-size: 13px; font-weight: 700; }
+        .form-control {
+            width: 100%; padding: 10px; background: var(--bg-input); border: 1px solid var(--border-color);
+            border-radius: 8px; color: #fff; font-size: 14px; outline: none; transition: 0.2s;
+        }
+        .form-control:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(217,140,63,0.15); }
+        .field-hint { font-size: 11px; color: var(--text-muted); margin-top: 4px; display:block; }
+
+        .btn {
+            padding: 8px 16px; border: none; border-radius: 8px; font-weight: 700; cursor: pointer;
+            display: inline-flex; align-items: center; gap: 8px; font-size: 13px; transition: 0.2s;
+        }
+        .btn:hover { transform: translateY(-1px); filter: brightness(1.08); }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-gold { background: linear-gradient(135deg, var(--accent-2), var(--accent)); color: #1a1005; font-weight: 800; }
+        .btn-danger { background: var(--danger); color: white; }
+        .btn-success { background: var(--success); color: white; }
+        .btn-whatsapp { background: #25D366; color: white; }
+        .btn-telegram { background: #229ED9; color: white; }
+        .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-main); }
+        .btn-sm { padding: 5px 10px; font-size: 12px; }
+
+        .app-container { display: none; }
+        .sidebar {
+            width: 250px; background: var(--bg-body-2); border-left: 1px solid var(--border-color);
+            position: fixed; right: 0; top: 0; height: 100vh; padding: 20px 10px; overflow-y: auto; z-index: 90;
+        }
+        .main-content { margin-right: 250px; padding: 25px; }
+
+        .sidebar-brand { text-align: center; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid var(--border-color); }
+        .sidebar-brand i { color: var(--accent-2); font-size: 22px; margin-bottom: 6px; display:block; }
+        .sidebar-menu { list-style: none; }
+        .sidebar-menu li a {
+            display: flex; align-items: center; gap: 10px; padding: 10px 12px; color: var(--text-main);
+            text-decoration: none; border-radius: 8px; font-weight: 600; margin-bottom: 5px; cursor: pointer; font-size: 14px;
+        }
+        .sidebar-menu li a i { width:18px; text-align:center; color: var(--text-muted); }
+        .sidebar-menu li a.active, .sidebar-menu li a:hover { background: var(--primary); color:#fff; }
+        .sidebar-menu li a.active i, .sidebar-menu li a:hover i { color:#fff; }
+
+        .topbar {
+            background: var(--bg-card); border: 1px solid var(--border-color); padding: 15px 20px;
+            border-radius: var(--radius); display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
+        }
+
+        .card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 20px; margin-bottom: 20px; overflow-x: auto; }
+        .card-head { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
+        table { width: 100%; min-width: 900px; border-collapse: collapse; margin-top: 15px; }
+        th, td { padding: 10px; text-align: center; border-bottom: 1px solid var(--border-color); font-size: 13px; white-space: nowrap; }
+        th { background: var(--bg-body-2); color: var(--accent-2); font-weight:700; }
+        tbody tr:hover { background: rgba(47,158,143,0.06); }
+
+        .section { display: none; }
+        .section.active { display: block; }
+
+        .user-badge { background: rgba(217,140,63,0.16); color: var(--accent-2); border: 1px solid var(--accent); padding: 2px 8px; border-radius: 5px; font-size: 12px; white-space: nowrap; display:inline-block; }
+        .status-ok { background: rgba(69,176,124,0.18); color: var(--success); border:1px solid var(--success); padding:2px 8px; border-radius:5px; font-size:12px; font-weight:700; white-space: nowrap; display:inline-block; }
+        .status-no { background: rgba(224,96,90,0.18); color: var(--danger); border:1px solid var(--danger); padding:2px 8px; border-radius:5px; font-size:12px; font-weight:700; white-space: nowrap; display:inline-block; }
+
+        .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(4,12,11,0.82); z-index:1000; justify-content:center; align-items:center; padding:15px; }
+        .modal.active { display: flex; }
+        .modal-content { background: var(--bg-card); padding: 25px; border-radius: var(--radius); width: 100%; max-width: 500px; border: 1px solid var(--border-color); max-height:90vh; overflow-y:auto; }
+
+        /* ============ صفحة الحجز الإلكتروني العامة (دفتر التسجيل) ============ */
+        .public-booking-page {
+            display: none; min-height: 100vh; justify-content: center; align-items: flex-start;
+            padding: 40px 15px;
+            background:
+                radial-gradient(circle at 15% 10%, rgba(217,140,63,0.10), transparent 40%),
+                radial-gradient(circle at 85% 90%, rgba(47,158,143,0.14), transparent 40%),
+                var(--bg-body);
+        }
+        .public-booking-wrapper {
+            background: linear-gradient(160deg, #fbf3e3, #f6e8cd);
+            color: #24312f;
+            border-radius: 22px;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 780px; width:100%;
+            box-shadow: 0 20px 45px rgba(0,0,0,0.35);
+        }
+        .decorative-dots { display: flex; gap: 12px; justify-content: center; margin-bottom: 15px; }
+        .decorative-dots span { width: 14px; height: 14px; border-radius: 50%; display: inline-block; }
+        .dot1 { background: #d98c3f; } .dot2 { background: #2f9e8f; } .dot3 { background: #7a5c8a; } .dot4 { background: #e0605a; } .dot5 { background: #e8b45f; }
+
+        .welcome-banner {
+            background: #16332f; padding: 15px 30px; border-radius: 60px; margin-bottom: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3); text-align: center; display: flex; align-items: center; gap: 15px;
+        }
+        .welcome-banner h2 {
+            font-family: 'Amiri', serif; font-weight: 700; font-size: 1.7rem;
+            background: linear-gradient(135deg, var(--accent-2), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0;
+        }
+
+        .notebook {
+            max-width: 750px; width: 100%; background: #fffcf5; border-radius: 24px; padding: 25px 30px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); border: 1px solid rgba(217,140,63,0.35);
+        }
+        .notebook-header { text-align: center; margin-bottom: 20px; border-bottom: 2px dashed #ecd9b8; padding-bottom: 15px; }
+        .notebook-header h1 { font-family:'Amiri', serif; font-size: 2.1rem; font-weight: 800; color: #1f7c70; margin-bottom: 5px; }
+
+        .public-form-group { margin-bottom: 15px; text-align: right; }
+        .public-form-group label { display: block; font-weight: 700; color: #3d2a20; margin-bottom: 5px; }
+        .public-form-group input, .public-form-group select {
+            width: 100%; padding: 10px 14px; border: 2px solid #ece1cf; border-radius: 12px; background: #fdfaf4; font-size: 0.95rem; color: #24312f;
+        }
+
+        .btn-booking-submit {
+            width: 100%; padding: 14px; background: linear-gradient(135deg, #2f9e8f, #d98c3f); border: none;
+            border-radius: 50px; color: white; font-size: 1.15rem; font-weight: 800; cursor: pointer; transition: 0.3s; margin-top: 10px;
+        }
+        .btn-booking-submit:hover { transform: scale(1.01); }
+
+        .confirmation-box {
+            background: #e1f4ee; border-radius: 20px; padding: 20px; margin-top: 20px; border-right: 6px solid #2f9e8f;
+            display: none; text-align: center; color: #0a4b3a;
+        }
+        .confirmation-box.active { display: block; }
+
+        .public-back-link { color: var(--text-muted); font-size:12px; margin-top:16px; text-align:center; }
+
+        .footer-stamp { text-align: center; margin-top: 25px; padding-top: 10px; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 12px; }
+
+        .checkbox-box { background: var(--bg-input); padding:12px; border-radius:10px; border:1px solid var(--border-color); margin-bottom:15px; }
+        .checkbox-box label { display:flex; align-items:center; gap:8px; cursor:pointer; font-size:13px; color:var(--text-main); font-weight:600; }
+        .checkbox-box input[type=checkbox] { width:auto; accent-color: var(--accent); }
+        .checkbox-box .hint { display:block; margin-top:6px; color: var(--accent-2); font-size:12px; font-weight:700; }
+
+        @media (max-width: 768px) {
+            .sidebar { width: 100%; height: auto; position: relative; }
+            .main-content { margin-right: 0; padding: 15px; }
+        }
+
+        /* ============ إعدادات الطباعة PDF ============ */
+        .print-header-block { display:none; }
+        @media print {
+            body * { visibility: hidden; }
+            .printable, .printable * { visibility: visible; }
+            .printable {
+                position: absolute; top: 0; right: 0; left:0; width: 100%; margin:0;
+                background:#fff !important; color:#000 !important;
+                border: 2px solid #333 !important; border-radius:0 !important;
+                padding: 18px !important; box-shadow:none !important;
+            }
+            .no-print { display: none !important; }
+            .print-header-block {
+                display: block !important; text-align: center; margin-bottom: 14px;
+                border-bottom: 3px double #333; padding-bottom: 10px;
+            }
+            .print-header-block h1 { font-family:'Amiri','Arial','Tahoma',sans-serif; font-weight:800 !important; font-size: 22px; color:#000 !important; margin-bottom:4px; }
+            .print-header-block h2 { font-family:'Arial','Tahoma',sans-serif; font-weight:800 !important; font-size: 16px; color:#000 !important; margin-bottom:2px; }
+            .print-header-block p { font-family:'Arial','Tahoma',sans-serif; font-weight:700 !important; font-size: 12px; color:#000 !important; }
+            .printable table { color:#000; width:100%; border-collapse:collapse; table-layout:auto; }
+            .printable th { background:#e0e0e0 !important; color:#000 !important; font-weight:800 !important; font-size:12.5px; -webkit-print-color-adjust: exact; print-color-adjust: exact; white-space: nowrap; padding:6px 8px !important; }
+            .printable td { font-weight:700 !important; font-size:12.5px; color:#000 !important; white-space: nowrap; padding:6px 8px !important; }
+            .printable td, .printable th { border: 1px solid #666 !important; }
+            .printable h4 { color:#000 !important; font-weight:800 !important; margin: 14px 0 4px; }
+            .print-footer-block { display:block !important; text-align:center; margin-top:14px; padding-top:8px; border-top:1px solid #999; font-size:12px; font-weight:700; color:#000 !important; }
+            @page { size: A4 landscape; margin: 10mm; }
+        }
+        .print-footer-block { display:none; }
+    </style>
+    <!-- Supabase (لمزامنة طلبات الحجز بين الأجهزة المختلفة عبر الإنترنت) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+
+<!-- 1. شاشة تسجيل الدخول -->
+<div class="login-page" id="loginPage">
+    <div class="login-box">
+        <div class="login-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+        <h2 id="loginTitle" style="color:var(--accent-2); margin-bottom:5px;">مستر / علاء الحفني</h2>
+        <p style="color:var(--text-muted); font-size:12px; margin-bottom:20px;">نظام إدارة المراكز التعليمية والحجوزات</p>
+
+        <div class="form-group">
+            <label>المستخدم</label>
+            <select class="form-control" id="loginUserSelect"></select>
+        </div>
+        <div class="form-group">
+            <label>كلمة المرور</label>
+            <input type="password" class="form-control" id="loginPassInput" placeholder="••••••••" onkeypress="if(event.key==='Enter') doLogin()">
+        </div>
+        <button class="btn btn-gold" style="width:100%; justify-content:center; margin-top:10px;" onclick="doLogin()"><i class="fa-solid fa-right-to-bracket"></i> تسجيل الدخول للنظام</button>
+    </div>
+</div>
+
+<!-- 2. صفحة الحجز الإلكتروني المستقلة (تظهر عبر الرابط العام دون الحاجة لتسجيل دخول) -->
+<div class="public-booking-page" id="publicBookingPage">
+    <div class="public-booking-wrapper">
+        <div class="decorative-dots">
+            <span class="dot1"></span><span class="dot2"></span><span class="dot3"></span><span class="dot4"></span><span class="dot5"></span>
+        </div>
+        <div class="welcome-banner">
+            <h2 id="publicMasterName">دفتر تسجيل الحجوزات - مستر / علاء الحفني</h2>
+        </div>
+        <div class="notebook">
+            <div class="notebook-header">
+                <h1>استمارة حجز درس</h1>
+                <p style="color:#7a5e46; font-weight:600;">سجل بياناتك للالتحاق بالمجموعات التعليمية</p>
+            </div>
+            <form id="publicBookingForm" onsubmit="handlePublicBooking(event)">
+                <div class="public-form-group">
+                    <label>اسم الطالب الثلاثي / الرباعي</label>
+                    <input type="text" id="pubStdName" required placeholder="أدخل الاسم الكامل">
+                </div>
+                <div class="public-form-group">
+                    <label>رقم هاتف الطالب (واتساب)</label>
+                    <input type="tel" id="pubStdPhone" required placeholder="01xxxxxxxxx">
+                </div>
+                <div class="public-form-group">
+                    <label>رقم هاتف ولي الأمر (واتساب)</label>
+                    <input type="tel" id="pubStdParentPhone" required placeholder="01xxxxxxxxx">
+                </div>
+                <div class="public-form-group">
+                    <label>المرحلة الدراسية</label>
+                    <select id="pubStdStage" required onchange="populatePublicGroupsSelect()"></select>
+                </div>
+                <div class="public-form-group">
+                    <label>المجموعة</label>
+                    <select id="pubStdGroup" required></select>
+                </div>
+                <button type="submit" class="btn-booking-submit"><i class="fa-solid fa-check"></i> تأكيد تسجيل الحجز الآن</button>
+            </form>
+
+            <div class="confirmation-box" id="pubConfirmationBox">
+                <h3>✅ تم إرسال طلب الحجز بنجاح!</h3>
+                <p>شكراً لك، تم تسجيل طلبك بانتظار الاعتماد من الأستاذ علاء الحفني.</p>
+            </div>
+        </div>
+        <p class="public-back-link">هذه صفحة الحجز العامة للطلاب — يمكن مشاركة رابطها مباشرة</p>
+    </div>
+</div>
+
+<!-- 3. التطبيق الأساسي لوحة التحكم -->
+<div class="app-container" id="appContainer">
+
+    <!-- القائمة الجانبية -->
+    <div class="sidebar">
+        <div class="sidebar-brand">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <h3 id="sideMasterName" style="color:var(--accent-2); font-size:17px;">مستر / علاء الحفني</h3>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a class="active" onclick="showTab('stages', this)"><i class="fa-solid fa-graduation-cap"></i><span>المراحل الدراسية</span></a></li>
+            <li><a onclick="showTab('groups', this)"><i class="fa-solid fa-layer-group"></i><span>المجموعات الدراسية</span></a></li>
+            <li><a onclick="showTab('booklets', this)"><i class="fa-solid fa-book"></i><span>الملازم والمذكرات</span></a></li>
+            <li><a onclick="showTab('students', this)"><i class="fa-solid fa-users"></i><span>إدارة الطلاب</span></a></li>
+            <li><a onclick="showTab('attendance', this)"><i class="fa-solid fa-clipboard-check"></i><span>الحضور والغياب</span></a></li>
+            <li><a onclick="showTab('exams', this)"><i class="fa-solid fa-file-pen"></i><span>الامتحانات</span></a></li>
+            <li><a onclick="showTab('homework', this)"><i class="fa-solid fa-book-open"></i><span>الواجبات</span></a></li>
+            <li><a onclick="showTab('booking', this)"><i class="fa-solid fa-globe"></i><span>الحجز الإلكتروني</span></a></li>
+            <li id="menuTreasuryItem"><a onclick="showTab('treasury', this)"><i class="fa-solid fa-vault"></i><span>الخزينة والمالية</span></a></li>
+            <li><a onclick="showTab('settings', this)"><i class="fa-solid fa-gear"></i><span>الإعدادات والمستخدمين</span></a></li>
+        </ul>
+    </div>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="main-content">
+        <div class="topbar">
+            <div>
+                <h3 id="topMasterName" style="color:var(--accent-2);">مستر / علاء الحفني</h3>
+                <span style="font-size:12px; color:var(--text-muted);">المستخدم النشط: <strong id="activeUserLabel" style="color:#fff;">-</strong> <span id="activeUserRoleBadge"></span></span>
+            </div>
+            <button class="btn btn-danger btn-sm" onclick="doLogout()"><i class="fa-solid fa-right-from-bracket"></i> تسجيل خروج</button>
+        </div>
+
+        <!-- 1. قسم المراحل الدراسية -->
+        <div class="section active" id="sec-stages">
+            <div class="card">
+                <div class="card-head">
+                    <h3><i class="fa-solid fa-graduation-cap"></i> المراحل الدراسية</h3>
+                    <button class="btn btn-gold" onclick="openStageModal()"><i class="fa-solid fa-plus"></i> إضافة مرحلة جديدة</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>اسم المرحلة الدراسية</th>
+                            <th>عدد المجموعات</th>
+                            <th>عدد الطلاب</th>
+                            <th>العمليات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="stagesTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 2. قسم المجموعات -->
+        <div class="section" id="sec-groups">
+            <div class="card" id="printGroupsArea">
+                <div class="card-head">
+                    <h3><i class="fa-solid fa-layer-group"></i> المجموعات الدراسية</h3>
+                    <div style="display:flex; gap:8px;">
+                        <button class="btn btn-outline btn-sm no-print" onclick="printSection('printGroupsArea','كشف المجموعات الدراسية')"><i class="fa-solid fa-print"></i> طباعة PDF</button>
+                        <button class="btn btn-gold no-print" onclick="openGroupModal()"><i class="fa-solid fa-plus"></i> إضافة مجموعة جديدة</button>
+                    </div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>اسم المجموعة</th>
+                            <th>المرحلة التابعة</th>
+                            <th>ميعاد المجموعة</th>
+                            <th>نظام الدفع</th>
+                            <th>المصاريف</th>
+                            <th>ثمن الملزمة</th>
+                            <th class="no-print">العمليات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="groupsTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 3. قسم الملازم والمذكرات -->
+        <div class="section" id="sec-booklets">
+            <div class="card">
+                <h3><i class="fa-solid fa-book"></i> إدارة أسعار الملازم والمذكرات</h3>
+                <p style="color:var(--text-muted); font-size:13px; margin-top:6px;">كل مجموعة قد يكون لها ثمن مختلف للملزمة — يمكنك هنا متابعة السعر وعدد الطلاب السادّين وغير السادّين لكل مجموعة.</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>المجموعة</th>
+                            <th>المرحلة</th>
+                            <th>ثمن الملزمة</th>
+                            <th>عدد السادّين</th>
+                            <th>عدد غير السادّين</th>
+                            <th>إجمالي المحصّل</th>
+                            <th>العمليات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bookletsTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 4. قسم الطلاب -->
+        <div class="section" id="sec-students">
+            <div class="card" id="printStudentsArea">
+                <div class="card-head">
+                    <h3><i class="fa-solid fa-users"></i> قائمة الطلاب المسجلين</h3>
+                    <div style="display:flex; gap:8px;">
+                        <button class="btn btn-outline btn-sm no-print" onclick="printSection('printStudentsArea','كشف الطلاب المسجلين')"><i class="fa-solid fa-print"></i> طباعة PDF</button>
+                        <button class="btn btn-gold no-print" onclick="openStudentModal()"><i class="fa-solid fa-plus"></i> إضافة طالب جديد</button>
+                    </div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>الكود</th>
+                            <th>اسم الطالب</th>
+                            <th>المرحلة</th>
+                            <th>المجموعة</th>
+                            <th>الهاتف</th>
+                            <th class="no-print">واتساب</th>
+                            <th>الخصم</th>
+                            <th>الملزمة</th>
+                            <th class="no-print">تحصيل مالي</th>
+                            <th class="no-print">العمليات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentsTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 5. الحضور والغياب -->
+        <div class="section" id="sec-attendance">
+            <div class="card no-print">
+                <h3><i class="fa-solid fa-layer-group"></i> اختر مجموعة اليوم</h3>
+                <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap; align-items:center;">
+                    <select class="form-control" id="attendanceGroupSelect" style="flex:1; min-width:220px;" onchange="renderAttendanceGroupList()"></select>
+                    <button class="btn btn-gold" onclick="bulkAttendGroup()"><i class="fa-solid fa-people-group"></i> تحضير جماعي لكل المجموعة</button>
+                </div>
+                <div id="attendanceGroupStudentsList" style="margin-top:15px;"></div>
+            </div>
+
+            <div class="card no-print">
+                <h3><i class="fa-solid fa-barcode"></i> تسجيل بالكود / الباركود / الاسم</h3>
+                <p style="color:var(--text-muted); font-size:12.5px; margin-top:6px;"><i class="fa-solid fa-circle-info"></i> اضغط داخل الحقل ثم مرّر الباركود على الماسح الضوئي مباشرة (يعمل كأنه يكتب الكود ثم Enter تلقائياً)، أو اكتب الكود أو اسم الطالب يدوياً واضغط Enter.</p>
+                <div style="display:flex; gap:10px; margin-top:15px; flex-wrap:wrap;">
+                    <input type="text" class="form-control" id="attendanceInput" placeholder="ادخل كود الطالب أو اسمه، أو مرّر الباركود هنا..." onkeypress="if(event.key==='Enter') recordAttendance()" style="flex:1; min-width:200px;" autofocus>
+                    <button class="btn btn-gold" onclick="recordAttendance()"><i class="fa-solid fa-check"></i> تسجيل حضور</button>
+                </div>
+                <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
+                    <input type="text" class="form-control" id="absenceInput" placeholder="ادخل كود الطالب أو اسمه لتسجيل غياب..." onkeypress="if(event.key==='Enter') recordAbsence()" style="flex:1; min-width:200px;">
+                    <button class="btn btn-danger" onclick="recordAbsence()"><i class="fa-solid fa-user-xmark"></i> تسجيل غياب</button>
+                </div>
+            </div>
+            <div class="card" id="printAttendanceArea">
+                <div class="card-head">
+                    <h3>سجل الحضور والغياب اليوم</h3>
+                    <button class="btn btn-outline btn-sm no-print" onclick="printSection('printAttendanceArea','كشف الحضور والغياب')"><i class="fa-solid fa-print"></i> طباعة PDF</button>
+                </div>
+                <h4 style="margin-top:15px; color:var(--accent-2);"><i class="fa-solid fa-check"></i> الحاضرون</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>اسم الطالب</th>
+                            <th>المجموعة</th>
+                            <th>الوقت</th>
+                            <th>اسم المحصل</th>
+                        </tr>
+                    </thead>
+                    <tbody id="attendanceLogsBody"></tbody>
+                </table>
+                <h4 style="margin-top:20px; color:var(--danger);"><i class="fa-solid fa-user-xmark"></i> الغائبون</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>اسم الطالب</th>
+                            <th>المجموعة</th>
+                            <th>التاريخ</th>
+                            <th>سجّله</th>
+                        </tr>
+                    </thead>
+                    <tbody id="absenceLogsBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 6. قسم الامتحانات -->
+        <div class="section" id="sec-exams">
+            <div class="card no-print">
+                <h3><i class="fa-solid fa-layer-group"></i> اختر المجموعة</h3>
+                <select class="form-control" id="examsGroupSelect" style="margin-top:12px;" onchange="renderExamsPanel()"></select>
+            </div>
+
+            <div class="card no-print" id="examsPanelWrap" style="display:none;">
+                <div style="display:flex; gap:8px; margin-bottom:15px; flex-wrap:wrap;">
+                    <button class="btn btn-outline btn-sm" id="examsSubtabSession" onclick="setExamsSubtab('حصة')"><i class="fa-solid fa-pen"></i> امتحانات الحصة</button>
+                    <button class="btn btn-outline btn-sm" id="examsSubtabDaily" onclick="setExamsSubtab('يومي')"><i class="fa-solid fa-calendar-day"></i> الامتحانات اليومية</button>
+                    <button class="btn btn-outline btn-sm" id="examsSubtabRank" onclick="setExamsSubtab('ترتيب')"><i class="fa-solid fa-ranking-star"></i> ترتيب الطلاب</button>
+                </div>
+                <div id="examsPanelBody"></div>
+            </div>
+        </div>
+
+        <!-- 7. قسم الواجبات -->
+        <div class="section" id="sec-homework">
+            <div class="card no-print">
+                <h3><i class="fa-solid fa-layer-group"></i> اختر المجموعة</h3>
+                <select class="form-control" id="hwGroupSelect" style="margin-top:12px;" onchange="renderHomeworkPanel()"></select>
+            </div>
+            <div class="card no-print" id="hwPanelWrap" style="display:none;">
+                <div class="card-head">
+                    <h3><i class="fa-solid fa-book-open"></i> واجبات المجموعة</h3>
+                    <button class="btn btn-gold btn-sm" onclick="openHomeworkModal()"><i class="fa-solid fa-plus"></i> إضافة واجب جديد</button>
+                </div>
+                <div id="hwListBody"></div>
+                <div id="hwDetailBody" style="margin-top:15px;"></div>
+            </div>
+        </div>
+
+        <!-- 6. قسم الحجز الإلكتروني -->
+        <div class="section" id="sec-booking">
+            <div class="card">
+                <h3><i class="fa-solid fa-globe"></i> رابط الحجز الإلكتروني المباشر للطلاب</h3>
+                <p style="color:var(--text-muted); font-size:13px; margin:10px 0;">هذا الرابط مُفعّل ويعمل فعلياً: شاركه مع الطلاب ليقوموا بتعبئة استمارة الحجز بأنفسهم، وستصلك طلباتهم مباشرة في الجدول أدناه.</p>
+                <div style="display:flex; gap:10px; align-items:center; margin:15px 0; flex-wrap:wrap;">
+                    <input type="text" class="form-control" id="bookingUrlInput" readonly style="flex:1; min-width:220px; direction:ltr; font-family:monospace; color:var(--accent-2); font-weight:bold;">
+                    <button class="btn btn-gold" onclick="copyBookingLink()"><i class="fa-solid fa-copy"></i> نسخ الرابط</button>
+                    <button class="btn btn-primary" onclick="openBookingLinkDirect()"><i class="fa-solid fa-arrow-up-right-from-square"></i> فتح صفحة الحجز</button>
+                </div>
+                <p style="color:var(--danger); font-size:12.5px; background:var(--bg-input); border:1px solid var(--danger); padding:10px; border-radius:8px; font-weight:700;">
+                    <i class="fa-solid fa-triangle-exclamation"></i> هام جداً: هذا الملف حالياً يعمل بالكامل داخل متصفح جهازك (بدون سيرفر خارجي). يعني ده إن أي حجز يتسجل من نفس الجهاز والمتصفح هيظهر هنا فوراً، لكن لو الطالب فتح الرابط من موبايله الشخصي أو جهاز تاني، الحجز هيتسجل في متصفح موبايله هو بس ولن يظهر في لوحتك — لأن مفيش قاعدة بيانات مشتركة على الإنترنت تربط الجهازين. الحل الوحيد لجعل الحجوزات تصل من أي جهاز لأي جهاز آخر هو رفع النظام على استضافة حقيقية (سيرفر + قاعدة بيانات فعلية)، وده تقدر تطلبه مني في أي وقت.
+                </p>
+                <p id="firebaseSyncStatus" style="font-size:13px; font-weight:700; margin-top:8px;"></p>
+                <div class="no-print" style="margin-top:12px; background:var(--bg-input); border:1px solid var(--border-color); padding:12px; border-radius:8px; font-size:13px; color:var(--text-muted); line-height:1.9;">
+                    <strong style="color:var(--accent-2);"><i class="fa-solid fa-list-ol"></i> لتفعيل وصول الحجوزات من أي جهاز (خطوة تُعمل مرة واحدة فقط، عن طريق Supabase):</strong>
+                    <ol style="padding-inline-start:20px; margin-top:6px;">
+                        <li>افتح <strong>supabase.com</strong> وسجّل حساب مجاني (بريد إلكتروني عادي، بدون تفعيل إجباري لخطوتين التحقق).</li>
+                        <li>اعمل <strong>New Project</strong> (اختر اسم وكلمة سر لقاعدة البيانات واحفظها في مكان آمن).</li>
+                        <li>من القائمة الجانبية: <strong>Table Editor ← New Table</strong>، سمّها بالظبط <strong>booking_requests</strong>، وأضف الأعمدة: name (text), stage_id (int8), group_id (int8), phone (text), parent_phone (text) — وعطّل خيار "Enable Row Level Security" وقت الإنشاء.</li>
+                        <li>من القائمة الجانبية: <strong>Project Settings ← API</strong>، انسخ <strong>Project URL</strong> و<strong>anon public key</strong>.</li>
+                        <li>ابعتهملي هنا في الشات وأنا أدخلهم في الكود وأديك الملف جاهز، أو افتح ملف البرنامج بمحرر نصوص وابحث عن SUPABASE_URL وSUPABASE_ANON_KEY والصق القيم بدل الرموز ★★★.</li>
+                    </ol>
+                    <span style="font-size:12px;"><i class="fa-solid fa-circle-info"></i> لو محتاج مساعدة في أي خطوة من دول، ابعتلي وهساعدك خطوة بخطوة.</span>
+                </div>
+                <button class="btn btn-outline btn-sm no-print" style="margin-top:10px;" onclick="manualRefreshFromStorage()"><i class="fa-solid fa-rotate"></i> تحديث الطلبات الآن</button>
+            </div>
+
+            <div class="card">
+                <h3>طلبات الحجز الإلكتروني الواردة</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>اسم الطالب</th>
+                            <th>المجموعة</th>
+                            <th>هاتف الطالب (واتساب)</th>
+                            <th>هاتف ولي الأمر (واتساب)</th>
+                            <th>الإجراء</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bookingRequestsBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 7. الخزينة والمالية -->
+        <div class="section admin-only" id="sec-treasury">
+            <div class="card" id="printTreasuryArea">
+                <div class="card-head">
+                    <h3><i class="fa-solid fa-vault"></i> الخزينة والمالية</h3>
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <div style="background:var(--bg-input); border:1px solid var(--accent); padding:8px 15px; border-radius:8px;">
+                            إجمالي الخزينة: <strong id="totalTreasurySum" style="color:var(--accent-2);">٠ ج.م</strong>
+                        </div>
+                        <button class="btn btn-outline btn-sm no-print" onclick="printSection('printTreasuryArea','كشف حساب الخزينة')"><i class="fa-solid fa-print"></i> طباعة PDF</button>
+                    </div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>اسم الطالب</th>
+                            <th>المبلغ المحصل</th>
+                            <th>بيان الدفع</th>
+                            <th>المحصل (المستخدم)</th>
+                            <th>التاريخ والوقت</th>
+                        </tr>
+                    </thead>
+                    <tbody id="treasuryLogsBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 8. الإعدادات وتعديل بيانات المدير -->
+        <div class="section" id="sec-settings">
+            <div class="card admin-only">
+                <h3><i class="fa-brands fa-telegram" style="color:#229ED9;"></i> إعدادات الرسائل الجماعية على تليجرام</h3>
+                <div class="form-group">
+                    <label>توكن بوت التليجرام (Bot Token)</label>
+                    <input type="text" class="form-control" id="telegramTokenInput" placeholder="مثال: 123456789:AAExxxxxxxxxxxxxxxxxxxxxxxxxxxxxx">
+                </div>
+                <button class="btn btn-gold" onclick="saveTelegramSettings()"><i class="fa-solid fa-floppy-disk"></i> حفظ إعدادات التليجرام</button>
+                <div style="margin-top:15px; background:var(--bg-input); border:1px solid var(--border-color); padding:12px; border-radius:8px; font-size:13px; color:var(--text-muted); line-height:1.9;">
+                    <strong style="color:var(--accent-2);"><i class="fa-solid fa-list-ol"></i> خطوات تفعيل الإرسال الجماعي على تليجرام:</strong>
+                    <ol style="padding-inline-start:20px; margin-top:6px;">
+                        <li>افتح تطبيق تليجرام وابحث عن <strong>@BotFather</strong>.</li>
+                        <li>أرسل له الأمر <strong>/newbot</strong> واتبع الخطوات لإنشاء بوت جديد، وسيعطيك <strong>Bot Token</strong> — الصقه في الحقل بالأعلى واحفظه.</li>
+                        <li>أنشئ مجموعة تليجرام لكل مجموعة دراسية عندك، وأضف كل أولياء الأمور/الطلاب فيها.</li>
+                        <li>أضف البوت الذي أنشأته كعضو في مجموعة التليجرام هذه.</li>
+                        <li>احصل على <strong>Chat ID</strong> الخاص بالمجموعة (يمكن ذلك عبر إضافة بوت مساعد مثل @RawDataBot للمجموعة مؤقتاً وسيعرض لك الرقم، ثم يمكنك حذفه).</li>
+                        <li>اذهب لتبويب "المجموعات الدراسية" وعدّل كل مجموعة، وألصق الـ Chat ID في حقل "معرف تليجرام".</li>
+                        <li>بعد ذلك سيظهر زر "رسالة جماعية" فعّال أمام كل مجموعة يرسل لجميع أعضائها فوراً.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="card admin-only">
+                <h3><i class="fa-solid fa-user-gear"></i> تعديل بيانات حساب المدير</h3>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-top:15px;">
+                    <div class="form-group">
+                        <label>اسم المدير الحالي:</label>
+                        <input type="text" class="form-control" id="editAdminNameInput">
+                    </div>
+                    <div class="form-group">
+                        <label>كلمة مرور جديدة (اختياري):</label>
+                        <input type="password" class="form-control" id="editAdminPassInput" placeholder="اتركه فارغاً للاحتفاظ بكلمة المرور الحالية">
+                        <span class="field-hint"><i class="fa-solid fa-lock"></i> لن تُعرض كلمة المرور الحالية هنا لأسباب أمنية.</span>
+                    </div>
+                </div>
+                <button class="btn btn-gold" onclick="updateAdminCredentials()"><i class="fa-solid fa-floppy-disk"></i> حفظ بيانات المدير</button>
+            </div>
+
+            <div class="card admin-only">
+                <h3><i class="fa-solid fa-users-gear"></i> إضافة مستخدمين</h3>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
+                    <div class="form-group">
+                        <label>اسم المستخدم الجديد</label>
+                        <input type="text" class="form-control" id="newAccUser">
+                    </div>
+                    <div class="form-group">
+                        <label>كلمة المرور</label>
+                        <input type="password" class="form-control" id="newAccPass">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>الصلاحية</label>
+                    <select class="form-control" id="newAccRole">
+                        <option value="user">أدمن (تسجيل وحضور)</option>
+                        <option value="admin">مدير (صلاحيات كاملة)</option>
+                    </select>
+                </div>
+                <button class="btn btn-gold" onclick="createNewUser()"><i class="fa-solid fa-user-plus"></i> إضافة المستخدم</button>
+
+                <h4 style="margin-top:20px; color:var(--accent-2);">المستخدمون الحاليون:</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>اسم المستخدم</th>
+                            <th>الصلاحية</th>
+                            <th>العمليات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersListBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="footer-stamp">
+            مستر / علاء الحفني - جميع الحقوق محفوظة
+        </div>
+
+    </div>
+</div>
+
+<!-- النافذة المنبثقة Modal -->
+<div class="modal" id="systemModal">
+    <div class="modal-content">
+        <h3 id="modalTitle" style="color:var(--accent-2); margin-bottom:15px;"></h3>
+        <div id="modalBody"></div>
+        <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
+            <button class="btn btn-danger" onclick="closeModal()">إلغاء</button>
+            <button class="btn btn-gold" id="modalSaveBtn">حفظ</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // دالة تحويل جميع الأرقام إلى أرقام عربية (٠-٩)
+    function toArDigits(str) {
+        if (str === null || str === undefined) return '';
+        return String(str).replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+    }
+
+    // قاعدة البيانات المركزية الموحدة (افتراضية عند أول تشغيل فقط)
+    const DB = {
+        masterName: "مستر / علاء الحفني",
+        activeUser: null,
+        settings: {
+            telegramBotToken: ""
+        },
+        users: [
+            { id: 1, name: "مستر / علاء الحفني", pass: "admin123", role: "admin" },
+            { id: 2, name: "الأدمن 1", pass: "123", role: "user" }
+        ],
+        stages: [
+            { id: 1, name: "الصف الأول الثانوي" },
+            { id: 2, name: "الصف الثاني الثانوي (علمي)" },
+            { id: 3, name: "الصف الثالث الثانوي (علمي)" }
+        ],
+        groups: [
+            { id: 1, stageId: 1, name: "مجموعة السبت والثلاثاء", schedule: "السبت والثلاثاء - ٤:٠٠ مساءً", payType: "شهر", fee: 200, bookletFee: 50, telegramChatId: "" },
+            { id: 2, stageId: 3, name: "مجموعة الأحد والأربعاء", schedule: "الأحد والأربعاء - ٦:٠٠ مساءً", payType: "حصة", fee: 50, bookletFee: 30, telegramChatId: "" }
+        ],
+        students: [
+            { id: 101, code: "ST-101", name: "أحمد محمود علي", stageId: 1, groupId: 1, phone: "01012345678", whatsapp: "01012345678", parentWhatsapp: "", discount: 0, payOverride: "", bookletPaid: false }
+        ],
+        attendanceLogs: [],
+        absenceLogs: [],
+        treasuryLogs: [],
+        exams: [],
+        examResults: [],
+        homeworks: [],
+        homeworkResults: [],
+        bookingRequests: [
+            { id: 1, name: "زياد خالد", stageId: 1, groupId: 1, phone: "01200000000", parentPhone: "" }
+        ]
+    };
+
+    // --- التخزين الدائم (localStorage) لضمان عمل رابط الحجز الإلكتروني فعلياً ---
+    const STORAGE_KEY = 'alaaCenterDB_v1';
+
+    function saveDB() {
+        try {
+            const snapshot = Object.assign({}, DB, { activeUser: null });
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot));
+        } catch (e) { /* التخزين غير متاح، يتجاهل بصمت */ }
+    }
+
+    function loadDB() {
+        try {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (raw) {
+                const saved = JSON.parse(raw);
+                Object.keys(saved).forEach(k => { if (k !== 'activeUser') DB[k] = saved[k]; });
+            }
+        } catch (e) { /* بيانات غير صالحة، يتجاهل بصمت */ }
+    }
+
+    /* =======================================================================
+       ربط قاعدة بيانات مشتركة (Supabase) لجعل طلبات الحجز تصل من أي جهاز لأي جهاز
+       =======================================================================
+       🔧 عدّل السطرين بين ★★★ فقط، والصق فيهم بيانات مشروع Supabase الخاص بك:
+       ١) روح https://supabase.com وسجل حساب مجاني (بريد إلكتروني عادي، بدون أي
+          تفعيل إجباري لخطوتين التحقق).
+       ٢) اعمل New Project (اختر أي اسم وكلمة سر لقاعدة البيانات واحفظها).
+       ٣) من القائمة الجانبية: Table Editor > New Table، اسمها booking_requests
+          بالظبط، وأضف الأعمدة: name (text), stage_id (int8), group_id (int8),
+          phone (text), parent_phone (text) — وعطّل خيار "Enable Row Level
+          Security" وقت الإنشاء (يبقى ظاهر مفيش تفعيل جنبه).
+       ٤) من القائمة الجانبية: Project Settings > API، هتلاقي "Project URL"
+          و"anon public key" — انسخهم.
+       ٥) الصق القيمتين هنا مكان ★★★، احفظ الملف وارفعه — وبعدها الحجز هيوصلك
+          من أي جهاز حقيقي تلقائيًا (يتحدّث كل ١٥ ثانية أو بضغطة زر تحديث).
+       لو سبتهم كما هما (بدون تعديل)، البرنامج هيشتغل عادي بنفس النظام القديم
+       (تخزين داخل المتصفح فقط، بدون مزامنة بين الأجهزة).
+    */
+    const SUPABASE_URL = "https://viygbmizhkqurvxhwdyr.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_KbPIm3UlNWTIb6gMadA3KQ_12zSvLUj";
+
+    let supabaseClient = null;
+    let supabaseReady = false;
+    let supabasePollTimer = null;
+
+    function isSupabaseConfigured() {
+        return SUPABASE_URL && !SUPABASE_URL.includes('★') && SUPABASE_ANON_KEY && !SUPABASE_ANON_KEY.includes('★');
+    }
+
+    function initSupabaseSync() {
+        if (!isSupabaseConfigured()) {
+            console.log('ℹ️ لم يتم إعداد Supabase بعد — البرنامج يعمل بالتخزين المحلي فقط.');
+            updateSupabaseStatusBadge(false);
+            return;
+        }
+        try {
+            supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            supabaseReady = true;
+            fetchBookingsFromSupabase();
+            if (supabasePollTimer) clearInterval(supabasePollTimer);
+            supabasePollTimer = setInterval(fetchBookingsFromSupabase, 15000);
+        } catch (e) {
+            console.warn('تعذر تفعيل Supabase:', e);
+            supabaseReady = false;
+            updateSupabaseStatusBadge(false);
+        }
+    }
+
+    function fetchBookingsFromSupabase() {
+        if (!supabaseReady) return;
+        supabaseClient.from('booking_requests').select('*').order('created_at', { ascending: false })
+            .then(function (res) {
+                if (res.error) { console.warn('Supabase fetch error:', res.error); updateSupabaseStatusBadge(false); return; }
+                DB.bookingRequests = res.data.map(function (row) {
+                    return {
+                        id: row.id, sbId: row.id,
+                        name: row.name, stageId: row.stage_id, groupId: row.group_id,
+                        phone: row.phone, parentPhone: row.parent_phone
+                    };
+                });
+                if (DB.activeUser) { renderBookings(); }
+                updateSupabaseStatusBadge(true);
+            })
+            .catch(function (err) { console.warn('Supabase fetch failed:', err); updateSupabaseStatusBadge(false); });
+    }
+
+    function updateSupabaseStatusBadge(connected) {
+        const el = document.getElementById('firebaseSyncStatus');
+        if (!el) return;
+        el.innerHTML = connected
+            ? '<span style="color:#2ecc71;"><i class="fa-solid fa-circle-check"></i> متصل بقاعدة بيانات مشتركة على الإنترنت — الحجوزات تصل من أي جهاز خلال ثوانٍ</span>'
+            : '<span style="color:var(--danger);"><i class="fa-solid fa-triangle-exclamation"></i> غير متصل بقاعدة بيانات مشتركة — الحجوزات تعمل داخل هذا الجهاز فقط</span>';
+    }
+
+    // مزامنة حية بين تبويبات نفس المتصفح (مثلاً: تبويب الطالب يفتح رابط الحجز، وتبويب المدير يشاهد الطلب فوراً)
+    window.addEventListener('storage', function (e) {
+        if (e.key === STORAGE_KEY) {
+            loadDB();
+            if (DB.activeUser) { renderAllTabsNoSave(); }
+        }
+    });
+
+    function populateUsersSelect() {
+        const sel = document.getElementById('loginUserSelect');
+        sel.innerHTML = DB.users.map(u => `<option value="${u.id}">${u.name} (${u.role === 'admin' ? 'مدير' : 'أدمن'})</option>`).join('');
+    }
+
+    function doLogin() {
+        const uId = parseInt(document.getElementById('loginUserSelect').value);
+        const pass = document.getElementById('loginPassInput').value;
+        const usr = DB.users.find(u => u.id === uId);
+
+        if (usr && usr.pass === pass) {
+            DB.activeUser = usr;
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('appContainer').style.display = 'block';
+            document.getElementById('activeUserLabel').innerText = usr.name;
+            document.getElementById('activeUserRoleBadge').innerHTML = `<span class="user-badge">${usr.role === 'admin' ? 'مدير' : 'أدمن'}</span>`;
+
+            const adminAcc = DB.users.find(u => u.role === 'admin');
+            if (adminAcc) {
+                document.getElementById('editAdminNameInput').value = adminAcc.name;
+                document.getElementById('editAdminPassInput').value = '';
+            }
+            document.getElementById('loginPassInput').value = '';
+
+            checkPermissions();
+            renderAllTabs();
+        } else {
+            alert("❌ كلمة المرور غير صحيحة!");
+        }
+    }
+
+    function doLogout() {
+        DB.activeUser = null;
+        document.getElementById('appContainer').style.display = 'none';
+        document.getElementById('loginPage').style.display = 'flex';
+    }
+
+    function checkPermissions() {
+        const isAdmin = DB.activeUser.role === 'admin';
+        document.querySelectorAll('.admin-only').forEach(el => el.style.display = isAdmin ? '' : 'none');
+        document.getElementById('menuTreasuryItem').style.display = isAdmin ? '' : 'none';
+    }
+
+    function showTab(secId, btn) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.sidebar-menu a').forEach(a => a.classList.remove('active'));
+        document.getElementById('sec-' + secId).classList.add('active');
+        if (btn) btn.classList.add('active');
+    }
+
+    function renderAllTabsNoSave() {
+        updateHeaderTitles();
+        renderStages();
+        renderGroups();
+        renderBooklets();
+        renderStudents();
+        renderAttendance();
+        renderAbsence();
+        renderTreasury();
+        renderBookings();
+        renderUsers();
+        populatePublicStagesSelect();
+        refreshBookingUrl();
+        populateExamsGroupSelect();
+        if (document.getElementById('examsGroupSelect') && document.getElementById('examsGroupSelect').value) renderExamsPanel();
+        populateHomeworkGroupSelect();
+        if (document.getElementById('hwGroupSelect') && document.getElementById('hwGroupSelect').value) renderHomeworkPanel();
+        const tgInput = document.getElementById('telegramTokenInput');
+        if (tgInput && document.activeElement !== tgInput) tgInput.value = DB.settings.telegramBotToken || '';
+    }
+
+    function saveTelegramSettings() {
+        const token = document.getElementById('telegramTokenInput').value.trim();
+        DB.settings.telegramBotToken = token;
+        saveDB();
+        alert('✅ تم حفظ إعدادات بوت التليجرام بنجاح!');
+    }
+
+    function renderAllTabs() {
+        renderAllTabsNoSave();
+        saveDB();
+    }
+
+    function manualRefreshFromStorage() {
+        loadDB();
+        renderAllTabsNoSave();
+    }
+
+    function updateHeaderTitles() {
+        const name = DB.masterName;
+        document.getElementById('loginTitle').innerText = name;
+        document.getElementById('sideMasterName').innerText = name;
+        document.getElementById('topMasterName').innerText = name;
+        document.getElementById('publicMasterName').innerText = "دفتر تسجيل الحجوزات - " + name;
+    }
+
+    // --- تعديل حساب المدير ---
+    function updateAdminCredentials() {
+        const newName = document.getElementById('editAdminNameInput').value.trim();
+        const newPass = document.getElementById('editAdminPassInput').value.trim();
+
+        if (!newName) {
+            alert("⚠️ يرجى إدخال اسم المدير!");
+            return;
+        }
+
+        const adminAcc = DB.users.find(u => u.role === 'admin');
+        if (adminAcc) {
+            adminAcc.name = newName;
+            if (newPass) adminAcc.pass = newPass;
+            DB.masterName = newName;
+            document.getElementById('editAdminPassInput').value = '';
+            updateHeaderTitles();
+            populateUsersSelect();
+            renderAllTabs();
+            alert("✅ تم تعديل بيانات حساب المدير بنجاح!");
+        }
+    }
+
+    // --- 1. إدارة المراحل ---
+    function renderStages() {
+        const tbody = document.getElementById('stagesTableBody');
+        tbody.innerHTML = DB.stages.map(s => {
+            const grpCount = DB.groups.filter(g => g.stageId === s.id).length;
+            const stdCount = DB.students.filter(st => st.stageId === s.id).length;
+            return `
+                <tr>
+                    <td><strong>${s.name}</strong></td>
+                    <td>${toArDigits(grpCount)}</td>
+                    <td>${toArDigits(stdCount)} طالب</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="openStageModal(${s.id})"><i class="fa-solid fa-pen"></i> تعديل</button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteStage(${s.id})"><i class="fa-solid fa-trash"></i> حذف</button>
+                    </td>
+                </tr>
+            `;
+        }).join('');
+    }
+
+    function openStageModal(editId = null) {
+        const stage = editId ? DB.stages.find(s => s.id === editId) : null;
+        const modal = document.getElementById('systemModal');
+        document.getElementById('modalTitle').innerText = stage ? "تعديل مرحلة دراسية" : "إضافة مرحلة دراسية جديدة";
+
+        document.getElementById('modalBody').innerHTML = `
+            <div class="form-group"><label>اسم المرحلة الدراسية</label><input type="text" class="form-control" id="mStageName" value="${stage ? stage.name : ''}"></div>
+        `;
+
+        document.getElementById('modalSaveBtn').onclick = function () {
+            const name = document.getElementById('mStageName').value.trim();
+            if (!name) return;
+            if (stage) {
+                stage.name = name;
+            } else {
+                DB.stages.push({ id: (DB.stages.length ? Math.max(...DB.stages.map(s => s.id)) : 0) + 1, name });
+            }
+            closeModal();
+            renderAllTabs();
+        };
+        modal.classList.add('active');
+    }
+
+    function deleteStage(id) {
+        if (confirm("⚠️ هل أنت تأكد من حذف هذه المرحلة الدراسية؟")) {
+            DB.stages = DB.stages.filter(s => s.id !== id);
+            renderAllTabs();
+        }
+    }
+
+    // --- 2. إدارة المجموعات ---
+    function renderGroups() {
+        const tbody = document.getElementById('groupsTableBody');
+        tbody.innerHTML = DB.groups.map(g => {
+            const stg = DB.stages.find(s => s.id === g.stageId);
+            return `
+                <tr>
+                    <td><strong>${g.name}</strong></td>
+                    <td><span class="user-badge">${stg ? stg.name : '---'}</span></td>
+                    <td><strong style="color:var(--accent-2);">${toArDigits(g.schedule) || 'غير محدد'}</strong></td>
+                    <td>بال${g.payType}</td>
+                    <td>${toArDigits(g.fee)} ج.م</td>
+                    <td>${toArDigits(g.bookletFee || 0)} ج.م</td>
+                    <td class="no-print">
+                        <button class="btn btn-telegram btn-sm" onclick="sendTelegramGroupMessage(${g.id})" title="إرسال رسالة جماعية على تليجرام"><i class="fa-brands fa-telegram"></i> رسالة جماعية</button>
+                        <button class="btn btn-primary btn-sm" onclick="openGroupModal(${g.id})"><i class="fa-solid fa-pen"></i> تعديل</button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteGroup(${g.id})"><i class="fa-solid fa-trash"></i> حذف</button>
+                    </td>
+                </tr>
+            `;
+        }).join('');
+    }
+
+    function openGroupModal(editId = null) {
+        const group = editId ? DB.groups.find(g => g.id === editId) : null;
+        const modal = document.getElementById('systemModal');
+        document.getElementById('modalTitle').innerText = group ? "تعديل المجموعة" : "إضافة مجموعة جديدة";
+
+        const stageOptions = DB.stages.map(st => `<option value="${st.id}" ${group && group.stageId === st.id ? 'selected' : ''}>${st.name}</option>`).join('');
+
+        document.getElementById('modalBody').innerHTML = `
+            <div class="form-group"><label>اختر المرحلة الدراسية</label><select class="form-control" id="mGroupStage">${stageOptions}</select></div>
+            <div class="form-group"><label>اسم المجموعة</label><input type="text" class="form-control" id="mGroupName" value="${group ? group.name : ''}"></div>
+            <div class="form-group"><label>ميعاد المجموعة (الأيام والساعة)</label><input type="text" class="form-control" id="mGroupSchedule" placeholder="مثال: السبت والثلاثاء - ٤:٠٠ مساءً" value="${group ? (group.schedule || '') : ''}"></div>
+            <div class="form-group">
+                <label>نوع نظام الدفع</label>
+                <select class="form-control" id="mGroupPayType">
+                    <option value="شهر" ${group && group.payType === 'شهر' ? 'selected' : ''}>بالشهر</option>
+                    <option value="حصة" ${group && group.payType === 'حصة' ? 'selected' : ''}>بالحصة</option>
+                </select>
+            </div>
+            <div class="form-group"><label>قيمة الاشتراك / الحصة (ج.م)</label><input type="number" class="form-control" id="mGroupFee" value="${group ? group.fee : 0}"></div>
+            <div class="form-group"><label>ثمن الملزمة / المذكرة (ج.م)</label><input type="number" class="form-control" id="mGroupBooklet" value="${group ? (group.bookletFee || 0) : 0}"></div>
+            <div class="form-group">
+                <label><i class="fa-brands fa-telegram" style="color:#229ED9;"></i> معرف مجموعة/قناة التليجرام (Chat ID)</label>
+                <input type="text" class="form-control" id="mGroupTelegram" placeholder="مثال: -1001234567890" value="${group ? (group.telegramChatId || '') : ''}">
+                <span class="field-hint"><i class="fa-solid fa-circle-info"></i> أنشئ مجموعة تليجرام لهذه الفصول، أضف البوت فيها كعضو، ثم احصل على الـ Chat ID (راجع تبويب الإعدادات لمعرفة الخطوات).</span>
+            </div>
+        `;
+
+        document.getElementById('modalSaveBtn').onclick = function () {
+            const stageId = parseInt(document.getElementById('mGroupStage').value);
+            const name = document.getElementById('mGroupName').value.trim();
+            const schedule = document.getElementById('mGroupSchedule').value.trim();
+            const payType = document.getElementById('mGroupPayType').value;
+            const fee = parseFloat(document.getElementById('mGroupFee').value) || 0;
+            const bookletFee = parseFloat(document.getElementById('mGroupBooklet').value) || 0;
+            const telegramChatId = document.getElementById('mGroupTelegram').value.trim();
+
+            if (!name) return;
+
+            if (group) {
+                group.stageId = stageId; group.name = name; group.schedule = schedule; group.payType = payType; group.fee = fee; group.bookletFee = bookletFee;
+                group.telegramChatId = telegramChatId;
+            } else {
+                DB.groups.push({ id: (DB.groups.length ? Math.max(...DB.groups.map(g => g.id)) : 0) + 1, stageId, name, schedule, payType, fee, bookletFee, telegramChatId });
+            }
+            closeModal();
+            renderAllTabs();
+        };
+        modal.classList.add('active');
+    }
+
+    function deleteGroup(id) {
+        if (confirm("⚠️ هل أنت تأكد من حذف هذه المجموعة؟")) {
+            DB.groups = DB.groups.filter(g => g.id !== id);
+            renderAllTabs();
+        }
+    }
+
+    // --- 3. إدارة الملازم والمذكرات ---
+    function renderBooklets() {
+        const tbody = document.getElementById('bookletsTableBody');
+        const isAdmin = DB.activeUser && DB.activeUser.role === 'admin';
+        tbody.innerHTML = DB.groups.map(g => {
+            const stg = DB.stages.find(s => s.id === g.stageId);
+            const groupStudents = DB.students.filter(s => s.groupId === g.id);
+            const paidCount = groupStudents.filter(s => s.bookletPaid).length;
+            const unpaidCount = groupStudents.length - paidCount;
+            const totalCollected = DB.treasuryLogs.filter(t => t.groupId === g.id && t.payType && t.payType.includes('ملزمة')).reduce((a, t) => a + t.amount, 0);
+            return `
+                <tr>
+                    <td><strong>${g.name}</strong></td>
+                    <td><span class="user-badge">${stg ? stg.name : '---'}</span></td>
+                    <td><strong style="color:var(--accent-2);">${toArDigits(g.bookletFee || 0)} ج.م</strong></td>
+                    <td><span class="status-ok">${toArDigits(paidCount)} طالب</span></td>
+                    <td><span class="status-no">${toArDigits(unpaidCount)} طالب</span></td>
+                    <td>${toArDigits(totalCollected)} ج.م</td>
+                    <td>${isAdmin ? `<button class="btn btn-primary btn-sm" onclick="openBookletFeeModal(${g.id})"><i class="fa-solid fa-pen"></i> تعديل السعر</button>` : '<span style="color:var(--text-muted); font-size:12px;">للمدير فقط</span>'}</td>
+                </tr>
+            `;
+        }).join('');
+    }
+
+    function openBookletFeeModal(groupId) {
+        const g = DB.groups.find(x => x.id === groupId);
+        if (!g) return;
+        document.getElementById('modalTitle').innerText = "تعديل ثمن الملزمة - " + g.name;
+        document.getElementById('modalBody').innerHTML = `
+            <div class="form-group"><label>ثمن الملزمة الجديد (ج.م)</label><input type="number" class="form-control" id="mBookletFee" value="${g.bookletFee || 0}"></div>
+        `;
+        document.getElementById('modalSaveBtn').onclick = function () {
+            g.bookletFee = parseFloat(document.getElementById('mBookletFee').value) || 0;
+            closeModal();
+            renderAllTabs();
+        };
+        document.getElementById('systemModal').classList.add('active');
+    }
+
+    // --- 4. إدارة الطلاب ---
+    function renderStudents() {
+        const tbody = document.getElementById('studentsTableBody');
+        tbody.innerHTML = DB.students.map(s => {
+            const stg = DB.stages.find(st => st.id === s.stageId);
+            const grp = DB.groups.find(g => g.id === s.groupId);
+            return `
+                <tr>
+                    <td><code>${toArDigits(s.code)}</code></td>
+                    <td><strong>${s.name}</strong></td>
+                    <td>${stg ? stg.name : '---'}</td>
+                    <td>${grp ? grp.name : '---'}</td>
+                    <td>${toArDigits(s.phone)}</td>
+                    <td class="no-print">
+                        ${s.whatsapp ? `<button class="btn btn-whatsapp btn-sm" onclick="sendWhatsappToStudent(${s.id})" title="مراسلة الطالب"><i class="fa-brands fa-whatsapp"></i> طالب</button>` : ''}
+                        ${s.parentWhatsapp ? `<button class="btn btn-whatsapp btn-sm" onclick="sendWhatsappToParent(${s.id})" title="مراسلة ولي الأمر"><i class="fa-brands fa-whatsapp"></i> ولي أمر</button>` : ''}
+                        ${(!s.whatsapp && !s.parentWhatsapp) ? '<span style="color:var(--text-muted); font-size:12px;">لا يوجد رقم</span>' : ''}
+                    </td>
+                    <td>${s.discount ? `<strong style="color:var(--accent-2);">${toArDigits(s.discount)} ج.م</strong>` : '—'}</td>
+                    <td>${s.bookletPaid ? '<span class="status-ok">سُدد</span>' : '<span class="status-no">لم يُسدد</span>'}</td>
+                    <td class="no-print">
+                        <button class="btn btn-success btn-sm" onclick="openPaymentModal(${s.id})"><i class="fa-solid fa-money-bill-wave"></i> دفع وتحصيل</button>
+                    </td>
+                    <td class="no-print">
+                        <button class="btn btn-primary btn-sm" onclick="openStudentModal(${s.id})"><i class="fa-solid fa-pen"></i> تعديل</button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteStudent(${s.id})"><i class="fa-solid fa-trash"></i> حذف</button>
+                    </td>
+                </tr>
+            `;
+        }).join('');
+    }
+
+    function updateBookletHint() {
+        const groupSel = document.getElementById('mStdGroup');
+        const hint = document.getElementById('bookletFeeHint');
+        if (!groupSel || !hint) return;
+        const g = DB.groups.find(x => x.id === parseInt(groupSel.value));
+        hint.innerText = g ? `ثمن الملزمة لهذه المجموعة: ${toArDigits(g.bookletFee || 0)} ج.م` : '';
+    }
+
+    function openStudentModal(editId = null) {
+        const student = editId ? DB.students.find(s => s.id === editId) : null;
+        const modal = document.getElementById('systemModal');
+        document.getElementById('modalTitle').innerText = student ? "تعديل بيانات الطالب" : "إضافة طالب جديد";
+
+        const stageOpts = DB.stages.map(st => `<option value="${st.id}" ${student && student.stageId === st.id ? 'selected' : ''}>${st.name}</option>`).join('');
+        const groupOpts = DB.groups.map(g => `<option value="${g.id}" ${student && student.groupId === g.id ? 'selected' : ''}>${g.name}</option>`).join('');
+        const firstGroup = DB.groups.find(g => student ? g.id === student.groupId : true);
+
+        document.getElementById('modalBody').innerHTML = `
+            <div class="form-group"><label>اسم الطالب</label><input type="text" class="form-control" id="mStdName" value="${student ? student.name : ''}"></div>
+            <div class="form-group"><label>رقم الهاتف</label><input type="text" class="form-control" id="mStdPhone" value="${student ? student.phone : ''}"></div>
+            <div class="form-group"><label><i class="fa-brands fa-whatsapp" style="color:#45b07c;"></i> واتساب الطالب</label><input type="text" class="form-control" id="mStdWhatsapp" placeholder="01xxxxxxxxx" value="${student ? (student.whatsapp || '') : ''}"></div>
+            <div class="form-group"><label><i class="fa-brands fa-whatsapp" style="color:#45b07c;"></i> واتساب ولي الأمر</label><input type="text" class="form-control" id="mStdParentWhatsapp" placeholder="01xxxxxxxxx" value="${student ? (student.parentWhatsapp || '') : ''}"></div>
+            <div class="form-group"><label>المرحلة</label><select class="form-control" id="mStdStage">${stageOpts}</select></div>
+            <div class="form-group"><label>المجموعة الدراسية</label><select class="form-control" id="mStdGroup" onchange="updateBookletHint()">${groupOpts}</select></div>
+            <div class="form-group"><label>نظام دفع خاص بالطالب (الدفع بالحصة)</label>
+                <select class="form-control" id="mStdPayOverride">
+                    <option value="">حسب نظام المجموعة${firstGroup ? ' (بال' + firstGroup.payType + ')' : ''}</option>
+                    <option value="حصة" ${student && student.payOverride === 'حصة' ? 'selected' : ''}>بالحصة</option>
+                    <option value="شهر" ${student && student.payOverride === 'شهر' ? 'selected' : ''}>بالشهر</option>
+                </select>
+            </div>
+            <div class="form-group"><label>خصم خاص بالطالب (ج.م) — اتركه صفراً إن لم يوجد خصم</label><input type="number" class="form-control" id="mStdDiscount" value="${student ? (student.discount || 0) : 0}"></div>
+            ${!student ? `
+            <div class="checkbox-box">
+                <label>
+                    <input type="checkbox" id="mStdBookletPaid">
+                    <span>تم سداد ثمن الملزمة عند التسجيل (سيُسجَّل تلقائياً في الخزينة)</span>
+                </label>
+                <span class="hint" id="bookletFeeHint"></span>
+            </div>` : ''}
+        `;
+
+        if (!student) { setTimeout(updateBookletHint, 0); }
+
+        document.getElementById('modalSaveBtn').onclick = function () {
+            const name = document.getElementById('mStdName').value.trim();
+            const phone = document.getElementById('mStdPhone').value.trim();
+            const whatsapp = document.getElementById('mStdWhatsapp').value.trim();
+            const parentWhatsapp = document.getElementById('mStdParentWhatsapp').value.trim();
+            const stageId = parseInt(document.getElementById('mStdStage').value);
+            const groupId = parseInt(document.getElementById('mStdGroup').value);
+            const payOverride = document.getElementById('mStdPayOverride').value;
+            const discount = parseFloat(document.getElementById('mStdDiscount').value) || 0;
+
+            if (!name) return;
+
+            if (student) {
+                student.name = name; student.phone = phone; student.stageId = stageId; student.groupId = groupId;
+                student.payOverride = payOverride; student.discount = discount;
+                student.whatsapp = whatsapp; student.parentWhatsapp = parentWhatsapp;
+            } else {
+                const bookletPaidNow = document.getElementById('mStdBookletPaid') ? document.getElementById('mStdBookletPaid').checked : false;
+                const newId = (DB.students.length ? Math.max(...DB.students.map(s => s.id)) : 100) + 1;
+                const newStudent = { id: newId, code: "ST-" + newId, name, phone, whatsapp, parentWhatsapp, stageId, groupId, payOverride, discount, bookletPaid: bookletPaidNow };
+                DB.students.push(newStudent);
+
+                if (bookletPaidNow) {
+                    const grp = DB.groups.find(g => g.id === groupId);
+                    const timeNow = new Date().toLocaleTimeString('ar-EG');
+                    const dateNow = new Date().toLocaleDateString('ar-EG');
+                    DB.treasuryLogs.unshift({
+                        studentName: name,
+                        studentId: newId,
+                        groupId: groupId,
+                        amount: grp ? (grp.bookletFee || 0) : 0,
+                        payType: "ثمن ملزمة / مذكرة (عند التسجيل)",
+                        collector: DB.activeUser.name,
+                        dateTime: dateNow + " " + timeNow
+                    });
+                }
+            }
+            closeModal();
+            renderAllTabs();
+        };
+        modal.classList.add('active');
+    }
+
+    function deleteStudent(id) {
+        if (confirm("⚠️ هل أنت تأكد من حذف هذا الطالب؟")) {
+            DB.students = DB.students.filter(s => s.id !== id);
+            renderAllTabs();
+        }
+    }
+
+    // --- رسائل واتساب فردية (طالب / ولي أمر) ---
+    function normalizeEgyptPhone(num) {
+        let n = (num || '').replace(/[^\d]/g, '');
+        if (n.startsWith('0')) n = '2' + n; // 01xxxxxxxxx -> 201xxxxxxxxx
+        else if (!n.startsWith('20')) n = '20' + n;
+        return n;
+    }
+
+    function sendWhatsappToStudent(studentId) {
+        const std = DB.students.find(s => s.id === studentId);
+        if (!std || !std.whatsapp) { alert('⚠️ لا يوجد رقم واتساب مسجل لهذا الطالب.'); return; }
+        const msg = prompt('اكتب نص الرسالة التي تريد إرسالها للطالب:', `مرحباً ${std.name}،`);
+        if (msg === null) return;
+        const phone = normalizeEgyptPhone(std.whatsapp);
+        window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    function sendWhatsappToParent(studentId) {
+        const std = DB.students.find(s => s.id === studentId);
+        if (!std || !std.parentWhatsapp) { alert('⚠️ لا يوجد رقم واتساب مسجل لولي أمر هذا الطالب.'); return; }
+        const msg = prompt('اكتب نص الرسالة التي تريد إرسالها لولي الأمر:', `تحية طيبة، بخصوص الطالب ${std.name}،`);
+        if (msg === null) return;
+        const phone = normalizeEgyptPhone(std.parentWhatsapp);
+        window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    // --- رسائل تليجرام جماعية (لكل مجموعة) ---
+    function sendTelegramGroupMessage(groupId) {
+        const grp = DB.groups.find(g => g.id === groupId);
+        if (!grp) return;
+        const token = (DB.settings.telegramBotToken || '').trim();
+        if (!token) { alert('⚠️ لم يتم إدخال توكن بوت التليجرام بعد. اذهب لتبويب "الإعدادات" وأدخله أولاً.'); return; }
+        if (!grp.telegramChatId) { alert('⚠️ لم يتم تحديد معرف محادثة/قناة التليجرام الخاصة بهذه المجموعة. عدّل بيانات المجموعة وأضف "معرف تليجرام".'); return; }
+
+        const msg = prompt(`اكتب نص الرسالة الجماعية التي تريد إرسالها لمجموعة "${grp.name}" على تليجرام:`, '');
+        if (!msg) return;
+
+        fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ chat_id: grp.telegramChatId, text: msg })
+        })
+            .then(r => r.json())
+            .then(data => {
+                if (data.ok) {
+                    alert('✅ تم إرسال الرسالة الجماعية على تليجرام بنجاح!');
+                } else {
+                    alert('❌ فشل الإرسال: ' + (data.description || 'تأكد من صحة التوكن ومعرف المحادثة.'));
+                }
+            })
+            .catch(() => alert('❌ حدث خطأ أثناء محاولة الإرسال. تأكد من اتصالك بالإنترنت وصحة بيانات البوت.'));
+    }
+
+    // --- 5. تحصيل مالي ---
+    function openPaymentModal(studentId) {
+        const std = DB.students.find(s => s.id === studentId);
+        const grp = DB.groups.find(g => g.id === std.groupId);
+        const modal = document.getElementById('systemModal');
+        const effectivePayType = std.payOverride || (grp ? grp.payType : 'حصة');
+        const feeAfterDiscount = Math.max((grp ? grp.fee : 0) - (std.discount || 0), 0);
+
+        document.getElementById('modalTitle').innerText = "تحصيل مالي: " + std.name;
+        document.getElementById('modalBody').innerHTML = `
+            ${std.discount ? `<p style="color:var(--accent-2); font-size:12px; margin-bottom:10px;"><i class="fa-solid fa-tag"></i> هذا الطالب لديه خصم قدره ${toArDigits(std.discount)} ج.م، وقد تم تطبيقه على المبلغ تلقائياً.</p>` : ''}
+            <div class="form-group">
+                <label>نوع التحصيل</label>
+                <select class="form-control" id="pType" onchange="onPaymentTypeChange(${feeAfterDiscount}, ${grp ? (grp.bookletFee || 0) : 0})">
+                    <option value="اشتراك (بال${effectivePayType})">دفع المصاريف (${toArDigits(feeAfterDiscount)} ج.م)</option>
+                    <option value="ثمن ملزمة / مذكرة">دفع ثمن ملزمة (${toArDigits(grp ? grp.bookletFee : 0)} ج.م)</option>
+                </select>
+            </div>
+            <div class="form-group"><label>المبلغ المطلوب (ج.م)</label><input type="number" class="form-control" id="pAmount" value="${feeAfterDiscount}"></div>
+        `;
+
+        document.getElementById('modalSaveBtn').onclick = function () {
+            const amount = parseFloat(document.getElementById('pAmount').value) || 0;
+            const type = document.getElementById('pType').value;
+            const timeNow = new Date().toLocaleTimeString('ar-EG');
+            const dateNow = new Date().toLocaleDateString('ar-EG');
+
+            DB.treasuryLogs.unshift({
+                studentName: std.name,
+                studentId: std.id,
+                groupId: std.groupId,
+                amount: amount,
+                payType: type,
+                collector: DB.activeUser.name,
+                dateTime: dateNow + " " + timeNow
+            });
+
+            if (type.includes('ملزمة')) { std.bookletPaid = true; }
+
+            closeModal();
+            renderAllTabs();
+            alert("✅ تم تسجيل عملية التحصيل بالخزينة!");
+        };
+        modal.classList.add('active');
+    }
+
+    function onPaymentTypeChange(feeAmount, bookletAmount) {
+        const sel = document.getElementById('pType');
+        const amountInput = document.getElementById('pAmount');
+        amountInput.value = sel.value.includes('ملزمة') ? bookletAmount : feeAmount;
+    }
+
+    // --- 6. الحضور والغياب ---
+    function isAlreadyAttendedToday(studentId, dateNow) {
+        return DB.attendanceLogs.some(a => a.studentId === studentId && a.date === dateNow);
+    }
+
+    function markStudentPresent(student, opts = {}) {
+        const grp = DB.groups.find(g => g.id === student.groupId);
+        const timeNow = new Date().toLocaleTimeString('ar-EG');
+        const dateNow = new Date().toLocaleDateString('ar-EG');
+
+        if (!opts.allowDuplicate && isAlreadyAttendedToday(student.id, dateNow)) {
+            return { ok: false, reason: 'duplicate' };
+        }
+
+        DB.attendanceLogs.unshift({
+            studentId: student.id,
+            studentName: student.name,
+            groupName: grp ? grp.name : '---',
+            time: timeNow,
+            date: dateNow,
+            collector: DB.activeUser.name
+        });
+
+        // الدفع يتم تسجيله تلقائياً مع الحضور فقط إذا كان نظام الدفع الفعلي للطالب "بالحصة"
+        const effectivePayType = student.payOverride || (grp ? grp.payType : '');
+        if (grp && effectivePayType === 'حصة') {
+            DB.treasuryLogs.unshift({
+                studentName: student.name,
+                studentId: student.id,
+                groupId: student.groupId,
+                amount: Math.max(grp.fee - (student.discount || 0), 0),
+                payType: "حضور ورسوم بالحصة",
+                collector: DB.activeUser.name,
+                dateTime: dateNow + " " + timeNow
+            });
+        }
+
+        return { ok: true };
+    }
+
+    function recordAttendance() {
+        const input = document.getElementById('attendanceInput');
+        const val = input.value.trim();
+        if (!val) return;
+        const valUpper = val.toUpperCase();
+
+        const student = DB.students.find(s => s.code.toUpperCase() === valUpper) || DB.students.find(s => s.name.includes(val));
+        if (!student) { alert("❌ طالب غير موجود! تأكد من الكود أو الاسم."); return; }
+
+        const result = markStudentPresent(student);
+        input.value = '';
+        renderAllTabs();
+        if (result.ok) {
+            alert(`✅ تم الحضور: ${student.name}`);
+        } else {
+            alert(`ℹ️ الطالب ${student.name} مسجل حاضر بالفعل اليوم.`);
+        }
+        input.focus();
+    }
+
+    function recordAbsence() {
+        const input = document.getElementById('absenceInput');
+        const val = input.value.trim();
+        if (!val) return;
+        const valUpper = val.toUpperCase();
+
+        const student = DB.students.find(s => s.code.toUpperCase() === valUpper) || DB.students.find(s => s.name.includes(val));
+        if (!student) { alert("❌ طالب غير موجود!"); return; }
+
+        const grp = DB.groups.find(g => g.id === student.groupId);
+        const dateNow = new Date().toLocaleDateString('ar-EG');
+
+        DB.absenceLogs.unshift({
+            studentName: student.name,
+            groupName: grp ? grp.name : '---',
+            date: dateNow,
+            collector: DB.activeUser.name
+        });
+
+        input.value = '';
+        renderAllTabs();
+        alert(`⚠️ تم تسجيل غياب: ${student.name}`);
+    }
+
+    // --- اختيار مجموعة اليوم وتحضير يدوي / جماعي ---
+    function populateAttendanceGroupSelect() {
+        const sel = document.getElementById('attendanceGroupSelect');
+        if (!sel) return;
+        const prevValue = sel.value;
+        sel.innerHTML = `<option value="">-- اختر المجموعة التي تحضر اليوم --</option>` +
+            DB.groups.map(g => `<option value="${g.id}">${g.name} (${g.schedule || 'بدون ميعاد'})</option>`).join('');
+        if (prevValue) sel.value = prevValue;
+    }
+
+    function renderAttendanceGroupList() {
+        const sel = document.getElementById('attendanceGroupSelect');
+        const box = document.getElementById('attendanceGroupStudentsList');
+        if (!sel || !box) return;
+        const groupId = parseInt(sel.value);
+        if (!groupId) { box.innerHTML = ''; return; }
+
+        const dateNow = new Date().toLocaleDateString('ar-EG');
+        const groupStudents = DB.students.filter(s => s.groupId === groupId);
+
+        if (!groupStudents.length) {
+            box.innerHTML = `<p style="color:var(--text-muted); font-size:13px;">لا يوجد طلاب في هذه المجموعة بعد.</p>`;
+            return;
+        }
+
+        box.innerHTML = `
+            <table>
+                <thead>
+                    <tr><th>الكود</th><th>اسم الطالب</th><th>الحالة اليوم</th><th>إجراء</th></tr>
+                </thead>
+                <tbody>
+                    ${groupStudents.map(s => {
+                        const attended = isAlreadyAttendedToday(s.id, dateNow);
+                        return `
+                            <tr>
+                                <td><code>${toArDigits(s.code)}</code></td>
+                                <td><strong>${s.name}</strong></td>
+                                <td>${attended ? '<span class="status-ok">حاضر اليوم</span>' : '<span class="status-no">لم يُسجَّل بعد</span>'}</td>
+                                <td>
+                                    <button class="btn btn-gold btn-sm" ${attended ? 'disabled' : ''} onclick="manualAttendStudent(${s.id})"><i class="fa-solid fa-check"></i> حضور</button>
+                                    <button class="btn btn-danger btn-sm" onclick="manualAbsentStudent(${s.id})"><i class="fa-solid fa-xmark"></i> غياب</button>
+                                </td>
+                            </tr>
+                        `;
+                    }).join('')}
+                </tbody>
+            </table>
+        `;
+    }
+
+    function manualAttendStudent(studentId) {
+        const student = DB.students.find(s => s.id === studentId);
+        if (!student) return;
+        markStudentPresent(student);
+        renderAllTabs();
+        renderAttendanceGroupList();
+    }
+
+    function manualAbsentStudent(studentId) {
+        const student = DB.students.find(s => s.id === studentId);
+        if (!student) return;
+        const grp = DB.groups.find(g => g.id === student.groupId);
+        DB.absenceLogs.unshift({
+            studentName: student.name,
+            groupName: grp ? grp.name : '---',
+            date: new Date().toLocaleDateString('ar-EG'),
+            collector: DB.activeUser.name
+        });
+        renderAllTabs();
+        renderAttendanceGroupList();
+    }
+
+    function bulkAttendGroup() {
+        const sel = document.getElementById('attendanceGroupSelect');
+        const groupId = parseInt(sel.value);
+        if (!groupId) { alert('⚠️ اختر المجموعة أولاً.'); return; }
+        const grp = DB.groups.find(g => g.id === groupId);
+        const groupStudents = DB.students.filter(s => s.groupId === groupId);
+        if (!groupStudents.length) { alert('لا يوجد طلاب في هذه المجموعة.'); return; }
+
+        if (!confirm(`سيتم تسجيل حضور ${toArDigits(groupStudents.length)} طالب في "${grp.name}" دفعة واحدة${grp.payType === 'حصة' ? '، وسيتم تسجيل دفعة مالية تلقائية لكل طالب حاضر (نظام الدفع بالحصة)' : ''}. متابعة؟`)) return;
+
+        let countNew = 0;
+        groupStudents.forEach(s => {
+            const r = markStudentPresent(s);
+            if (r.ok) countNew++;
+        });
+
+        renderAllTabs();
+        renderAttendanceGroupList();
+        alert(`✅ تم تسجيل حضور ${toArDigits(countNew)} طالب من إجمالي ${toArDigits(groupStudents.length)} في مجموعة "${grp.name}".`);
+    }
+
+    function renderAttendance() {
+        const tbody = document.getElementById('attendanceLogsBody');
+        tbody.innerHTML = DB.attendanceLogs.map(a => `
+            <tr>
+                <td><strong>${a.studentName}</strong></td>
+                <td>${a.groupName}</td>
+                <td>${toArDigits(a.time)}</td>
+                <td><span class="user-badge">${a.collector}</span></td>
+            </tr>
+        `).join('');
+        populateAttendanceGroupSelect();
+        renderAttendanceGroupList();
+    }
+
+    function renderAbsence() {
+        const tbody = document.getElementById('absenceLogsBody');
+        tbody.innerHTML = DB.absenceLogs.map(a => `
+            <tr>
+                <td><strong>${a.studentName}</strong></td>
+                <td>${a.groupName}</td>
+                <td>${toArDigits(a.date)}</td>
+                <td><span class="user-badge">${a.collector}</span></td>
+            </tr>
+        `).join('');
+    }
+
+    // --- الامتحانات (امتحانات الحصة / الامتحانات اليومية / ترتيب الطلاب) ---
+    let currentExamsSubtab = 'حصة';
+
+    function populateExamsGroupSelect() {
+        const sel = document.getElementById('examsGroupSelect');
+        if (!sel) return;
+        const prev = sel.value;
+        sel.innerHTML = `<option value="">-- اختر المجموعة --</option>` +
+            DB.groups.map(g => `<option value="${g.id}">${g.name}</option>`).join('');
+        if (prev) sel.value = prev;
+    }
+
+    function setExamsSubtab(tab) {
+        currentExamsSubtab = tab;
+        ['examsSubtabSession', 'examsSubtabDaily', 'examsSubtabRank'].forEach(id => document.getElementById(id).classList.remove('btn-primary'));
+        const map = { 'حصة': 'examsSubtabSession', 'يومي': 'examsSubtabDaily', 'ترتيب': 'examsSubtabRank' };
+        document.getElementById(map[tab]).classList.add('btn-primary');
+        renderExamsPanel();
+    }
+
+    function renderExamsPanel() {
+        const groupId = parseInt(document.getElementById('examsGroupSelect').value);
+        const wrap = document.getElementById('examsPanelWrap');
+        if (!groupId) { wrap.style.display = 'none'; return; }
+        wrap.style.display = 'block';
+        setExamsSubtabHighlightOnly();
+
+        if (currentExamsSubtab === 'ترتيب') { renderExamsRanking(groupId); return; }
+        renderExamsList(groupId, currentExamsSubtab);
+    }
+
+    function setExamsSubtabHighlightOnly() {
+        ['examsSubtabSession', 'examsSubtabDaily', 'examsSubtabRank'].forEach(id => document.getElementById(id).classList.remove('btn-primary'));
+        const map = { 'حصة': 'examsSubtabSession', 'يومي': 'examsSubtabDaily', 'ترتيب': 'examsSubtabRank' };
+        document.getElementById(map[currentExamsSubtab]).classList.add('btn-primary');
+    }
+
+    function renderExamsList(groupId, type) {
+        const body = document.getElementById('examsPanelBody');
+        const exams = DB.exams.filter(ex => ex.groupId === groupId && ex.type === type);
+
+        body.innerHTML = `
+            <div style="display:flex; justify-content:flex-end; margin-bottom:12px;">
+                <button class="btn btn-gold btn-sm" onclick="openExamModal(${groupId}, '${type}')"><i class="fa-solid fa-plus"></i> إضافة ${type === 'حصة' ? 'امتحان حصة' : 'امتحان يومي'} جديد</button>
+            </div>
+            ${exams.length ? exams.map(ex => `
+                <div class="card" style="background:var(--bg-input); margin-bottom:12px;">
+                    <div class="card-head">
+                        <h4 style="margin:0;">${ex.title} <span style="color:var(--text-muted); font-size:12px;">(الدرجة الكلية: ${toArDigits(ex.maxDegree)} - ${toArDigits(ex.date)})</span></h4>
+                        <div>
+                            <button class="btn btn-outline btn-sm" onclick="toggleExamDegrees(${ex.id})"><i class="fa-solid fa-list"></i> تسجيل الدرجات</button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteExam(${ex.id})"><i class="fa-solid fa-trash"></i> حذف</button>
+                        </div>
+                    </div>
+                    <div id="examDegreesBox-${ex.id}" style="display:none; margin-top:10px;"></div>
+                </div>
+            `).join('') : `<p style="color:var(--text-muted); font-size:13px;">لا توجد امتحانات ${type === 'حصة' ? 'حصة' : 'يومية'} مسجلة لهذه المجموعة بعد.</p>`}
+        `;
+    }
+
+    function openExamModal(groupId, type) {
+        const modal = document.getElementById('systemModal');
+        document.getElementById('modalTitle').innerText = type === 'حصة' ? 'إضافة امتحان حصة' : 'إضافة امتحان يومي';
+        document.getElementById('modalBody').innerHTML = `
+            <div class="form-group"><label>عنوان الامتحان</label><input type="text" class="form-control" id="mExamTitle" placeholder="مثال: امتحان الوحدة الأولى"></div>
+            <div class="form-group"><label>الدرجة الكلية</label><input type="number" class="form-control" id="mExamMax" value="10"></div>
+            <div class="form-group"><label>التاريخ</label><input type="text" class="form-control" id="mExamDate" value="${new Date().toLocaleDateString('ar-EG')}"></div>
+        `;
+        document.getElementById('modalSaveBtn').onclick = function () {
+            const title = document.getElementById('mExamTitle').value.trim();
+            const maxDegree = parseFloat(document.getElementById('mExamMax').value) || 0;
+            const date = document.getElementById('mExamDate').value.trim();
+            if (!title) return;
+            DB.exams.push({ id: (DB.exams.length ? Math.max(...DB.exams.map(e => e.id)) : 0) + 1, groupId, type, title, maxDegree, date });
+            closeModal();
+            renderAllTabs();
+            renderExamsPanel();
+        };
+        modal.classList.add('active');
+    }
+
+    function deleteExam(examId) {
+        if (!confirm('⚠️ حذف هذا الامتحان سيحذف كل الدرجات المسجلة به. متابعة؟')) return;
+        DB.exams = DB.exams.filter(e => e.id !== examId);
+        DB.examResults = DB.examResults.filter(r => r.examId !== examId);
+        renderAllTabs();
+        renderExamsPanel();
+    }
+
+    function toggleExamDegrees(examId) {
+        const box = document.getElementById('examDegreesBox-' + examId);
+        if (!box) return;
+        if (box.style.display === 'block') { box.style.display = 'none'; return; }
+
+        const exam = DB.exams.find(e => e.id === examId);
+        const groupStudents = DB.students.filter(s => s.groupId === exam.groupId);
+
+        box.innerHTML = `
+            <table>
+                <thead><tr><th>اسم الطالب</th><th>الدرجة (من ${toArDigits(exam.maxDegree)})</th></tr></thead>
+                <tbody>
+                    ${groupStudents.map(s => {
+                        const res = DB.examResults.find(r => r.examId === examId && r.studentId === s.id);
+                        return `<tr><td><strong>${s.name}</strong></td><td><input type="number" class="form-control" style="max-width:120px; margin:0 auto;" min="0" max="${exam.maxDegree}" id="examDeg-${examId}-${s.id}" value="${res ? res.degree : ''}"></td></tr>`;
+                    }).join('')}
+                </tbody>
+            </table>
+            <button class="btn btn-gold btn-sm" style="margin-top:10px;" onclick="saveExamDegrees(${examId})"><i class="fa-solid fa-floppy-disk"></i> حفظ الدرجات</button>
+        `;
+        box.style.display = 'block';
+    }
+
+    function saveExamDegrees(examId) {
+        const exam = DB.exams.find(e => e.id === examId);
+        const groupStudents = DB.students.filter(s => s.groupId === exam.groupId);
+        groupStudents.forEach(s => {
+            const input = document.getElementById(`examDeg-${examId}-${s.id}`);
+            if (!input || input.value === '') return;
+            const degree = parseFloat(input.value) || 0;
+            let res = DB.examResults.find(r => r.examId === examId && r.studentId === s.id);
+            if (res) { res.degree = degree; }
+            else { DB.examResults.push({ id: (DB.examResults.length ? Math.max(...DB.examResults.map(r => r.id)) : 0) + 1, examId, studentId: s.id, degree }); }
+        });
+        saveDB();
+        alert('✅ تم حفظ الدرجات بنجاح!');
+    }
+
+    function renderExamsRanking(groupId) {
+        const body = document.getElementById('examsPanelBody');
+        const exams = DB.exams.filter(ex => ex.groupId === groupId);
+        const groupStudents = DB.students.filter(s => s.groupId === groupId);
+
+        const ranking = groupStudents.map(s => {
+            let total = 0, max = 0;
+            exams.forEach(ex => {
+                const res = DB.examResults.find(r => r.examId === ex.id && r.studentId === s.id);
+                if (res) { total += res.degree; max += ex.maxDegree; }
+            });
+            const pct = max > 0 ? (total / max) * 100 : 0;
+            return { name: s.name, total, max, pct };
+        }).sort((a, b) => b.pct - a.pct);
+
+        body.innerHTML = exams.length ? `
+            <table>
+                <thead><tr><th>الترتيب</th><th>اسم الطالب</th><th>مجموع الدرجات</th><th>النسبة المئوية</th></tr></thead>
+                <tbody>
+                    ${ranking.map((r, i) => `
+                        <tr>
+                            <td><strong>${toArDigits(i + 1)}</strong></td>
+                            <td>${r.name}</td>
+                            <td>${toArDigits(r.total)} / ${toArDigits(r.max)}</td>
+                            <td><strong style="color:${r.pct >= 50 ? 'var(--success)' : 'var(--danger)'};">${toArDigits(r.pct.toFixed(1))}%</strong></td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        ` : `<p style="color:var(--text-muted); font-size:13px;">لا توجد امتحانات مسجلة بعد لهذه المجموعة لعمل ترتيب.</p>`;
+    }
+
+    // --- الواجبات ---
+    let currentHwGroupId = null;
+
+    function populateHomeworkGroupSelect() {
+        const sel = document.getElementById('hwGroupSelect');
+        if (!sel) return;
+        const prev = sel.value;
+        sel.innerHTML = `<option value="">-- اختر المجموعة --</option>` +
+            DB.groups.map(g => `<option value="${g.id}">${g.name}</option>`).join('');
+        if (prev) sel.value = prev;
+    }
+
+    function renderHomeworkPanel() {
+        const groupId = parseInt(document.getElementById('hwGroupSelect').value);
+        const wrap = document.getElementById('hwPanelWrap');
+        if (!groupId) { wrap.style.display = 'none'; return; }
+        wrap.style.display = 'block';
+        currentHwGroupId = groupId;
+
+        const listBody = document.getElementById('hwListBody');
+        const homeworks = DB.homeworks.filter(h => h.groupId === groupId);
+        listBody.innerHTML = homeworks.length ? `
+            <table>
+                <thead><tr><th>عنوان الواجب</th><th>التاريخ</th><th>الإجراء</th></tr></thead>
+                <tbody>
+                    ${homeworks.map(h => `
+                        <tr>
+                            <td><strong>${h.title}</strong></td>
+                            <td>${toArDigits(h.date)}</td>
+                            <td>
+                                <button class="btn btn-outline btn-sm" onclick="viewHomeworkDetail(${h.id})"><i class="fa-solid fa-list-check"></i> تسجيل الحل</button>
+                                <button class="btn btn-danger btn-sm" onclick="deleteHomework(${h.id})"><i class="fa-solid fa-trash"></i> حذف</button>
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        ` : `<p style="color:var(--text-muted); font-size:13px;">لا توجد واجبات مسجلة لهذه المجموعة بعد.</p>`;
+        document.getElementById('hwDetailBody').innerHTML = '';
+    }
+
+    function openHomeworkModal() {
+        const groupId = parseInt(document.getElementById('hwGroupSelect').value);
+        if (!groupId) { alert('⚠️ اختر المجموعة أولاً.'); return; }
+        const modal = document.getElementById('systemModal');
+        document.getElementById('modalTitle').innerText = 'إضافة واجب جديد';
+        document.getElementById('modalBody').innerHTML = `
+            <div class="form-group"><label>عنوان الواجب</label><input type="text" class="form-control" id="mHwTitle" placeholder="مثال: واجب حصة الأربعاء"></div>
+            <div class="form-group"><label>التاريخ</label><input type="text" class="form-control" id="mHwDate" value="${new Date().toLocaleDateString('ar-EG')}"></div>
+        `;
+        document.getElementById('modalSaveBtn').onclick = function () {
+            const title = document.getElementById('mHwTitle').value.trim();
+            const date = document.getElementById('mHwDate').value.trim();
+            if (!title) return;
+            DB.homeworks.push({ id: (DB.homeworks.length ? Math.max(...DB.homeworks.map(h => h.id)) : 0) + 1, groupId, title, date });
+            closeModal();
+            renderAllTabs();
+            renderHomeworkPanel();
+        };
+        modal.classList.add('active');
+    }
+
+    function deleteHomework(hwId) {
+        if (!confirm('⚠️ حذف هذا الواجب سيحذف كل بيانات الحل المسجلة به. متابعة؟')) return;
+        DB.homeworks = DB.homeworks.filter(h => h.id !== hwId);
+        DB.homeworkResults = DB.homeworkResults.filter(r => r.homeworkId !== hwId);
+        renderAllTabs();
+        renderHomeworkPanel();
+    }
+
+    function viewHomeworkDetail(hwId) {
+        const hw = DB.homeworks.find(h => h.id === hwId);
+        const groupStudents = DB.students.filter(s => s.groupId === hw.groupId);
+        const box = document.getElementById('hwDetailBody');
+
+        box.innerHTML = `
+            <h4 style="color:var(--accent-2); margin-bottom:10px;">تسجيل حل واجب: ${hw.title}</h4>
+            <table>
+                <thead><tr><th>اسم الطالب</th><th>هل حل الواجب؟</th></tr></thead>
+                <tbody>
+                    ${groupStudents.map(s => {
+                        const res = DB.homeworkResults.find(r => r.homeworkId === hwId && r.studentId === s.id);
+                        const done = res ? res.done : false;
+                        return `<tr><td><strong>${s.name}</strong></td><td><input type="checkbox" id="hwDone-${hwId}-${s.id}" ${done ? 'checked' : ''} style="width:18px; height:18px;"></td></tr>`;
+                    }).join('')}
+                </tbody>
+            </table>
+            <button class="btn btn-gold btn-sm" style="margin-top:10px;" onclick="saveHomeworkResults(${hwId})"><i class="fa-solid fa-floppy-disk"></i> حفظ حالة الحل</button>
+        `;
+    }
+
+    function saveHomeworkResults(hwId) {
+        const hw = DB.homeworks.find(h => h.id === hwId);
+        const groupStudents = DB.students.filter(s => s.groupId === hw.groupId);
+        groupStudents.forEach(s => {
+            const input = document.getElementById(`hwDone-${hwId}-${s.id}`);
+            if (!input) return;
+            const done = input.checked;
+            let res = DB.homeworkResults.find(r => r.homeworkId === hwId && r.studentId === s.id);
+            if (res) { res.done = done; }
+            else { DB.homeworkResults.push({ id: (DB.homeworkResults.length ? Math.max(...DB.homeworkResults.map(r => r.id)) : 0) + 1, homeworkId: hwId, studentId: s.id, done }); }
+        });
+        saveDB();
+        alert('✅ تم حفظ حالة حل الواجب بنجاح!');
+    }
+
+    // --- 7. الخزينة والمالية ---
+    function renderTreasury() {
+        const tbody = document.getElementById('treasuryLogsBody');
+        let total = 0;
+        tbody.innerHTML = DB.treasuryLogs.map(t => {
+            total += t.amount;
+            return `
+                <tr>
+                    <td><strong>${t.studentName}</strong></td>
+                    <td><strong style="color:var(--accent-2);">${toArDigits(t.amount)} ج.م</strong></td>
+                    <td>${t.payType}</td>
+                    <td><span class="user-badge">${t.collector}</span></td>
+                    <td>${toArDigits(t.dateTime)}</td>
+                </tr>
+            `;
+        }).join('');
+        document.getElementById('totalTreasurySum').innerText = toArDigits(total) + " ج.م";
+    }
+
+    // --- 8. الحجز الإلكتروني ---
+    function refreshBookingUrl() {
+        const el = document.getElementById('bookingUrlInput');
+        if (el) el.value = getBookingUrl();
+    }
+
+    function getBookingUrl() {
+        const base = location.href.split('?')[0].split('#')[0];
+        return base + '?booking=1';
+    }
+
+    function renderBookings() {
+        const tbody = document.getElementById('bookingRequestsBody');
+        tbody.innerHTML = DB.bookingRequests.map(b => {
+            const grp = DB.groups.find(g => g.id === b.groupId);
+            return `
+                <tr>
+                    <td><strong>${b.name}</strong></td>
+                    <td>${grp ? grp.name : '---'}</td>
+                    <td>${toArDigits(b.phone)}</td>
+                    <td>${toArDigits(b.parentPhone || '---')}</td>
+                    <td>
+                        <button class="btn btn-gold btn-sm" onclick="acceptBookingReq(${b.id})"><i class="fa-solid fa-check"></i> قبول الطالب</button>
+                        <button class="btn btn-danger btn-sm" onclick="rejectBookingReq(${b.id})"><i class="fa-solid fa-xmark"></i> رفض</button>
+                    </td>
+                </tr>
+            `;
+        }).join('');
+    }
+
+    function rejectBookingReq(id) {
+        if (!confirm("⚠️ هل أنت متأكد من رفض وحذف طلب الحجز هذا؟")) return;
+        const req = DB.bookingRequests.find(b => b.id === id);
+        if (supabaseReady && req && req.sbId) {
+            supabaseClient.from('booking_requests').delete().eq('id', req.sbId)
+                .then(() => fetchBookingsFromSupabase())
+                .catch(err => console.warn(err));
+        } else {
+            DB.bookingRequests = DB.bookingRequests.filter(b => b.id !== id);
+            renderAllTabs();
+        }
+    }
+
+    function acceptBookingReq(id) {
+        const req = DB.bookingRequests.find(b => b.id === id);
+        if (!req) return;
+        const newId = (DB.students.length ? Math.max(...DB.students.map(s => s.id)) : 100) + 1;
+        const grp = DB.groups.find(g => g.id === req.groupId) || DB.groups.find(g => g.stageId === req.stageId) || DB.groups[0];
+        DB.students.push({
+            id: newId, code: "ST-" + newId, name: req.name,
+            stageId: grp ? grp.stageId : req.stageId, groupId: grp ? grp.id : 1,
+            phone: req.phone, whatsapp: req.phone, parentWhatsapp: req.parentPhone || '',
+            discount: 0, payOverride: "", bookletPaid: false
+        });
+
+        if (supabaseReady && req.sbId) {
+            supabaseClient.from('booking_requests').delete().eq('id', req.sbId)
+                .then(() => fetchBookingsFromSupabase())
+                .catch(err => console.warn(err));
+            renderAllTabs();
+        } else {
+            DB.bookingRequests = DB.bookingRequests.filter(b => b.id !== id);
+            renderAllTabs();
+        }
+        alert(`✅ تم قبول الطالب ${req.name} وإدراجه بقائمة الطلاب!`);
+    }
+
+
+    function copyBookingLink() {
+        const url = getBookingUrl();
+        navigator.clipboard.writeText(url).then(() => {
+            alert("✅ تم نسخ رابط الحجز! الرابط:\n" + url);
+        }).catch(() => {
+            prompt("انسخ الرابط يدوياً:", url);
+        });
+    }
+
+    function openBookingLinkDirect() {
+        window.open(getBookingUrl(), '_blank');
+    }
+
+    // ربط الاستمارة الإلكترونية
+    function populatePublicStagesSelect() {
+        const sel = document.getElementById('pubStdStage');
+        if (!sel) return;
+        sel.innerHTML = DB.stages.map(st => `<option value="${st.id}">${st.name}</option>`).join('');
+        populatePublicGroupsSelect();
+    }
+
+    function populatePublicGroupsSelect() {
+        const stageSel = document.getElementById('pubStdStage');
+        const groupSel = document.getElementById('pubStdGroup');
+        if (!stageSel || !groupSel) return;
+        const stageId = parseInt(stageSel.value);
+        const groups = DB.groups.filter(g => g.stageId === stageId);
+        groupSel.innerHTML = groups.length
+            ? groups.map(g => `<option value="${g.id}">${g.name} (${g.schedule || 'بدون ميعاد محدد'})</option>`).join('')
+            : `<option value="">لا توجد مجموعات متاحة لهذه المرحلة حالياً</option>`;
+    }
+
+    function handlePublicBooking(e) {
+        e.preventDefault();
+        const name = document.getElementById('pubStdName').value.trim();
+        const phone = document.getElementById('pubStdPhone').value.trim();
+        const parentPhone = document.getElementById('pubStdParentPhone').value.trim();
+        const stageId = parseInt(document.getElementById('pubStdStage').value);
+        const groupId = parseInt(document.getElementById('pubStdGroup').value) || null;
+
+        if (name && phone && parentPhone) {
+            const newBooking = { name, stageId, groupId, phone, parentPhone };
+
+            if (supabaseReady) {
+                supabaseClient.from('booking_requests').insert({
+                    name: name, stage_id: stageId, group_id: groupId, phone: phone, parent_phone: parentPhone
+                }).then(res => {
+                    if (res.error) {
+                        console.warn('فشل إرسال الحجز لقاعدة البيانات المشتركة، سيتم الحفظ محلياً:', res.error);
+                        DB.bookingRequests.push(Object.assign({ id: (DB.bookingRequests.length ? Math.max(...DB.bookingRequests.map(b => b.id)) : 0) + 1 }, newBooking));
+                        saveDB();
+                    }
+                }).catch(err => {
+                    console.warn('فشل إرسال الحجز لقاعدة البيانات المشتركة، سيتم الحفظ محلياً:', err);
+                    DB.bookingRequests.push(Object.assign({ id: (DB.bookingRequests.length ? Math.max(...DB.bookingRequests.map(b => b.id)) : 0) + 1 }, newBooking));
+                    saveDB();
+                });
+            } else {
+                DB.bookingRequests.push(Object.assign({ id: (DB.bookingRequests.length ? Math.max(...DB.bookingRequests.map(b => b.id)) : 0) + 1 }, newBooking));
+                saveDB();
+            }
+
+            document.getElementById('pubConfirmationBox').classList.add('active');
+            document.getElementById('publicBookingForm').reset();
+            populatePublicGroupsSelect();
+
+            setTimeout(() => {
+                document.getElementById('pubConfirmationBox').classList.remove('active');
+            }, 4000);
+        }
+    }
+
+    // --- 9. إدارة المستخدمين ---
+    function createNewUser() {
+        const name = document.getElementById('newAccUser').value.trim();
+        const pass = document.getElementById('newAccPass').value.trim();
+        const role = document.getElementById('newAccRole').value;
+
+        if (name && pass) {
+            DB.users.push({ id: (DB.users.length ? Math.max(...DB.users.map(u => u.id)) : 0) + 1, name, pass, role });
+            populateUsersSelect();
+            renderAllTabs();
+            document.getElementById('newAccUser').value = '';
+            document.getElementById('newAccPass').value = '';
+            alert(`✅ تم إضافة المستخدم (${name})!`);
+        }
+    }
+
+    function renderUsers() {
+        const tbody = document.getElementById('usersListBody');
+        tbody.innerHTML = DB.users.map(u => `
+            <tr>
+                <td><strong>${u.name}</strong></td>
+                <td>${u.role === 'admin' ? '👑 مدير' : '👤 أدمن'}</td>
+                <td>
+                    <button class="btn btn-primary btn-sm" onclick="openResetPasswordModal(${u.id})"><i class="fa-solid fa-key"></i> كلمة المرور</button>
+                    <button class="btn btn-danger btn-sm" onclick="deleteUser(${u.id})"><i class="fa-solid fa-trash"></i> حذف</button>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    function openResetPasswordModal(userId) {
+        const u = DB.users.find(x => x.id === userId);
+        if (!u) return;
+        document.getElementById('modalTitle').innerText = "تغيير كلمة مرور: " + u.name;
+        document.getElementById('modalBody').innerHTML = `
+            <div class="form-group"><label>كلمة المرور الجديدة</label><input type="password" class="form-control" id="mNewUserPass" placeholder="أدخل كلمة مرور جديدة"></div>
+        `;
+        document.getElementById('modalSaveBtn').onclick = function () {
+            const newPass = document.getElementById('mNewUserPass').value.trim();
+            if (!newPass) { alert("⚠️ يرجى إدخال كلمة مرور جديدة!"); return; }
+            u.pass = newPass;
+            if (u.role === 'admin') DB.masterName = DB.masterName; // no-op safeguard
+            closeModal();
+            renderAllTabs();
+            alert("✅ تم تغيير كلمة المرور بنجاح!");
+        };
+        document.getElementById('systemModal').classList.add('active');
+    }
+
+    function deleteUser(id) {
+        const target = DB.users.find(u => u.id === id);
+        if (!target) return;
+        if (DB.users.length <= 1) { alert("⚠️ لا يمكن حذف آخر مستخدم في النظام!"); return; }
+        if (DB.activeUser && DB.activeUser.id === id) { alert("⚠️ لا يمكنك حذف حسابك الحالي أثناء تسجيل الدخول به!"); return; }
+        const adminCount = DB.users.filter(u => u.role === 'admin').length;
+        if (target.role === 'admin' && adminCount <= 1) { alert("⚠️ لا يمكن حذف آخر حساب مدير في النظام!"); return; }
+
+        if (confirm(`⚠️ هل أنت متأكد من حذف المستخدم (${target.name})؟`)) {
+            DB.users = DB.users.filter(u => u.id !== id);
+            populateUsersSelect();
+            renderAllTabs();
+        }
+    }
+
+    function closeModal() {
+        document.getElementById('systemModal').classList.remove('active');
+    }
+
+    // --- 10. الطباعة كـ PDF بإطار كامل للصفحة ---
+    function printSection(id, title) {
+        document.querySelectorAll('.print-header-block, .print-footer-block').forEach(el => el.remove());
+        document.querySelectorAll('.printable').forEach(el => el.classList.remove('printable'));
+
+        const el = document.getElementById(id);
+        if (!el) return;
+
+        const header = document.createElement('div');
+        header.className = 'print-header-block';
+        header.innerHTML = `<h1>${DB.masterName}</h1><h2>${title}</h2><p>تاريخ الطباعة: ${toArDigits(new Date().toLocaleDateString('ar-EG'))} — ${toArDigits(new Date().toLocaleTimeString('ar-EG'))}</p>`;
+        el.insertBefore(header, el.firstChild);
+
+        const footer = document.createElement('div');
+        footer.className = 'print-footer-block';
+        footer.innerText = 'مستر / علاء الحفني - نظام إدارة المراكز التعليمية';
+        el.appendChild(footer);
+
+        el.classList.add('printable');
+        window.print();
+    }
+
+    // تهيئة التطبيق عند بدء التشغيل
+    (function init() {
+        loadDB();
+        initSupabaseSync();
+        const params = new URLSearchParams(location.search);
+        if (params.get('booking') === '1') {
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('publicBookingPage').style.display = 'flex';
+            updateHeaderTitles();
+            populatePublicStagesSelect();
+        } else {
+            populateUsersSelect();
+        }
+    })();
+</script>
+</body>
+</html>
