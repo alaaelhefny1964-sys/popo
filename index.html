@@ -11,28 +11,28 @@
     <style>
         /* ============ لوحة الألوان الجديدة: أخضر زُمردي داكن + نحاسي دافئ ============ */
         :root {
-            --bg-body: #0b201e;
-            --bg-body-2: #0a1a18;
-            --bg-card: #123330;
-            --bg-card-2: #163a36;
-            --bg-input: #0e2624;
-            --border-color: #235049;
-            --primary: #2f9e8f;
-            --primary-dark: #1f7c70;
-            --accent: #d98c3f;
-            --accent-2: #e8b45f;
-            --text-main: #f4ecdc;
-            --text-muted: #9fbab3;
-            --danger: #e0605a;
-            --success: #45b07c;
-            --radius: 14px;
-            --shadow: 0 10px 28px rgba(0,0,0,0.35);
+            --bg-body: #10131f;
+            --bg-body-2: #0b0e18;
+            --bg-card: #181c2e;
+            --bg-card-2: #1f2439;
+            --bg-input: #141827;
+            --border-color: #2b3150;
+            --primary: #6c63e0;
+            --primary-dark: #564dc2;
+            --accent: #f2a13a;
+            --accent-2: #2dd4a7;
+            --text-main: #eef0fb;
+            --text-muted: #8d94b8;
+            --danger: #ff5c72;
+            --success: #2dd4a7;
+            --radius: 16px;
+            --shadow: 0 14px 34px rgba(6,8,16,0.45);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
         body {
             background:
-                radial-gradient(circle at 100% 0%, rgba(217,140,63,0.08), transparent 45%),
+                radial-gradient(circle at 100% 0%, rgba(108,99,224,0.10), transparent 45%),
                 radial-gradient(circle at 0% 100%, rgba(47,158,143,0.10), transparent 45%),
                 var(--bg-body);
             color: var(--text-main); min-height: 100vh;
@@ -51,7 +51,7 @@
             content:''; position:absolute; top:0; right:0; left:0; height:5px;
             background: linear-gradient(90deg, var(--primary), var(--accent));
         }
-        .login-icon { width:64px; height:64px; border-radius:50%; background:rgba(217,140,63,0.15); border:2px solid var(--accent);
+        .login-icon { width:64px; height:64px; border-radius:50%; background:rgba(242,161,58,0.15); border:2px solid var(--accent);
             display:flex; align-items:center; justify-content:center; margin:0 auto 14px; font-size:26px; color:var(--accent-2); }
 
         .form-group { margin-bottom: 15px; text-align: right; }
@@ -60,7 +60,7 @@
             width: 100%; padding: 10px; background: var(--bg-input); border: 1px solid var(--border-color);
             border-radius: 8px; color: #fff; font-size: 14px; outline: none; transition: 0.2s;
         }
-        .form-control:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(217,140,63,0.15); }
+        .form-control:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(242,161,58,0.15); }
         .field-hint { font-size: 11px; color: var(--text-muted); margin-top: 4px; display:block; }
 
         .btn {
@@ -69,17 +69,19 @@
         }
         .btn:hover { transform: translateY(-1px); filter: brightness(1.08); }
         .btn-primary { background: var(--primary); color: white; }
-        .btn-gold { background: linear-gradient(135deg, var(--accent-2), var(--accent)); color: #1a1005; font-weight: 800; }
+        .btn-gold { background: linear-gradient(135deg, #ffc978, var(--accent)); color: #2a1a05; font-weight: 800; box-shadow: 0 6px 16px rgba(242,161,58,0.28); }
         .btn-danger { background: var(--danger); color: white; }
         .btn-success { background: var(--success); color: white; }
         .btn-whatsapp { background: #25D366; color: white; }
         .btn-telegram { background: #229ED9; color: white; }
         .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-main); }
         .btn-sm { padding: 5px 10px; font-size: 12px; }
+        .btn-xs { padding: 3px 7px; font-size: 10.5px; gap: 4px; border-radius: 6px; }
 
         .app-container { display: none; }
         .sidebar {
-            width: 250px; background: var(--bg-body-2); border-left: 1px solid var(--border-color);
+            width: 250px; background: linear-gradient(180deg, var(--bg-body-2), #0d1120 60%, var(--bg-body-2));
+            border-left: 1px solid var(--border-color);
             position: fixed; right: 0; top: 0; height: 100vh; padding: 20px 10px; overflow-y: auto; z-index: 90;
         }
         .main-content { margin-right: 250px; padding: 25px; }
@@ -89,28 +91,30 @@
         .sidebar-menu { list-style: none; }
         .sidebar-menu li a {
             display: flex; align-items: center; gap: 10px; padding: 10px 12px; color: var(--text-main);
-            text-decoration: none; border-radius: 8px; font-weight: 600; margin-bottom: 5px; cursor: pointer; font-size: 14px;
+            text-decoration: none; border-radius: 10px; font-weight: 600; margin-bottom: 5px; cursor: pointer; font-size: 14px;
+            transition: background 0.2s, transform 0.15s;
         }
-        .sidebar-menu li a i { width:18px; text-align:center; color: var(--text-muted); }
-        .sidebar-menu li a.active, .sidebar-menu li a:hover { background: var(--primary); color:#fff; }
-        .sidebar-menu li a.active i, .sidebar-menu li a:hover i { color:#fff; }
+        .sidebar-menu li a i { width:18px; text-align:center; }
+        .sidebar-menu li a:hover { background: rgba(255,255,255,0.06); transform: translateX(-2px); }
+        .sidebar-menu li a.active { background: linear-gradient(135deg, var(--primary), #8b7ff0); color:#fff; box-shadow: 0 6px 16px rgba(108,99,224,0.35); }
+        .sidebar-menu li a.active i { color:#fff; }
 
         .topbar {
             background: var(--bg-card); border: 1px solid var(--border-color); padding: 15px 20px;
             border-radius: var(--radius); display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
         }
 
-        .card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 20px; margin-bottom: 20px; overflow-x: auto; }
+        .card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 20px; margin-bottom: 20px; overflow-x: auto; box-shadow: 0 8px 22px rgba(6,8,16,0.28); }
         .card-head { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
-        table { width: 100%; min-width: 900px; border-collapse: collapse; margin-top: 15px; }
-        th, td { padding: 10px; text-align: center; border-bottom: 1px solid var(--border-color); font-size: 13px; white-space: nowrap; }
+        table { width: 100%; min-width: 760px; border-collapse: collapse; margin-top: 15px; }
+        th, td { padding: 7px 8px; text-align: center; border-bottom: 1px solid var(--border-color); font-size: 12.5px; white-space: nowrap; }
         th { background: var(--bg-body-2); color: var(--accent-2); font-weight:700; }
         tbody tr:hover { background: rgba(47,158,143,0.06); }
 
         .section { display: none; }
         .section.active { display: block; }
 
-        .user-badge { background: rgba(217,140,63,0.16); color: var(--accent-2); border: 1px solid var(--accent); padding: 2px 8px; border-radius: 5px; font-size: 12px; white-space: nowrap; display:inline-block; }
+        .user-badge { background: rgba(242,161,58,0.16); color: var(--accent-2); border: 1px solid var(--accent); padding: 2px 8px; border-radius: 5px; font-size: 12px; white-space: nowrap; display:inline-block; }
         .status-ok { background: rgba(69,176,124,0.18); color: var(--success); border:1px solid var(--success); padding:2px 8px; border-radius:5px; font-size:12px; font-weight:700; white-space: nowrap; display:inline-block; }
         .status-no { background: rgba(224,96,90,0.18); color: var(--danger); border:1px solid var(--danger); padding:2px 8px; border-radius:5px; font-size:12px; font-weight:700; white-space: nowrap; display:inline-block; }
 
@@ -123,7 +127,7 @@
             display: none; min-height: 100vh; justify-content: center; align-items: flex-start;
             padding: 40px 15px;
             background:
-                radial-gradient(circle at 15% 10%, rgba(217,140,63,0.10), transparent 40%),
+                radial-gradient(circle at 15% 10%, rgba(242,161,58,0.10), transparent 40%),
                 radial-gradient(circle at 85% 90%, rgba(47,158,143,0.14), transparent 40%),
                 var(--bg-body);
         }
@@ -140,7 +144,7 @@
         }
         .decorative-dots { display: flex; gap: 12px; justify-content: center; margin-bottom: 15px; }
         .decorative-dots span { width: 14px; height: 14px; border-radius: 50%; display: inline-block; }
-        .dot1 { background: #d98c3f; } .dot2 { background: #2f9e8f; } .dot3 { background: #7a5c8a; } .dot4 { background: #e0605a; } .dot5 { background: #e8b45f; }
+        .dot1 { background: #f2a13a; } .dot2 { background: #6c63e0; } .dot3 { background: #7a5c8a; } .dot4 { background: #e0605a; } .dot5 { background: #2dd4a7; }
 
         .welcome-banner {
             background: #16332f; padding: 15px 30px; border-radius: 60px; margin-bottom: 20px;
@@ -153,7 +157,7 @@
 
         .notebook {
             max-width: 750px; width: 100%; background: #fffcf5; border-radius: 24px; padding: 25px 30px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); border: 1px solid rgba(217,140,63,0.35);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); border: 1px solid rgba(242,161,58,0.35);
         }
         .notebook-header { text-align: center; margin-bottom: 20px; border-bottom: 2px dashed #ecd9b8; padding-bottom: 15px; }
         .notebook-header h1 { font-family:'Amiri', serif; font-size: 2.1rem; font-weight: 800; color: #1f7c70; margin-bottom: 5px; }
@@ -165,13 +169,13 @@
         }
 
         .btn-booking-submit {
-            width: 100%; padding: 14px; background: linear-gradient(135deg, #2f9e8f, #d98c3f); border: none;
+            width: 100%; padding: 14px; background: linear-gradient(135deg, #6c63e0, #f2a13a); border: none;
             border-radius: 50px; color: white; font-size: 1.15rem; font-weight: 800; cursor: pointer; transition: 0.3s; margin-top: 10px;
         }
         .btn-booking-submit:hover { transform: scale(1.01); }
 
         .confirmation-box {
-            background: #e1f4ee; border-radius: 20px; padding: 20px; margin-top: 20px; border-right: 6px solid #2f9e8f;
+            background: #e1f4ee; border-radius: 20px; padding: 20px; margin-top: 20px; border-right: 6px solid #6c63e0;
             display: none; text-align: center; color: #0a4b3a;
         }
         .confirmation-box.active { display: block; }
@@ -300,16 +304,16 @@
             <h3 id="sideMasterName" style="color:var(--accent-2); font-size:17px;">مستر / علاء الحفني</h3>
         </div>
         <ul class="sidebar-menu">
-            <li><a class="active" onclick="showTab('stages', this)"><i class="fa-solid fa-graduation-cap"></i><span>المراحل الدراسية</span></a></li>
-            <li><a onclick="showTab('groups', this)"><i class="fa-solid fa-layer-group"></i><span>المجموعات الدراسية</span></a></li>
-            <li><a onclick="showTab('booklets', this)"><i class="fa-solid fa-book"></i><span>الملازم والمذكرات</span></a></li>
-            <li><a onclick="showTab('students', this)"><i class="fa-solid fa-users"></i><span>إدارة الطلاب</span></a></li>
-            <li><a onclick="showTab('attendance', this)"><i class="fa-solid fa-clipboard-check"></i><span>الحضور والغياب</span></a></li>
-            <li><a onclick="showTab('exams', this)"><i class="fa-solid fa-file-pen"></i><span>الامتحانات</span></a></li>
-            <li><a onclick="showTab('homework', this)"><i class="fa-solid fa-book-open"></i><span>الواجبات</span></a></li>
-            <li><a onclick="showTab('booking', this)"><i class="fa-solid fa-globe"></i><span>الحجز الإلكتروني</span></a></li>
-            <li id="menuTreasuryItem"><a onclick="showTab('treasury', this)"><i class="fa-solid fa-vault"></i><span>الخزينة والمالية</span></a></li>
-            <li><a onclick="showTab('settings', this)"><i class="fa-solid fa-gear"></i><span>الإعدادات والمستخدمين</span></a></li>
+            <li><a class="active" onclick="showTab('stages', this)"><i class="fa-solid fa-graduation-cap" style="color:#f2a13a;"></i><span>المراحل الدراسية</span></a></li>
+            <li><a onclick="showTab('groups', this)"><i class="fa-solid fa-layer-group" style="color:#2dd4a7;"></i><span>المجموعات الدراسية</span></a></li>
+            <li><a onclick="showTab('booklets', this)"><i class="fa-solid fa-book" style="color:#ff8fb1;"></i><span>الملازم والمذكرات</span></a></li>
+            <li><a onclick="showTab('students', this)"><i class="fa-solid fa-users" style="color:#6c63e0;"></i><span>إدارة الطلاب</span></a></li>
+            <li><a onclick="showTab('attendance', this)"><i class="fa-solid fa-clipboard-check" style="color:#4fd1e8;"></i><span>الحضور والغياب</span></a></li>
+            <li><a onclick="showTab('exams', this)"><i class="fa-solid fa-file-pen" style="color:#ffcf5c;"></i><span>الامتحانات</span></a></li>
+            <li><a onclick="showTab('homework', this)"><i class="fa-solid fa-book-open" style="color:#ff9f6b;"></i><span>الواجبات</span></a></li>
+            <li><a onclick="showTab('booking', this)"><i class="fa-solid fa-globe" style="color:#5cc8ff;"></i><span>الحجز الإلكتروني</span></a></li>
+            <li id="menuTreasuryItem"><a onclick="showTab('treasury', this)"><i class="fa-solid fa-vault" style="color:#2dd4a7;"></i><span>الخزينة والمالية</span></a></li>
+            <li><a onclick="showTab('settings', this)"><i class="fa-solid fa-gear" style="color:#b39ddb;"></i><span>الإعدادات والمستخدمين</span></a></li>
         </ul>
     </div>
 
@@ -459,6 +463,7 @@
                             <th>المجموعة</th>
                             <th>الوقت</th>
                             <th>اسم المحصل</th>
+                            <th class="no-print">إجراء</th>
                         </tr>
                     </thead>
                     <tbody id="attendanceLogsBody"></tbody>
@@ -471,6 +476,7 @@
                             <th>المجموعة</th>
                             <th>التاريخ</th>
                             <th>سجّله</th>
+                            <th class="no-print">إجراء</th>
                         </tr>
                     </thead>
                     <tbody id="absenceLogsBody"></tbody>
@@ -521,22 +527,29 @@
                     <button class="btn btn-gold" onclick="copyBookingLink()"><i class="fa-solid fa-copy"></i> نسخ الرابط</button>
                     <button class="btn btn-primary" onclick="openBookingLinkDirect()"><i class="fa-solid fa-arrow-up-right-from-square"></i> فتح صفحة الحجز</button>
                 </div>
-                <p style="color:var(--danger); font-size:12.5px; background:var(--bg-input); border:1px solid var(--danger); padding:10px; border-radius:8px; font-weight:700;">
-                    <i class="fa-solid fa-triangle-exclamation"></i> هام جداً: هذا الملف حالياً يعمل بالكامل داخل متصفح جهازك (بدون سيرفر خارجي). يعني ده إن أي حجز يتسجل من نفس الجهاز والمتصفح هيظهر هنا فوراً، لكن لو الطالب فتح الرابط من موبايله الشخصي أو جهاز تاني، الحجز هيتسجل في متصفح موبايله هو بس ولن يظهر في لوحتك — لأن مفيش قاعدة بيانات مشتركة على الإنترنت تربط الجهازين. الحل الوحيد لجعل الحجوزات تصل من أي جهاز لأي جهاز آخر هو رفع النظام على استضافة حقيقية (سيرفر + قاعدة بيانات فعلية)، وده تقدر تطلبه مني في أي وقت.
-                </p>
                 <p id="firebaseSyncStatus" style="font-size:13px; font-weight:700; margin-top:8px;"></p>
-                <div class="no-print" style="margin-top:12px; background:var(--bg-input); border:1px solid var(--border-color); padding:12px; border-radius:8px; font-size:13px; color:var(--text-muted); line-height:1.9;">
-                    <strong style="color:var(--accent-2);"><i class="fa-solid fa-list-ol"></i> لتفعيل وصول الحجوزات من أي جهاز (خطوة تُعمل مرة واحدة فقط، عن طريق Supabase):</strong>
-                    <ol style="padding-inline-start:20px; margin-top:6px;">
-                        <li>افتح <strong>supabase.com</strong> وسجّل حساب مجاني (بريد إلكتروني عادي، بدون تفعيل إجباري لخطوتين التحقق).</li>
-                        <li>اعمل <strong>New Project</strong> (اختر اسم وكلمة سر لقاعدة البيانات واحفظها في مكان آمن).</li>
-                        <li>من القائمة الجانبية: <strong>Table Editor ← New Table</strong>، سمّها بالظبط <strong>booking_requests</strong>، وأضف الأعمدة: name (text), stage_id (int8), group_id (int8), phone (text), parent_phone (text) — وعطّل خيار "Enable Row Level Security" وقت الإنشاء.</li>
-                        <li>من القائمة الجانبية: <strong>Project Settings ← API</strong>، انسخ <strong>Project URL</strong> و<strong>anon public key</strong>.</li>
-                        <li>ابعتهملي هنا في الشات وأنا أدخلهم في الكود وأديك الملف جاهز، أو افتح ملف البرنامج بمحرر نصوص وابحث عن SUPABASE_URL وSUPABASE_ANON_KEY والصق القيم بدل الرموز ★★★.</li>
-                    </ol>
-                    <span style="font-size:12px;"><i class="fa-solid fa-circle-info"></i> لو محتاج مساعدة في أي خطوة من دول، ابعتلي وهساعدك خطوة بخطوة.</span>
+                <div id="bookingSetupHelp">
+                    <p style="color:var(--danger); font-size:12.5px; background:var(--bg-input); border:1px solid var(--danger); padding:10px; border-radius:8px; font-weight:700; margin-top:10px;">
+                        <i class="fa-solid fa-triangle-exclamation"></i> هام جداً: لسه مفيش قاعدة بيانات مشتركة متصلة. يعني حجز الطالب من موبايله الشخصي مش هيوصل لوحتك دلوقتي — اتبع الخطوات تحت لربط قاعدة بيانات مجانية (Supabase) وتفعيل الوصول من أي جهاز.
+                    </p>
+                    <div class="no-print" style="margin-top:12px; background:var(--bg-input); border:1px solid var(--border-color); padding:12px; border-radius:8px; font-size:13px; color:var(--text-muted); line-height:1.9;">
+                        <strong style="color:var(--accent-2);"><i class="fa-solid fa-list-ol"></i> لتفعيل وصول الحجوزات من أي جهاز (خطوة تُعمل مرة واحدة فقط، عن طريق Supabase):</strong>
+                        <ol style="padding-inline-start:20px; margin-top:6px;">
+                            <li>افتح <strong>supabase.com</strong> وسجّل حساب مجاني (بريد إلكتروني عادي، بدون تفعيل إجباري لخطوتين التحقق).</li>
+                            <li>اعمل <strong>New Project</strong> (اختر اسم وكلمة سر لقاعدة البيانات واحفظها في مكان آمن).</li>
+                            <li>من القائمة الجانبية: <strong>Table Editor ← New Table</strong>، اعمل جدولين (وعطّل خيار "Enable Row Level Security" وقت إنشاء كل واحد):
+                                <ul style="padding-inline-start:18px; margin-top:4px;">
+                                    <li>جدول اسمه <strong>booking_requests</strong> بالأعمدة: name (text), stage_id (int8), group_id (int8), phone (text), parent_phone (text)</li>
+                                    <li>جدول تاني اسمه <strong>center_state</strong> بالأعمدة: id (int8، خليها Primary Key)، payload (jsonb)، updated_at (timestamptz)</li>
+                                </ul>
+                            </li>
+                            <li>من القائمة الجانبية: <strong>Project Settings ← API</strong>، انسخ <strong>Project URL</strong> و<strong>anon public key</strong>.</li>
+                            <li>ابعتهملي هنا في الشات وأنا أدخلهم في الكود وأديك الملف جاهز، أو افتح ملف البرنامج بمحرر نصوص وابحث عن SUPABASE_URL وSUPABASE_ANON_KEY والصق القيم بدل الرموز ★★★.</li>
+                        </ol>
+                        <span style="font-size:12px;"><i class="fa-solid fa-circle-info"></i> لو محتاج مساعدة في أي خطوة من دول، ابعتلي وهساعدك خطوة بخطوة.</span>
+                    </div>
                 </div>
-                <button class="btn btn-outline btn-sm no-print" style="margin-top:10px;" onclick="manualRefreshFromStorage()"><i class="fa-solid fa-rotate"></i> تحديث الطلبات الآن</button>
+                <button id="manualRefreshBtn" class="btn btn-outline btn-sm no-print" style="margin-top:10px;" onclick="manualRefreshFromStorage()"><i class="fa-solid fa-rotate"></i> تحديث الطلبات الآن</button>
             </div>
 
             <div class="card">
@@ -683,6 +696,23 @@
         return String(str).replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
     }
 
+    // يحوّل أي أرقام عربية (٠١٢٣٤٥٦٧٨٩) اتنسخت من الشاشة أو كارت الباركود إلى أرقام إنجليزية عادية
+    function normalizeDigits(str) {
+        if (str === null || str === undefined) return '';
+        const arMap = { '٠': '0', '١': '1', '٢': '2', '٣': '3', '٤': '4', '٥': '5', '٦': '6', '٧': '7', '٨': '8', '٩': '9' };
+        return String(str).replace(/[٠-٩]/g, d => arMap[d]);
+    }
+
+    // مقارنة "ذكية" لكود الطالب: بتتجاهل فرق الأرقام العربية/الإنجليزية، وبتتجاهل حتى
+    // انعكاس ترتيب الجزء الرقمي والحروف اللي بيحصل أحياناً عند نسخ نص من صفحة عربية
+    // (مثال: "ST-101" ممكن يتنسخ "١٠١-ST" — الدالة دي بتتعرف عليهم كأنهم نفس الكود)
+    function canonicalCode(str) {
+        const norm = normalizeDigits(str || '').toUpperCase();
+        const digits = norm.replace(/[^0-9]/g, '');
+        const letters = norm.replace(/[^A-Z]/g, '');
+        return letters + '#' + digits;
+    }
+
     // قاعدة البيانات المركزية الموحدة (افتراضية عند أول تشغيل فقط)
     const DB = {
         masterName: "مستر / علاء الحفني",
@@ -721,11 +751,16 @@
     // --- التخزين الدائم (localStorage) لضمان عمل رابط الحجز الإلكتروني فعلياً ---
     const STORAGE_KEY = 'alaaCenterDB_v1';
 
-    function saveDB() {
+    function saveLocalOnly() {
         try {
             const snapshot = Object.assign({}, DB, { activeUser: null });
             localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot));
         } catch (e) { /* التخزين غير متاح، يتجاهل بصمت */ }
+    }
+
+    function saveDB() {
+        saveLocalOnly();
+        pushFullStateToSupabase();
     }
 
     function loadDB() {
@@ -739,29 +774,38 @@
     }
 
     /* =======================================================================
-       ربط قاعدة بيانات مشتركة (Supabase) لجعل طلبات الحجز تصل من أي جهاز لأي جهاز
+       ربط قاعدة بيانات مشتركة (Supabase) لجعل كل بيانات البرنامج (الطلاب، الحضور،
+       الخزينة، الامتحانات، الواجبات...) وكذلك طلبات الحجز تتزامن بين أي جهازين
+       (مثلاً: جهازك المحلي ونسخة GitHub) فوراً بدل ما تفضل كل نسخة منفصلة عن التانية
        =======================================================================
        🔧 عدّل السطرين بين ★★★ فقط، والصق فيهم بيانات مشروع Supabase الخاص بك:
        ١) روح https://supabase.com وسجل حساب مجاني (بريد إلكتروني عادي، بدون أي
           تفعيل إجباري لخطوتين التحقق).
        ٢) اعمل New Project (اختر أي اسم وكلمة سر لقاعدة البيانات واحفظها).
-       ٣) من القائمة الجانبية: Table Editor > New Table، اسمها booking_requests
-          بالظبط، وأضف الأعمدة: name (text), stage_id (int8), group_id (int8),
-          phone (text), parent_phone (text) — وعطّل خيار "Enable Row Level
-          Security" وقت الإنشاء (يبقى ظاهر مفيش تفعيل جنبه).
+       ٣) من القائمة الجانبية: Table Editor > New Table، اعمل جدولين (وعطّل خيار
+          "Enable Row Level Security" وقت إنشاء كل واحد فيهم):
+          - جدول اسمه booking_requests بالأعمدة: name (text), stage_id (int8),
+            group_id (int8), phone (text), parent_phone (text)
+          - جدول تاني اسمه center_state بالأعمدة: id (int8, واحفظه Primary Key)،
+            payload (jsonb)، updated_at (timestamptz، القيمة الافتراضية now())
        ٤) من القائمة الجانبية: Project Settings > API، هتلاقي "Project URL"
           و"anon public key" — انسخهم.
-       ٥) الصق القيمتين هنا مكان ★★★، احفظ الملف وارفعه — وبعدها الحجز هيوصلك
-          من أي جهاز حقيقي تلقائيًا (يتحدّث كل ١٥ ثانية أو بضغطة زر تحديث).
+       ٥) الصق القيمتين هنا مكان ★★★، احفظ الملف وارفعه — وبعدها كل حاجة (الحجز
+          وكل بيانات البرنامج) هتتزامن تلقائياً بين أي جهازين مفتوح عليهم نفس الملف
+          (يتحدّث كل ١٥-٢٠ ثانية تلقائياً أو بضغطة زر تحديث).
+       تنبيه: لو فتحت البرنامج في جهازين وعدّلت في نفس اللحظة بالظبط على الاتنين،
+       آخر تعديل هو اللي هيفضل (فبيُفضّل ما تشتغلش على جهازين في نفس الثانية).
        لو سبتهم كما هما (بدون تعديل)، البرنامج هيشتغل عادي بنفس النظام القديم
        (تخزين داخل المتصفح فقط، بدون مزامنة بين الأجهزة).
     */
-    const SUPABASE_URL = "https://viygbmizhkqurvxhwdyr.supabase.co";
-    const SUPABASE_ANON_KEY = "sb_publishable_KbPIm3UlNWTIb6gMadA3KQ_12zSvLUj";
+    const SUPABASE_URL = "https://ufhkbvqopzsetxebbleq.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_72yHeSh2z-329g8TuK7A9g_dBhYB1O9";
 
     let supabaseClient = null;
     let supabaseReady = false;
     let supabasePollTimer = null;
+    let lastRemoteStateUpdatedAt = null;
+    let applyingRemoteState = false;
 
     function isSupabaseConfigured() {
         return SUPABASE_URL && !SUPABASE_URL.includes('★') && SUPABASE_ANON_KEY && !SUPABASE_ANON_KEY.includes('★');
@@ -777,8 +821,12 @@
             supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
             supabaseReady = true;
             fetchBookingsFromSupabase();
+            pullFullStateFromSupabase(true);
             if (supabasePollTimer) clearInterval(supabasePollTimer);
-            supabasePollTimer = setInterval(fetchBookingsFromSupabase, 15000);
+            supabasePollTimer = setInterval(function () {
+                fetchBookingsFromSupabase();
+                pullFullStateFromSupabase(false);
+            }, 15000);
         } catch (e) {
             console.warn('تعذر تفعيل Supabase:', e);
             supabaseReady = false;
@@ -786,9 +834,44 @@
         }
     }
 
+    // أهم مفاتيح بيانات البرنامج اللي بتتزامن بين الأجهزة (activeUser وbookingRequests مستثناة عمداً:
+    // الأول جلسة دخول شخصية لكل جهاز، والتاني له آلية مزامنة منفصلة خاصة به بالفعل)
+    const SYNCED_DB_KEYS = ['settings', 'users', 'stages', 'groups', 'students', 'attendanceLogs', 'absenceLogs', 'treasuryLogs', 'exams', 'examResults', 'homeworks', 'homeworkResults'];
+
+    function pushFullStateToSupabase() {
+        if (!supabaseReady || applyingRemoteState) return;
+        const payload = {};
+        SYNCED_DB_KEYS.forEach(k => { payload[k] = DB[k]; });
+        supabaseClient.from('center_state').upsert({ id: 1, payload: payload, updated_at: new Date().toISOString() })
+            .then(function (res) {
+                if (res.error) console.warn('تعذر رفع البيانات لقاعدة البيانات المشتركة:', res.error);
+            })
+            .catch(function (err) { console.warn('تعذر رفع البيانات لقاعدة البيانات المشتركة:', err); });
+    }
+
+    function pullFullStateFromSupabase(forceApplyOnFirstLoad) {
+        if (!supabaseReady) return Promise.resolve();
+        return supabaseClient.from('center_state').select('*').eq('id', 1).maybeSingle()
+            .then(function (res) {
+                if (res.error || !res.data) return;
+                const remoteUpdatedAt = res.data.updated_at;
+                if (!forceApplyOnFirstLoad && lastRemoteStateUpdatedAt && remoteUpdatedAt === lastRemoteStateUpdatedAt) return;
+                lastRemoteStateUpdatedAt = remoteUpdatedAt;
+
+                applyingRemoteState = true;
+                const payload = res.data.payload || {};
+                SYNCED_DB_KEYS.forEach(k => { if (payload[k] !== undefined) DB[k] = payload[k]; });
+                saveLocalOnly();
+                applyingRemoteState = false;
+
+                if (DB.activeUser) { renderAllTabsNoSave(); }
+            })
+            .catch(function (err) { console.warn('تعذر جلب البيانات من قاعدة البيانات المشتركة:', err); });
+    }
+
     function fetchBookingsFromSupabase() {
-        if (!supabaseReady) return;
-        supabaseClient.from('booking_requests').select('*').order('created_at', { ascending: false })
+        if (!supabaseReady) return Promise.resolve();
+        return supabaseClient.from('booking_requests').select('*').order('created_at', { ascending: false })
             .then(function (res) {
                 if (res.error) { console.warn('Supabase fetch error:', res.error); updateSupabaseStatusBadge(false); return; }
                 DB.bookingRequests = res.data.map(function (row) {
@@ -808,8 +891,10 @@
         const el = document.getElementById('firebaseSyncStatus');
         if (!el) return;
         el.innerHTML = connected
-            ? '<span style="color:#2ecc71;"><i class="fa-solid fa-circle-check"></i> متصل بقاعدة بيانات مشتركة على الإنترنت — الحجوزات تصل من أي جهاز خلال ثوانٍ</span>'
-            : '<span style="color:var(--danger);"><i class="fa-solid fa-triangle-exclamation"></i> غير متصل بقاعدة بيانات مشتركة — الحجوزات تعمل داخل هذا الجهاز فقط</span>';
+            ? '<span style="color:var(--success);"><i class="fa-solid fa-circle-check"></i> متصل بقاعدة بيانات مشتركة — كل بيانات البرنامج (والحجوزات) تتزامن بين أي جهازين تلقائياً</span>'
+            : '<span style="color:var(--danger);"><i class="fa-solid fa-triangle-exclamation"></i> غير متصل بقاعدة بيانات مشتركة — البيانات تعمل داخل هذا الجهاز فقط</span>';
+        const helpBox = document.getElementById('bookingSetupHelp');
+        if (helpBox) helpBox.style.display = connected ? 'none' : 'block';
     }
 
     // مزامنة حية بين تبويبات نفس المتصفح (مثلاً: تبويب الطالب يفتح رابط الحجز، وتبويب المدير يشاهد الطلب فوراً)
@@ -904,8 +989,22 @@
     }
 
     function manualRefreshFromStorage() {
-        loadDB();
-        renderAllTabsNoSave();
+        const btn = document.getElementById('manualRefreshBtn');
+        if (supabaseReady) {
+            if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري التحديث...'; }
+            Promise.all([fetchBookingsFromSupabase(), pullFullStateFromSupabase(true)])
+                .then(function () {
+                    if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-circle-check"></i> تم التحديث!'; setTimeout(() => { btn.innerHTML = '<i class="fa-solid fa-rotate"></i> تحديث الطلبات الآن'; }, 1800); }
+                })
+                .catch(function () {
+                    if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-rotate"></i> تحديث الطلبات الآن'; }
+                    alert('⚠️ حصل خطأ أثناء التحديث. تأكد من اتصالك بالإنترنت.');
+                });
+        } else {
+            loadDB();
+            renderAllTabsNoSave();
+            alert('ℹ️ قاعدة البيانات المشتركة غير متصلة، تم تحديث البيانات المحلية فقط.');
+        }
     }
 
     function updateHeaderTitles() {
@@ -997,7 +1096,7 @@
             return `
                 <tr>
                     <td><strong>${g.name}</strong></td>
-                    <td><span class="user-badge">${stg ? stg.name : '---'}</span></td>
+                    <td>${stg ? coloredBadge(stg.name, stg.id) : '---'}</td>
                     <td><strong style="color:var(--accent-2);">${toArDigits(g.schedule) || 'غير محدد'}</strong></td>
                     <td>بال${g.payType}</td>
                     <td>${toArDigits(g.fee)} ج.م</td>
@@ -1118,22 +1217,22 @@
                 <tr>
                     <td><code>${toArDigits(s.code)}</code></td>
                     <td><strong>${s.name}</strong></td>
-                    <td>${stg ? stg.name : '---'}</td>
-                    <td>${grp ? grp.name : '---'}</td>
+                    <td>${stg ? coloredBadge(stg.name, stg.id) : '---'}</td>
+                    <td>${grp ? coloredBadge(grp.name, grp.id + 100) : '---'}</td>
                     <td>${toArDigits(s.phone)}</td>
                     <td class="no-print">
-                        ${s.whatsapp ? `<button class="btn btn-whatsapp btn-sm" onclick="sendWhatsappToStudent(${s.id})" title="مراسلة الطالب"><i class="fa-brands fa-whatsapp"></i> طالب</button>` : ''}
-                        ${s.parentWhatsapp ? `<button class="btn btn-whatsapp btn-sm" onclick="sendWhatsappToParent(${s.id})" title="مراسلة ولي الأمر"><i class="fa-brands fa-whatsapp"></i> ولي أمر</button>` : ''}
-                        ${(!s.whatsapp && !s.parentWhatsapp) ? '<span style="color:var(--text-muted); font-size:12px;">لا يوجد رقم</span>' : ''}
+                        ${s.whatsapp ? `<button class="btn btn-whatsapp btn-xs" onclick="sendWhatsappToStudent(${s.id})" title="مراسلة الطالب"><i class="fa-brands fa-whatsapp"></i> طالب</button>` : ''}
+                        ${s.parentWhatsapp ? `<button class="btn btn-whatsapp btn-xs" onclick="sendWhatsappToParent(${s.id})" title="مراسلة ولي الأمر"><i class="fa-brands fa-whatsapp"></i> ولي أمر</button>` : ''}
+                        ${(!s.whatsapp && !s.parentWhatsapp) ? '<span style="color:var(--text-muted); font-size:11px;">لا يوجد رقم</span>' : ''}
                     </td>
                     <td>${s.discount ? `<strong style="color:var(--accent-2);">${toArDigits(s.discount)} ج.م</strong>` : '—'}</td>
                     <td>${s.bookletPaid ? '<span class="status-ok">سُدد</span>' : '<span class="status-no">لم يُسدد</span>'}</td>
                     <td class="no-print">
-                        <button class="btn btn-success btn-sm" onclick="openPaymentModal(${s.id})"><i class="fa-solid fa-money-bill-wave"></i> دفع وتحصيل</button>
+                        <button class="btn btn-success btn-xs" onclick="openPaymentModal(${s.id})"><i class="fa-solid fa-money-bill-wave"></i> دفع</button>
                     </td>
                     <td class="no-print">
-                        <button class="btn btn-primary btn-sm" onclick="openStudentModal(${s.id})"><i class="fa-solid fa-pen"></i> تعديل</button>
-                        <button class="btn btn-danger btn-sm" onclick="deleteStudent(${s.id})"><i class="fa-solid fa-trash"></i> حذف</button>
+                        <button class="btn btn-primary btn-xs" onclick="openStudentModal(${s.id})"><i class="fa-solid fa-pen"></i> تعديل</button>
+                        <button class="btn btn-danger btn-xs" onclick="deleteStudent(${s.id})"><i class="fa-solid fa-trash"></i> حذف</button>
                     </td>
                 </tr>
             `;
@@ -1154,10 +1253,17 @@
         document.getElementById('modalTitle').innerText = student ? "تعديل بيانات الطالب" : "إضافة طالب جديد";
 
         const stageOpts = DB.stages.map(st => `<option value="${st.id}" ${student && student.stageId === st.id ? 'selected' : ''}>${st.name}</option>`).join('');
-        const groupOpts = DB.groups.map(g => `<option value="${g.id}" ${student && student.groupId === g.id ? 'selected' : ''}>${g.name}</option>`).join('');
+        const groupOpts = DB.groups.map(g => `<option value="${g.id}" ${student && student.groupId === g.id ? 'selected' : ''}>${groupLabel(g)}</option>`).join('');
         const firstGroup = DB.groups.find(g => student ? g.id === student.groupId : true);
 
+        const suggestedCode = student ? student.code : "ST-" + ((DB.students.length ? Math.max(...DB.students.map(s => s.id)) : 100) + 1);
+
         document.getElementById('modalBody').innerHTML = `
+            <div class="form-group">
+                <label><i class="fa-solid fa-barcode"></i> كود الطالب (يمكن مسح كارت الباركود هنا مباشرة)</label>
+                <input type="text" class="form-control" id="mStdCode" value="${suggestedCode}">
+                <span class="field-hint"><i class="fa-solid fa-circle-info"></i> لو عندك كروت باركود جاهزة للطلاب: دوس جوه الخانة دي وامرّر كارت الطالب على الماسح الضوئي، وهيتعبى الكود تلقائياً بدل ما تكتبه بنفسك. لازم يكون كل كود مختلف عن التاني.</span>
+            </div>
             <div class="form-group"><label>اسم الطالب</label><input type="text" class="form-control" id="mStdName" value="${student ? student.name : ''}"></div>
             <div class="form-group"><label>رقم الهاتف</label><input type="text" class="form-control" id="mStdPhone" value="${student ? student.phone : ''}"></div>
             <div class="form-group"><label><i class="fa-brands fa-whatsapp" style="color:#45b07c;"></i> واتساب الطالب</label><input type="text" class="form-control" id="mStdWhatsapp" placeholder="01xxxxxxxxx" value="${student ? (student.whatsapp || '') : ''}"></div>
@@ -1185,6 +1291,7 @@
         if (!student) { setTimeout(updateBookletHint, 0); }
 
         document.getElementById('modalSaveBtn').onclick = function () {
+            const code = normalizeDigits(document.getElementById('mStdCode').value.trim());
             const name = document.getElementById('mStdName').value.trim();
             const phone = document.getElementById('mStdPhone').value.trim();
             const whatsapp = document.getElementById('mStdWhatsapp').value.trim();
@@ -1194,16 +1301,19 @@
             const payOverride = document.getElementById('mStdPayOverride').value;
             const discount = parseFloat(document.getElementById('mStdDiscount').value) || 0;
 
-            if (!name) return;
+            if (!name || !code) return;
+
+            const duplicateCode = DB.students.find(s => canonicalCode(s.code) === canonicalCode(code) && (!student || s.id !== student.id));
+            if (duplicateCode) { alert(`⚠️ الكود "${code}" مستخدم بالفعل مع الطالب "${duplicateCode.name}". اختر كوداً مختلفاً أو امسح كارت باركود آخر.`); return; }
 
             if (student) {
-                student.name = name; student.phone = phone; student.stageId = stageId; student.groupId = groupId;
+                student.code = code; student.name = name; student.phone = phone; student.stageId = stageId; student.groupId = groupId;
                 student.payOverride = payOverride; student.discount = discount;
                 student.whatsapp = whatsapp; student.parentWhatsapp = parentWhatsapp;
             } else {
                 const bookletPaidNow = document.getElementById('mStdBookletPaid') ? document.getElementById('mStdBookletPaid').checked : false;
                 const newId = (DB.students.length ? Math.max(...DB.students.map(s => s.id)) : 100) + 1;
-                const newStudent = { id: newId, code: "ST-" + newId, name, phone, whatsapp, parentWhatsapp, stageId, groupId, payOverride, discount, bookletPaid: bookletPaidNow };
+                const newStudent = { id: newId, code: code, name, phone, whatsapp, parentWhatsapp, stageId, groupId, payOverride, discount, bookletPaid: bookletPaidNow };
                 DB.students.push(newStudent);
 
                 if (bookletPaidNow) {
@@ -1340,6 +1450,31 @@
     }
 
     // --- 6. الحضور والغياب ---
+    // يوزّع ألوان زاهية متنوعة على شارات المراحل/المجموعات بالتناوب، عشان الصفحة تبقى مليانة حيوية وألوان
+    const VIVID_PALETTE = ['#f2a13a', '#2dd4a7', '#6c63e0', '#ff8fb1', '#4fd1e8', '#ffcf5c', '#ff9f6b', '#5cc8ff', '#b39ddb'];
+    function vividColor(seed) {
+        const n = typeof seed === 'number' ? seed : String(seed).split('').reduce((a, c) => a + c.charCodeAt(0), 0);
+        return VIVID_PALETTE[n % VIVID_PALETTE.length];
+    }
+    function coloredBadge(text, seed) {
+        const c = vividColor(seed);
+        return `<span class="user-badge" style="background:${c}26; color:${c}; border-color:${c};">${text}</span>`;
+    }
+
+    // يبني تسمية موحّدة للمجموعة تشمل المرحلة واسم المجموعة وميعادها، عشان تظهر واضحة في كل الشاشات
+    function groupLabel(g) {
+        if (!g) return '---';
+        const stg = DB.stages.find(st => st.id === g.stageId);
+        const stageName = stg ? stg.name : '';
+        const schedule = g.schedule || 'بدون ميعاد محدد';
+        return `${stageName ? stageName + ' - ' : ''}${g.name} (${schedule})`;
+    }
+
+    // يولّد رقم تعريف فريد تلقائي لأي مصفوفة (يُستخدم لكل سجلات الحضور/الغياب/الخزينة... إلخ)
+    function nextId(arr) {
+        return (arr.length ? Math.max(...arr.map(x => x.id || 0)) : 0) + 1;
+    }
+
     function isAlreadyAttendedToday(studentId, dateNow) {
         return DB.attendanceLogs.some(a => a.studentId === studentId && a.date === dateNow);
     }
@@ -1353,19 +1488,15 @@
             return { ok: false, reason: 'duplicate' };
         }
 
-        DB.attendanceLogs.unshift({
-            studentId: student.id,
-            studentName: student.name,
-            groupName: grp ? grp.name : '---',
-            time: timeNow,
-            date: dateNow,
-            collector: DB.activeUser.name
-        });
+        const attendanceId = (DB.attendanceLogs.length ? Math.max(...DB.attendanceLogs.map(a => a.id || 0)) : 0) + 1;
+        let linkedTreasuryId = null;
 
         // الدفع يتم تسجيله تلقائياً مع الحضور فقط إذا كان نظام الدفع الفعلي للطالب "بالحصة"
         const effectivePayType = student.payOverride || (grp ? grp.payType : '');
         if (grp && effectivePayType === 'حصة') {
+            linkedTreasuryId = (DB.treasuryLogs.length ? Math.max(...DB.treasuryLogs.map(t => t.id || 0)) : 0) + 1;
             DB.treasuryLogs.unshift({
+                id: linkedTreasuryId,
                 studentName: student.name,
                 studentId: student.id,
                 groupId: student.groupId,
@@ -1376,16 +1507,48 @@
             });
         }
 
+        DB.attendanceLogs.unshift({
+            id: attendanceId,
+            studentId: student.id,
+            studentName: student.name,
+            groupName: grp ? grp.name : '---',
+            time: timeNow,
+            date: dateNow,
+            collector: DB.activeUser.name,
+            treasuryLogId: linkedTreasuryId
+        });
+
         return { ok: true };
+    }
+
+    function deleteAttendanceLog(id) {
+        const log = DB.attendanceLogs.find(a => a.id === id);
+        if (!log) return;
+        const msg = log.treasuryLogId
+            ? "⚠️ سيتم حذف سجل الحضور ده، وحذف الدفعة المالية المرتبطة به تلقائياً من الخزينة. متابعة؟"
+            : "⚠️ هل تريد حذف سجل الحضور هذا؟";
+        if (!confirm(msg)) return;
+        DB.attendanceLogs = DB.attendanceLogs.filter(a => a.id !== id);
+        if (log.treasuryLogId) {
+            DB.treasuryLogs = DB.treasuryLogs.filter(t => t.id !== log.treasuryLogId);
+        }
+        renderAllTabs();
+    }
+
+    function deleteAbsenceLog(id) {
+        if (!confirm("⚠️ هل تريد حذف سجل الغياب هذا؟")) return;
+        DB.absenceLogs = DB.absenceLogs.filter(a => a.id !== id);
+        renderAllTabs();
     }
 
     function recordAttendance() {
         const input = document.getElementById('attendanceInput');
-        const val = input.value.trim();
-        if (!val) return;
-        const valUpper = val.toUpperCase();
+        const rawVal = input.value.trim();
+        if (!rawVal) return;
+        const val = normalizeDigits(rawVal);
+        const codeKey = canonicalCode(rawVal);
 
-        const student = DB.students.find(s => s.code.toUpperCase() === valUpper) || DB.students.find(s => s.name.includes(val));
+        const student = DB.students.find(s => canonicalCode(s.code) === codeKey) || DB.students.find(s => s.name.includes(val));
         if (!student) { alert("❌ طالب غير موجود! تأكد من الكود أو الاسم."); return; }
 
         const result = markStudentPresent(student);
@@ -1401,17 +1564,19 @@
 
     function recordAbsence() {
         const input = document.getElementById('absenceInput');
-        const val = input.value.trim();
-        if (!val) return;
-        const valUpper = val.toUpperCase();
+        const rawVal = input.value.trim();
+        if (!rawVal) return;
+        const val = normalizeDigits(rawVal);
+        const codeKey = canonicalCode(rawVal);
 
-        const student = DB.students.find(s => s.code.toUpperCase() === valUpper) || DB.students.find(s => s.name.includes(val));
+        const student = DB.students.find(s => canonicalCode(s.code) === codeKey) || DB.students.find(s => s.name.includes(val));
         if (!student) { alert("❌ طالب غير موجود!"); return; }
 
         const grp = DB.groups.find(g => g.id === student.groupId);
         const dateNow = new Date().toLocaleDateString('ar-EG');
 
         DB.absenceLogs.unshift({
+            id: nextId(DB.absenceLogs),
             studentName: student.name,
             groupName: grp ? grp.name : '---',
             date: dateNow,
@@ -1429,7 +1594,7 @@
         if (!sel) return;
         const prevValue = sel.value;
         sel.innerHTML = `<option value="">-- اختر المجموعة التي تحضر اليوم --</option>` +
-            DB.groups.map(g => `<option value="${g.id}">${g.name} (${g.schedule || 'بدون ميعاد'})</option>`).join('');
+            DB.groups.map(g => `<option value="${g.id}">${groupLabel(g)}</option>`).join('');
         if (prevValue) sel.value = prevValue;
     }
 
@@ -1486,6 +1651,7 @@
         if (!student) return;
         const grp = DB.groups.find(g => g.id === student.groupId);
         DB.absenceLogs.unshift({
+            id: nextId(DB.absenceLogs),
             studentName: student.name,
             groupName: grp ? grp.name : '---',
             date: new Date().toLocaleDateString('ar-EG'),
@@ -1524,6 +1690,7 @@
                 <td>${a.groupName}</td>
                 <td>${toArDigits(a.time)}</td>
                 <td><span class="user-badge">${a.collector}</span></td>
+                <td class="no-print"><button class="btn btn-danger btn-xs" onclick="deleteAttendanceLog(${a.id})"><i class="fa-solid fa-trash"></i> حذف</button></td>
             </tr>
         `).join('');
         populateAttendanceGroupSelect();
@@ -1538,6 +1705,7 @@
                 <td>${a.groupName}</td>
                 <td>${toArDigits(a.date)}</td>
                 <td><span class="user-badge">${a.collector}</span></td>
+                <td class="no-print"><button class="btn btn-danger btn-xs" onclick="deleteAbsenceLog(${a.id})"><i class="fa-solid fa-trash"></i> حذف</button></td>
             </tr>
         `).join('');
     }
@@ -1550,7 +1718,7 @@
         if (!sel) return;
         const prev = sel.value;
         sel.innerHTML = `<option value="">-- اختر المجموعة --</option>` +
-            DB.groups.map(g => `<option value="${g.id}">${g.name}</option>`).join('');
+            DB.groups.map(g => `<option value="${g.id}">${groupLabel(g)}</option>`).join('');
         if (prev) sel.value = prev;
     }
 
@@ -1709,7 +1877,7 @@
         if (!sel) return;
         const prev = sel.value;
         sel.innerHTML = `<option value="">-- اختر المجموعة --</option>` +
-            DB.groups.map(g => `<option value="${g.id}">${g.name}</option>`).join('');
+            DB.groups.map(g => `<option value="${g.id}">${groupLabel(g)}</option>`).join('');
         if (prev) sel.value = prev;
     }
 
