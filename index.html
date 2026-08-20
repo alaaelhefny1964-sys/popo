@@ -2111,11 +2111,13 @@
                 }).then(res => {
                     if (res.error) {
                         console.warn('فشل إرسال الحجز لقاعدة البيانات المشتركة، سيتم الحفظ محلياً:', res.error);
+                        alert('⚠️ تنبيه تشخيصي: فشل إرسال الحجز لقاعدة البيانات المشتركة.\nرسالة الخطأ: ' + (res.error.message || JSON.stringify(res.error)) + '\n\nتم حفظ الحجز مؤقتاً على هذا الجهاز فقط.');
                         DB.bookingRequests.push(Object.assign({ id: (DB.bookingRequests.length ? Math.max(...DB.bookingRequests.map(b => b.id)) : 0) + 1 }, newBooking));
                         saveDB();
                     }
                 }).catch(err => {
                     console.warn('فشل إرسال الحجز لقاعدة البيانات المشتركة، سيتم الحفظ محلياً:', err);
+                    alert('⚠️ تنبيه تشخيصي: فشل إرسال الحجز لقاعدة البيانات المشتركة.\nرسالة الخطأ: ' + (err && err.message ? err.message : JSON.stringify(err)) + '\n\nتم حفظ الحجز مؤقتاً على هذا الجهاز فقط.');
                     DB.bookingRequests.push(Object.assign({ id: (DB.bookingRequests.length ? Math.max(...DB.bookingRequests.map(b => b.id)) : 0) + 1 }, newBooking));
                     saveDB();
                 });
