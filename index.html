@@ -7,33 +7,34 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Amiri:wght@400;700&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* ============ لوحة الألوان الجديدة: أخضر زُمردي داكن + نحاسي دافئ ============ */
+        /* ============ لوحة الألوان الجديدة: ألوان مبهجة وحيوية تلفت النظر ============ */
         :root {
-            --bg-body: #10131f;
-            --bg-body-2: #0b0e18;
-            --bg-card: #181c2e;
-            --bg-card-2: #1f2439;
-            --bg-input: #141827;
-            --border-color: #2b3150;
-            --primary: #6c63e0;
-            --primary-dark: #564dc2;
-            --accent: #f2a13a;
-            --accent-2: #2dd4a7;
-            --text-main: #eef0fb;
-            --text-muted: #8d94b8;
-            --danger: #ff5c72;
-            --success: #2dd4a7;
+            --bg-body: #0b2530;
+            --bg-body-2: #071b23;
+            --bg-card: #0e3242;
+            --bg-card-2: #123c4f;
+            --bg-input: #0a2733;
+            --border-color: #1f5468;
+            --primary: #118AB2;
+            --primary-dark: #0c6f90;
+            --accent: #FFD166;
+            --accent-2: #06D6A0;
+            --accent-purple: #9B5DE5;
+            --text-main: #f7fbfc;
+            --text-muted: #9fc6d4;
+            --danger: #EF476F;
+            --success: #06D6A0;
             --radius: 16px;
-            --shadow: 0 14px 34px rgba(6,8,16,0.45);
+            --shadow: 0 14px 34px rgba(3,10,14,0.45);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
         body {
             background:
-                radial-gradient(circle at 100% 0%, rgba(108,99,224,0.10), transparent 45%),
-                radial-gradient(circle at 0% 100%, rgba(47,158,143,0.10), transparent 45%),
+                radial-gradient(circle at 100% 0%, rgba(255,209,102,0.10), transparent 45%),
+                radial-gradient(circle at 0% 100%, rgba(6,214,160,0.12), transparent 45%),
                 var(--bg-body);
             color: var(--text-main); min-height: 100vh;
         }
@@ -51,7 +52,7 @@
             content:''; position:absolute; top:0; right:0; left:0; height:5px;
             background: linear-gradient(90deg, var(--primary), var(--accent));
         }
-        .login-icon { width:64px; height:64px; border-radius:50%; background:rgba(242,161,58,0.15); border:2px solid var(--accent);
+        .login-icon { width:64px; height:64px; border-radius:50%; background:rgba(255,209,102,0.18); border:2px solid var(--accent);
             display:flex; align-items:center; justify-content:center; margin:0 auto 14px; font-size:26px; color:var(--accent-2); }
 
         .form-group { margin-bottom: 15px; text-align: right; }
@@ -60,7 +61,7 @@
             width: 100%; padding: 10px; background: var(--bg-input); border: 1px solid var(--border-color);
             border-radius: 8px; color: #fff; font-size: 14px; outline: none; transition: 0.2s;
         }
-        .form-control:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(242,161,58,0.15); }
+        .form-control:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(255,209,102,0.18); }
         .field-hint { font-size: 11px; color: var(--text-muted); margin-top: 4px; display:block; }
 
         .btn {
@@ -69,7 +70,7 @@
         }
         .btn:hover { transform: translateY(-1px); filter: brightness(1.08); }
         .btn-primary { background: var(--primary); color: white; }
-        .btn-gold { background: linear-gradient(135deg, #ffc978, var(--accent)); color: #2a1a05; font-weight: 800; box-shadow: 0 6px 16px rgba(242,161,58,0.28); }
+        .btn-gold { background: linear-gradient(135deg, #ffe29a, var(--accent)); color: #2a1a05; font-weight: 800; box-shadow: 0 6px 16px rgba(255,209,102,0.30); }
         .btn-danger { background: var(--danger); color: white; }
         .btn-success { background: var(--success); color: white; }
         .btn-whatsapp { background: #25D366; color: white; }
@@ -96,7 +97,7 @@
         }
         .sidebar-menu li a i { width:18px; text-align:center; }
         .sidebar-menu li a:hover { background: rgba(255,255,255,0.06); transform: translateX(-2px); }
-        .sidebar-menu li a.active { background: linear-gradient(135deg, var(--primary), #8b7ff0); color:#fff; box-shadow: 0 6px 16px rgba(108,99,224,0.35); }
+        .sidebar-menu li a.active { background: linear-gradient(135deg, var(--primary), var(--accent-purple)); color:#fff; box-shadow: 0 6px 16px rgba(17,138,178,0.35); }
         .sidebar-menu li a.active i { color:#fff; }
 
         .topbar {
@@ -109,12 +110,12 @@
         table { width: 100%; min-width: 760px; border-collapse: collapse; margin-top: 15px; }
         th, td { padding: 7px 8px; text-align: center; border-bottom: 1px solid var(--border-color); font-size: 12.5px; white-space: nowrap; }
         th { background: var(--bg-body-2); color: var(--accent-2); font-weight:700; }
-        tbody tr:hover { background: rgba(47,158,143,0.06); }
+        tbody tr:hover { background: rgba(6,214,160,0.08); }
 
         .section { display: none; }
         .section.active { display: block; }
 
-        .user-badge { background: rgba(242,161,58,0.16); color: var(--accent-2); border: 1px solid var(--accent); padding: 2px 8px; border-radius: 5px; font-size: 12px; white-space: nowrap; display:inline-block; }
+        .user-badge { background: rgba(255,209,102,0.18); color: var(--accent-2); border: 1px solid var(--accent); padding: 2px 8px; border-radius: 5px; font-size: 12px; white-space: nowrap; display:inline-block; }
         .status-ok { background: rgba(69,176,124,0.18); color: var(--success); border:1px solid var(--success); padding:2px 8px; border-radius:5px; font-size:12px; font-weight:700; white-space: nowrap; display:inline-block; }
         .status-no { background: rgba(224,96,90,0.18); color: var(--danger); border:1px solid var(--danger); padding:2px 8px; border-radius:5px; font-size:12px; font-weight:700; white-space: nowrap; display:inline-block; }
 
@@ -122,65 +123,80 @@
         .modal.active { display: flex; }
         .modal-content { background: var(--bg-card); padding: 25px; border-radius: var(--radius); width: 100%; max-width: 500px; border: 1px solid var(--border-color); max-height:90vh; overflow-y:auto; }
 
-        /* ============ صفحة الحجز الإلكتروني العامة (دفتر التسجيل) ============ */
+        /* ============ صفحة الحجز الإلكتروني العامة (دفتر التسجيل) — نفس تصميم كشف الحجوزات بالضبط ============ */
         .public-booking-page {
             display: none; min-height: 100vh; justify-content: center; align-items: flex-start;
-            padding: 40px 15px;
-            background:
-                radial-gradient(circle at 15% 10%, rgba(242,161,58,0.10), transparent 40%),
-                radial-gradient(circle at 85% 90%, rgba(47,158,143,0.14), transparent 40%),
-                var(--bg-body);
+            padding: 30px 20px;
+            background: linear-gradient(145deg, #fff9e6, #fef3d7);
         }
         .public-booking-wrapper {
-            background: linear-gradient(160deg, #fbf3e3, #f6e8cd);
-            color: #24312f;
-            border-radius: 22px;
-            padding: 30px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            max-width: 780px; width:100%;
-            box-shadow: 0 20px 45px rgba(0,0,0,0.35);
+            max-width: 820px; width:100%;
         }
-        .decorative-dots { display: flex; gap: 12px; justify-content: center; margin-bottom: 15px; }
-        .decorative-dots span { width: 14px; height: 14px; border-radius: 50%; display: inline-block; }
-        .dot1 { background: #f2a13a; } .dot2 { background: #6c63e0; } .dot3 { background: #7a5c8a; } .dot4 { background: #e0605a; } .dot5 { background: #2dd4a7; }
+        .decorative-dots { display: flex; gap: 18px; justify-content: center; margin-bottom: 15px; flex-wrap: wrap; }
+        .decorative-dots span { width: 16px; height: 16px; border-radius: 50%; display: inline-block; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
+        .dot1 { background: #FFD166; } .dot2 { background: #06D6A0; } .dot3 { background: #9B5DE5; } .dot4 { background: #EF476F; } .dot5 { background: #118AB2; }
 
         .welcome-banner {
-            background: #16332f; padding: 15px 30px; border-radius: 60px; margin-bottom: 20px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3); text-align: center; display: flex; align-items: center; gap: 15px;
+            background: #2d1b3d; padding: 20px 40px; border-radius: 60px; margin-bottom: 25px;
+            box-shadow: 0 8px 20px rgba(90, 30, 120, 0.3); text-align: center; display: flex; align-items: center; justify-content: center; gap: 16px;
         }
+        .teacher-avatar { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; flex-shrink: 0; border: 2.5px solid #f9d976; box-shadow: 0 0 0 3px rgba(243,156,18,0.25); background: #fffdf7; }
         .welcome-banner h2 {
-            font-family: 'Amiri', serif; font-weight: 700; font-size: 1.7rem;
-            background: linear-gradient(135deg, var(--accent-2), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0;
+            font-family: 'Amiri', serif; font-weight: 700; font-size: 2rem; letter-spacing: 0.5px;
+            background: linear-gradient(135deg, #f9d976, #f39c12, #f9d976); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            text-shadow: 0 0 20px rgba(243, 156, 18, 0.2); margin: 0;
         }
 
         .notebook {
-            max-width: 750px; width: 100%; background: #fffcf5; border-radius: 24px; padding: 25px 30px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); border: 1px solid rgba(242,161,58,0.35);
+            max-width: 820px; width: 100%; background: #fffdf7; border-radius: 30px; padding: 30px 35px 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12), 0 8px 16px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(255, 215, 140, 0.4); position: relative; margin-bottom: 30px;
         }
-        .notebook-header { text-align: center; margin-bottom: 20px; border-bottom: 2px dashed #ecd9b8; padding-bottom: 15px; }
-        .notebook-header h1 { font-family:'Amiri', serif; font-size: 2.1rem; font-weight: 800; color: #1f7c70; margin-bottom: 5px; }
+        .notebook-header { text-align: center; margin-bottom: 28px; border-bottom: 2px dashed #f0e0c8; padding-bottom: 18px; }
+        .notebook-header h1 { font-size: 2.5rem; font-weight: 800; color: #5f2d8a; letter-spacing: 2px; margin-bottom: 6px; text-shadow: 0 2px 8px rgba(95, 45, 138, 0.15); }
+        .notebook-header .subhead {
+            font-size: 1.1rem; font-weight: 600;
+            background: linear-gradient(135deg, #EF476F, #FFD166); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
 
-        .public-form-group { margin-bottom: 15px; text-align: right; }
-        .public-form-group label { display: block; font-weight: 700; color: #3d2a20; margin-bottom: 5px; }
+        .public-form-row { display: flex; flex-wrap: wrap; gap: 18px; }
+        .public-form-row .public-form-group { flex: 1 1 220px; }
+        .public-form-group { margin-bottom: 20px; text-align: right; }
+        .public-form-group label { display: block; font-weight: 700; color: #3d2a4b; margin-bottom: 6px; font-size: 1rem; letter-spacing: 0.3px; }
         .public-form-group input, .public-form-group select {
-            width: 100%; padding: 10px 14px; border: 2px solid #ece1cf; border-radius: 12px; background: #fdfaf4; font-size: 0.95rem; color: #24312f;
+            width: 100%; padding: 10px 16px; border: 2px solid #ece1d3; border-radius: 16px; background: #fcf9f4; font-size: 1rem; font-family: 'Cairo', sans-serif; transition: 0.25s; color: #2d1b3d;
+        }
+        .public-form-group input:focus, .public-form-group select:focus {
+            border-color: #9B5DE5; outline: none; box-shadow: 0 0 0 5px rgba(155, 93, 229, 0.15); background: #ffffff;
         }
 
         .btn-booking-submit {
-            width: 100%; padding: 14px; background: linear-gradient(135deg, #6c63e0, #f2a13a); border: none;
-            border-radius: 50px; color: white; font-size: 1.15rem; font-weight: 800; cursor: pointer; transition: 0.3s; margin-top: 10px;
+            width: 100%; padding: 16px; background: linear-gradient(135deg, #9B5DE5, #EF476F); border: none;
+            border-radius: 60px; color: white; font-size: 1.3rem; font-weight: 800; letter-spacing: 1px; cursor: pointer; transition: 0.3s;
+            box-shadow: 0 10px 20px -8px rgba(155, 93, 229, 0.5); margin-top: 10px;
         }
-        .btn-booking-submit:hover { transform: scale(1.01); }
+        .btn-booking-submit:hover { transform: scale(1.01); box-shadow: 0 14px 28px -8px #9B5DE5; }
 
         .confirmation-box {
-            background: #e1f4ee; border-radius: 20px; padding: 20px; margin-top: 20px; border-right: 6px solid #6c63e0;
-            display: none; text-align: center; color: #0a4b3a;
+            background: #e1f7f0; border-radius: 28px; padding: 24px 18px; margin-top: 20px; border-right: 8px solid #06D6A0;
+            display: none; text-align: center; color: #0a4b3a; box-shadow: 0 0 0 3px #fff, 0 8px 20px rgba(6, 214, 160, 0.2);
         }
         .confirmation-box.active { display: block; }
+        .confirmation-box .stamp {
+            display: inline-block; background: linear-gradient(145deg, #06D6A0, #0bbf8a); color: white; font-weight: 800; font-size: 1.6rem;
+            padding: 8px 28px; border-radius: 60px; box-shadow: 0 0 0 4px #ffdd99, 0 0 0 8px #06D6A0; margin-bottom: 18px; letter-spacing: 2px; text-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        .confirmation-box p { font-size: 1.15rem; font-weight: 600; color: #0a4b3a; margin: 10px 0; }
+        .confirmation-box .copy-link-btn {
+            display: inline-block; background: #e9e0f5; color: #4a2b5e; padding: 10px 26px; border-radius: 40px; border: none;
+            font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: 0.2s; font-family: 'Cairo', sans-serif; margin-top: 14px;
+        }
+        .confirmation-box .copy-link-btn:hover { background: #d7c7ec; }
 
-        .public-back-link { color: var(--text-muted); font-size:12px; margin-top:16px; text-align:center; }
+        .public-back-link { color: #7a5e7e; font-size:12px; margin-top:6px; text-align:center; }
 
         .footer-stamp { text-align: center; margin-top: 25px; padding-top: 10px; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 12px; }
 
@@ -189,39 +205,114 @@
         .checkbox-box input[type=checkbox] { width:auto; accent-color: var(--accent); }
         .checkbox-box .hint { display:block; margin-top:6px; color: var(--accent-2); font-size:12px; font-weight:700; }
 
+        /* ============ عرض المجموعات بشكل مجلدات قابلة للطي (بالميعاد + الطلاب المسجلين بداخلها) ============ */
+        .groups-filter-bar { display:flex; align-items:center; gap:10px; margin: 16px 0; flex-wrap:wrap; }
+        .groups-filter-bar select { max-width: 260px; }
+        .group-folder {
+            background: var(--bg-card-2); border: 1px solid var(--border-color); border-radius: 14px;
+            margin-bottom: 12px; overflow: hidden; transition: 0.2s;
+        }
+        .group-folder-head {
+            display:flex; align-items:center; justify-content:space-between; gap:12px;
+            padding: 14px 18px; cursor: pointer; user-select:none;
+        }
+        .group-folder-head:hover { background: rgba(255,255,255,0.03); }
+        .group-folder-title { display:flex; align-items:center; gap:12px; }
+        .group-folder-title .folder-icon { font-size: 20px; }
+        .group-folder-name { font-weight: 800; font-size: 15px; color: var(--text-main); }
+        .group-folder-sub { font-size: 12.5px; color: var(--accent-2); margin-top: 3px; display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+        .group-folder-chevron { transition: transform 0.25s; color: var(--text-muted); }
+        .group-folder.open .group-folder-chevron { transform: rotate(180deg); }
+        .group-folder-actions { display:flex; gap:6px; align-items:center; }
+        .group-folder-body { max-height:0; overflow:hidden; transition: max-height 0.3s ease; border-top: 1px solid transparent; }
+        .group-folder.open .group-folder-body { max-height: 2000px; border-top: 1px solid var(--border-color); }
+        .group-folder-body-inner { padding: 14px 18px 18px; }
+        .group-student-row {
+            display:flex; align-items:center; justify-content:space-between; gap:10px;
+            padding: 9px 12px; border-radius: 10px; background: var(--bg-input); margin-bottom: 8px; flex-wrap:wrap;
+        }
+        .group-student-info { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+        .group-student-empty { color: var(--text-muted); font-size: 13px; text-align:center; padding: 10px; }
+        .group-fee-badges { display:flex; gap:6px; flex-wrap:wrap; margin-top:2px; }
+        .group-fee-badge { font-size: 11px; padding: 2px 9px; border-radius: 20px; background: rgba(255,209,102,0.14); color: var(--accent); border:1px solid rgba(255,209,102,0.4); font-weight:700; }
+        .group-fee-badge.tag-purple { background: rgba(155,93,229,0.14); color: var(--accent-purple); border-color: rgba(155,93,229,0.4); }
+        .group-fee-badge.tag-green { background: rgba(6,214,160,0.14); color: var(--accent-2); border-color: rgba(6,214,160,0.4); }
+
+        /* ============ نافذة إضافة/تعديل مجموعة بالتصميم الجديد ============ */
+        .gmodal-grid { display:grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        .gmodal-grid.full { grid-template-columns: 1fr; }
+        .gmodal-field label { display:flex; align-items:center; gap:6px; font-weight:700; color: var(--accent-2); font-size: 13px; margin-bottom: 6px; }
+        .gmodal-field input, .gmodal-field select {
+            width: 100%; padding: 12px 16px; border-radius: 30px; border: 1.5px solid var(--border-color);
+            background: var(--bg-input); color: var(--text-main); font-size: 14px; text-align:center; transition: 0.2s;
+        }
+        .gmodal-field input:focus, .gmodal-field select:focus { outline:none; border-color: var(--accent-purple); box-shadow: 0 0 0 4px rgba(155,93,229,0.18); }
+        .gmodal-field { margin-bottom: 14px; }
+
         @media (max-width: 768px) {
             .sidebar { width: 100%; height: auto; position: relative; }
             .main-content { margin-right: 0; padding: 15px; }
         }
 
-        /* ============ إعدادات الطباعة PDF ============ */
-        .print-header-block { display:none; }
-        @media print {
-            body * { visibility: hidden; }
-            .printable, .printable * { visibility: visible; }
-            .printable {
-                position: absolute; top: 0; right: 0; left:0; width: 100%; margin:0;
-                background:#fff !important; color:#000 !important;
-                border: 2px solid #333 !important; border-radius:0 !important;
-                padding: 18px !important; box-shadow:none !important;
-            }
-            .no-print { display: none !important; }
-            .print-header-block {
-                display: block !important; text-align: center; margin-bottom: 14px;
-                border-bottom: 3px double #333; padding-bottom: 10px;
-            }
-            .print-header-block h1 { font-family:'Amiri','Arial','Tahoma',sans-serif; font-weight:800 !important; font-size: 22px; color:#000 !important; margin-bottom:4px; }
-            .print-header-block h2 { font-family:'Arial','Tahoma',sans-serif; font-weight:800 !important; font-size: 16px; color:#000 !important; margin-bottom:2px; }
-            .print-header-block p { font-family:'Arial','Tahoma',sans-serif; font-weight:700 !important; font-size: 12px; color:#000 !important; }
-            .printable table { color:#000; width:100%; border-collapse:collapse; table-layout:auto; }
-            .printable th { background:#e0e0e0 !important; color:#000 !important; font-weight:800 !important; font-size:12.5px; -webkit-print-color-adjust: exact; print-color-adjust: exact; white-space: nowrap; padding:6px 8px !important; }
-            .printable td { font-weight:700 !important; font-size:12.5px; color:#000 !important; white-space: nowrap; padding:6px 8px !important; }
-            .printable td, .printable th { border: 1px solid #666 !important; }
-            .printable h4 { color:#000 !important; font-weight:800 !important; margin: 14px 0 4px; }
-            .print-footer-block { display:block !important; text-align:center; margin-top:14px; padding-top:8px; border-top:1px solid #999; font-size:12px; font-weight:700; color:#000 !important; }
-            @page { size: A4 landscape; margin: 10mm; }
+        /* ============ إعدادات الطباعة PDF: فريم واحد مقفول تماماً على صفحة واحدة، بخط أسود، وبدون أي امتداد جانبي ============ */
+        .print-header-block, .print-footer-block { display:none; }
+        #printRoot { position: fixed; top: -99999px; left: -99999px; }
+        body.printing > *:not(#printRoot) { display: none !important; }
+        body.printing #printRoot {
+            position: static; width: 100%;
+            display: flex; justify-content: center;
+            background: #fff;
         }
-        .print-footer-block { display:none; }
+        .print-frame {
+            background: #fff; color: #000;
+            border: 2.5px solid #333; border-radius: 0;
+            padding: 14px; box-shadow: none;
+            box-sizing: border-box;
+            font-size: 12px;
+            box-decoration-break: clone;
+            -webkit-box-decoration-break: clone;
+        }
+        /* تصفير شامل: أي عنصر جوه فريم الطباعة يتحول للأبيض والأسود بخط النظام الثابت، ويُمنع من التمدد خارج عرض الصفحة */
+        .print-frame, .print-frame * {
+            background-color: #fff !important;
+            background-image: none !important;
+            color: #000 !important;
+            border-color: #888 !important;
+            box-shadow: none !important;
+            text-shadow: none !important;
+            white-space: normal !important;
+            word-break: break-word !important;
+            overflow-wrap: break-word !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            box-sizing: border-box !important;
+            font-family: 'Tahoma', 'Arial', sans-serif !important;
+        }
+        .print-frame .print-header-block {
+            display: block; text-align: center; margin-bottom: 1.1em;
+            border-bottom: 3px double #333; padding-bottom: 0.8em;
+        }
+        .print-frame .print-header-block h1 { font-weight:800; font-size: 1.8em; margin-bottom:0.3em; }
+        .print-frame .print-header-block h2 { font-weight:800; font-size: 1.35em; margin-bottom:0.15em; }
+        .print-frame .print-header-block p { font-weight:700; font-size: 1em; }
+        .print-frame table { width:100% !important; border-collapse:collapse; table-layout:auto; font-size: 1em; }
+        .print-frame th { background-color:#e0e0e0 !important; font-weight:800; font-size:1em; -webkit-print-color-adjust: exact; print-color-adjust: exact; padding:0.32em 0.4em; }
+        .print-frame td { font-weight:700; font-size:1em; padding:0.32em 0.4em; }
+        .print-frame td, .print-frame th { border: 1px solid #888 !important; }
+        .print-page-shell tbody > tr > td table tr { break-inside: avoid; page-break-inside: avoid; }
+        .print-frame h4 { font-weight:800; font-size: 1.05em; margin: 1.1em 0 0.3em; }
+        .print-frame .print-footer-block { display:block; text-align:center; margin-top:1.1em; padding-top:0.7em; border-top:1px solid #999; font-size:1em; font-weight:700; }
+        /* الفريم الخارجي عبارة عن جدول: العنوان فى thead والختم فى tfoot عشان يتكرروا تلقائياً فى أول وآخر كل صفحة لو المحتوى امتد لأكتر من صفحة */
+        .print-page-shell { width:100%; border-collapse:collapse; }
+        .print-page-shell > thead > tr > td,
+        .print-page-shell > tbody > tr > td,
+        .print-page-shell > tfoot > tr > td {
+            border: none !important; padding: 0 !important; background:#fff !important;
+        }
+        @media print {
+            @page { size: A4; margin: 6mm; }
+        }
+        body.printing { background: #fff !important; }
     </style>
     <!-- Supabase (لمزامنة طلبات الحجز بين الأجهزة المختلفة عبر الإنترنت) -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
@@ -254,29 +345,34 @@
             <span class="dot1"></span><span class="dot2"></span><span class="dot3"></span><span class="dot4"></span><span class="dot5"></span>
         </div>
         <div class="welcome-banner">
-            <h2 id="publicMasterName">دفتر تسجيل الحجوزات - مستر / علاء الحفني</h2>
+            <img src="data:image/png;base64,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" alt="مستر علاء الحفني" class="teacher-avatar">
+            <h2 id="publicMasterName">مستر / علاء الحفني يرحب بكم</h2>
         </div>
         <div class="notebook">
             <div class="notebook-header">
-                <h1>استمارة حجز درس</h1>
-                <p style="color:#7a5e46; font-weight:600;">سجل بياناتك للالتحاق بالمجموعات التعليمية</p>
+                <h1>دفتر تسجيل الحجوزات</h1>
+                <div class="subhead">✧ المرحلة الدراسية · المجموعة · بيانات الطالب ✧</div>
             </div>
             <form id="publicBookingForm" onsubmit="handlePublicBooking(event)">
-                <div class="public-form-group">
-                    <label>اسم الطالب الثلاثي / الرباعي</label>
-                    <input type="text" id="pubStdName" required placeholder="أدخل الاسم الكامل">
+                <div class="public-form-row">
+                    <div class="public-form-group">
+                        <label>المرحلة الدراسية</label>
+                        <select id="pubStdStage" required onchange="populatePublicGroupsSelect()"></select>
+                    </div>
+                    <div class="public-form-group">
+                        <label>اسم الطالب الثلاثي / الرباعي</label>
+                        <input type="text" id="pubStdName" required placeholder="أدخل الاسم الكامل">
+                    </div>
                 </div>
-                <div class="public-form-group">
-                    <label>رقم هاتف الطالب (واتساب)</label>
-                    <input type="tel" id="pubStdPhone" required placeholder="01xxxxxxxxx">
-                </div>
-                <div class="public-form-group">
-                    <label>رقم هاتف ولي الأمر (واتساب)</label>
-                    <input type="tel" id="pubStdParentPhone" required placeholder="01xxxxxxxxx">
-                </div>
-                <div class="public-form-group">
-                    <label>المرحلة الدراسية</label>
-                    <select id="pubStdStage" required onchange="populatePublicGroupsSelect()"></select>
+                <div class="public-form-row">
+                    <div class="public-form-group">
+                        <label>رقم هاتف الطالب (واتساب)</label>
+                        <input type="tel" id="pubStdPhone" required placeholder="01xxxxxxxxx">
+                    </div>
+                    <div class="public-form-group">
+                        <label>رقم هاتف ولي الأمر (واتساب)</label>
+                        <input type="tel" id="pubStdParentPhone" required placeholder="01xxxxxxxxx">
+                    </div>
                 </div>
                 <div class="public-form-group">
                     <label>المجموعة</label>
@@ -286,8 +382,9 @@
             </form>
 
             <div class="confirmation-box" id="pubConfirmationBox">
-                <h3>✅ تم إرسال طلب الحجز بنجاح!</h3>
-                <p>شكراً لك، تم تسجيل طلبك بانتظار الاعتماد من الأستاذ علاء الحفني.</p>
+                <div class="stamp">✓ تم التسجيل</div>
+                <p>تم تسجيل بياناتك بالكامل، برجاء انتظار تفعيل الحجز من مستر / علاء الحفني</p>
+                <button type="button" class="copy-link-btn" onclick="copyBookingLink()"><i class="fa-solid fa-copy"></i> نسخ رابط الحجز</button>
             </div>
         </div>
         <p class="public-back-link">هذه صفحة الحجز العامة للطلاب — يمكن مشاركة رابطها مباشرة</p>
@@ -352,26 +449,18 @@
         <div class="section" id="sec-groups">
             <div class="card" id="printGroupsArea">
                 <div class="card-head">
-                    <h3><i class="fa-solid fa-layer-group"></i> المجموعات الدراسية</h3>
+                    <h3 style="font-size:15px;"><i class="fa-solid fa-layer-group" style="font-size:14px;"></i> إدارة المجموعات الدراسية</h3>
                     <div style="display:flex; gap:8px;">
                         <button class="btn btn-outline btn-sm no-print" onclick="printSection('printGroupsArea','كشف المجموعات الدراسية')"><i class="fa-solid fa-print"></i> طباعة PDF</button>
-                        <button class="btn btn-gold no-print" onclick="openGroupModal()"><i class="fa-solid fa-plus"></i> إضافة مجموعة جديدة</button>
+                        <button class="btn btn-gold no-print" onclick="openGroupModal()"><i class="fa-solid fa-plus"></i> إضافة مجموعة</button>
                     </div>
                 </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>اسم المجموعة</th>
-                            <th>المرحلة التابعة</th>
-                            <th>ميعاد المجموعة</th>
-                            <th>نظام الدفع</th>
-                            <th>المصاريف</th>
-                            <th>ثمن الملزمة</th>
-                            <th class="no-print">العمليات</th>
-                        </tr>
-                    </thead>
-                    <tbody id="groupsTableBody"></tbody>
-                </table>
+                <div class="groups-filter-bar no-print">
+                    <select class="form-control" id="groupsStageFilter" onchange="renderGroups()">
+                        <option value="all">كل المراحل</option>
+                    </select>
+                </div>
+                <div id="groupsFolderList"></div>
             </div>
         </div>
 
@@ -419,6 +508,7 @@
                             <th>الخصم</th>
                             <th>الملزمة</th>
                             <th class="no-print">تحصيل مالي</th>
+                            <th class="no-print">تقرير الطالب</th>
                             <th class="no-print">العمليات</th>
                         </tr>
                     </thead>
@@ -426,6 +516,9 @@
                 </table>
             </div>
         </div>
+
+        <!-- حاوية مخفية لبناء تقرير الطالب الشامل عند الطباعة (لا تظهر إلا وقت الطباعة) -->
+        <div id="studentReportPrintArea"></div>
 
         <!-- 5. الحضور والغياب -->
         <div class="section" id="sec-attendance">
@@ -491,11 +584,14 @@
                 <select class="form-control" id="examsGroupSelect" style="margin-top:12px;" onchange="renderExamsPanel()"></select>
             </div>
 
-            <div class="card no-print" id="examsPanelWrap" style="display:none;">
-                <div style="display:flex; gap:8px; margin-bottom:15px; flex-wrap:wrap;">
-                    <button class="btn btn-outline btn-sm" id="examsSubtabSession" onclick="setExamsSubtab('حصة')"><i class="fa-solid fa-pen"></i> امتحانات الحصة</button>
-                    <button class="btn btn-outline btn-sm" id="examsSubtabDaily" onclick="setExamsSubtab('يومي')"><i class="fa-solid fa-calendar-day"></i> الامتحانات اليومية</button>
-                    <button class="btn btn-outline btn-sm" id="examsSubtabRank" onclick="setExamsSubtab('ترتيب')"><i class="fa-solid fa-ranking-star"></i> ترتيب الطلاب</button>
+            <div class="card" id="examsPanelWrap" style="display:none;">
+                <div class="card-head no-print">
+                    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                        <button class="btn btn-outline btn-sm" id="examsSubtabSession" onclick="setExamsSubtab('حصة')"><i class="fa-solid fa-pen"></i> امتحانات الحصة</button>
+                        <button class="btn btn-outline btn-sm" id="examsSubtabDaily" onclick="setExamsSubtab('يومي')"><i class="fa-solid fa-calendar-day"></i> الامتحانات اليومية</button>
+                        <button class="btn btn-outline btn-sm" id="examsSubtabRank" onclick="setExamsSubtab('ترتيب')"><i class="fa-solid fa-ranking-star"></i> ترتيب الطلاب</button>
+                    </div>
+                    <button class="btn btn-outline btn-sm" onclick="printSection('examsPanelWrap','كشف الامتحانات')"><i class="fa-solid fa-print"></i> طباعة PDF</button>
                 </div>
                 <div id="examsPanelBody"></div>
             </div>
@@ -507,10 +603,13 @@
                 <h3><i class="fa-solid fa-layer-group"></i> اختر المجموعة</h3>
                 <select class="form-control" id="hwGroupSelect" style="margin-top:12px;" onchange="renderHomeworkPanel()"></select>
             </div>
-            <div class="card no-print" id="hwPanelWrap" style="display:none;">
+            <div class="card" id="hwPanelWrap" style="display:none;">
                 <div class="card-head">
                     <h3><i class="fa-solid fa-book-open"></i> واجبات المجموعة</h3>
-                    <button class="btn btn-gold btn-sm" onclick="openHomeworkModal()"><i class="fa-solid fa-plus"></i> إضافة واجب جديد</button>
+                    <div style="display:flex; gap:8px;">
+                        <button class="btn btn-outline btn-sm no-print" onclick="printSection('hwPanelWrap','كشف الواجبات')"><i class="fa-solid fa-print"></i> طباعة PDF</button>
+                        <button class="btn btn-gold btn-sm no-print" onclick="openHomeworkModal()"><i class="fa-solid fa-plus"></i> إضافة واجب جديد</button>
+                    </div>
                 </div>
                 <div id="hwListBody"></div>
                 <div id="hwDetailBody" style="margin-top:15px;"></div>
@@ -552,8 +651,11 @@
                 <button id="manualRefreshBtn" class="btn btn-outline btn-sm no-print" style="margin-top:10px;" onclick="manualRefreshFromStorage()"><i class="fa-solid fa-rotate"></i> تحديث الطلبات الآن</button>
             </div>
 
-            <div class="card">
-                <h3>طلبات الحجز الإلكتروني الواردة</h3>
+            <div class="card" id="printBookingRequestsArea">
+                <div class="card-head">
+                    <h3>طلبات الحجز الإلكتروني الواردة (قبل التفعيل وإرسالهم إلى مجموعاتهم)</h3>
+                    <button class="btn btn-outline btn-sm no-print" onclick="printSection('printBookingRequestsArea','كشف طلبات الحجز الإلكتروني الواردة')"><i class="fa-solid fa-print"></i> طباعة PDF</button>
+                </div>
                 <table>
                     <thead>
                         <tr>
@@ -561,7 +663,7 @@
                             <th>المجموعة</th>
                             <th>هاتف الطالب (واتساب)</th>
                             <th>هاتف ولي الأمر (واتساب)</th>
-                            <th>الإجراء</th>
+                            <th class="no-print">الإجراء</th>
                         </tr>
                     </thead>
                     <tbody id="bookingRequestsBody"></tbody>
@@ -689,6 +791,9 @@
     </div>
 </div>
 
+<!-- حاوية معزولة تُستخدم لبناء فريم الطباعة (نسخة من المحتوى المطلوب طباعته فقط، بمعزل عن باقي الصفحة) -->
+<div id="printRoot"></div>
+
 <script>
     // دالة تحويل جميع الأرقام إلى أرقام عربية (٠-٩)
     function toArDigits(str) {
@@ -730,8 +835,8 @@
             { id: 3, name: "الصف الثالث الثانوي (علمي)" }
         ],
         groups: [
-            { id: 1, stageId: 1, name: "مجموعة السبت والثلاثاء", schedule: "السبت والثلاثاء - ٤:٠٠ مساءً", payType: "شهر", fee: 200, bookletFee: 50, telegramChatId: "" },
-            { id: 2, stageId: 3, name: "مجموعة الأحد والأربعاء", schedule: "الأحد والأربعاء - ٦:٠٠ مساءً", payType: "حصة", fee: 50, bookletFee: 30, telegramChatId: "" }
+            { id: 1, stageId: 1, name: "مجموعة السبت والثلاثاء", subject: "", schedule: "السبت والثلاثاء - ٤:٠٠ مساءً", payType: "شهر", fee: 200, monthlyFee: 0, bookletFee: 50, telegramChatId: "" },
+            { id: 2, stageId: 3, name: "مجموعة الأحد والأربعاء", subject: "", schedule: "الأحد والأربعاء - ٦:٠٠ مساءً", payType: "حصة", fee: 50, monthlyFee: 0, bookletFee: 30, telegramChatId: "" }
         ],
         students: [
             { id: 101, code: "ST-101", name: "أحمد محمود علي", stageId: 1, groupId: 1, phone: "01012345678", whatsapp: "01012345678", parentWhatsapp: "", discount: 0, payOverride: "", bookletPaid: false }
@@ -1090,70 +1195,167 @@
 
     // --- 2. إدارة المجموعات ---
     function renderGroups() {
-        const tbody = document.getElementById('groupsTableBody');
-        tbody.innerHTML = DB.groups.map(g => {
+        const filterSel = document.getElementById('groupsStageFilter');
+        if (filterSel) {
+            const prevVal = filterSel.value || 'all';
+            filterSel.innerHTML = '<option value="all">كل المراحل</option>' +
+                DB.stages.map(st => `<option value="${st.id}">${st.name}</option>`).join('');
+            filterSel.value = Array.from(filterSel.options).some(o => o.value === prevVal) ? prevVal : 'all';
+        }
+        const filterVal = filterSel ? filterSel.value : 'all';
+        const list = document.getElementById('groupsFolderList');
+        if (!list) return;
+
+        const openIds = Array.from(list.querySelectorAll('.group-folder.open')).map(el => el.dataset.groupId);
+
+        const groupsToShow = DB.groups.filter(g => filterVal === 'all' || String(g.stageId) === String(filterVal));
+
+        if (!groupsToShow.length) {
+            list.innerHTML = '<div class="group-student-empty">لا توجد مجموعات مطابقة</div>';
+            return;
+        }
+
+        list.innerHTML = groupsToShow.map(g => {
             const stg = DB.stages.find(s => s.id === g.stageId);
+            const groupStudents = DB.students.filter(s => s.groupId === g.id);
+            const isOpen = openIds.includes(String(g.id));
+
+            const studentsHtml = groupStudents.length ? groupStudents.map(s => `
+                <div class="group-student-row">
+                    <div class="group-student-info">
+                        <code>${toArDigits(s.code)}</code>
+                        <strong>${s.name}</strong>
+                        <span style="color:var(--text-muted); font-size:12.5px;">${toArDigits(s.phone || '')}</span>
+                    </div>
+                    <div style="display:flex; gap:6px;">
+                        <button class="btn btn-success btn-sm" onclick="event.stopPropagation(); openPaymentModal(${s.id})"><i class="fa-solid fa-money-bill-wave"></i> دفع</button>
+                        <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); openStudentModal(${s.id})"><i class="fa-solid fa-pen"></i> تعديل</button>
+                    </div>
+                </div>
+            `).join('') : '<div class="group-student-empty">لا يوجد طلاب مسجلين في هذه المجموعة بعد</div>';
+
             return `
-                <tr>
-                    <td><strong>${g.name}</strong></td>
-                    <td>${stg ? coloredBadge(stg.name, stg.id) : '---'}</td>
-                    <td><strong style="color:var(--accent-2);">${toArDigits(g.schedule) || 'غير محدد'}</strong></td>
-                    <td>بال${g.payType}</td>
-                    <td>${toArDigits(g.fee)} ج.م</td>
-                    <td>${toArDigits(g.bookletFee || 0)} ج.م</td>
-                    <td class="no-print">
-                        <button class="btn btn-telegram btn-sm" onclick="sendTelegramGroupMessage(${g.id})" title="إرسال رسالة جماعية على تليجرام"><i class="fa-brands fa-telegram"></i> رسالة جماعية</button>
-                        <button class="btn btn-primary btn-sm" onclick="openGroupModal(${g.id})"><i class="fa-solid fa-pen"></i> تعديل</button>
-                        <button class="btn btn-danger btn-sm" onclick="deleteGroup(${g.id})"><i class="fa-solid fa-trash"></i> حذف</button>
-                    </td>
-                </tr>
+                <div class="group-folder ${isOpen ? 'open' : ''}" data-group-id="${g.id}">
+                    <div class="group-folder-head" onclick="toggleGroupFolder(${g.id})">
+                        <div class="group-folder-title">
+                            <i class="fa-solid fa-chevron-down group-folder-chevron"></i>
+                            <span class="folder-icon">📁</span>
+                            <div>
+                                <div class="group-folder-name">${g.name} ${stg ? coloredBadge(stg.name, stg.id) : ''}</div>
+                                <div class="group-folder-sub">
+                                    <span><i class="fa-regular fa-clock"></i> ${toArDigits(g.schedule) || 'غير محدد'}</span>
+                                    <span class="group-fee-badges">
+                                        ${g.subject ? `<span class="group-fee-badge tag-purple">${g.subject}</span>` : ''}
+                                        <span class="group-fee-badge">بال${g.payType} — ${toArDigits(g.fee)} ج.م</span>
+                                        ${g.monthlyFee ? `<span class="group-fee-badge tag-green">اشتراك شهري: ${toArDigits(g.monthlyFee)} ج.م</span>` : ''}
+                                        <span class="group-fee-badge">ملزمة: ${toArDigits(g.bookletFee || 0)} ج.م</span>
+                                        <span class="group-fee-badge">${toArDigits(groupStudents.length)} طالب</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="group-folder-actions no-print">
+                            <button class="btn btn-telegram btn-sm" onclick="event.stopPropagation(); sendTelegramGroupMessage(${g.id})" title="إرسال رسالة جماعية على تليجرام"><i class="fa-brands fa-telegram"></i></button>
+                            <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); openGroupModal(${g.id})"><i class="fa-solid fa-pen"></i></button>
+                            <button class="btn btn-danger btn-sm" onclick="event.stopPropagation(); deleteGroup(${g.id})"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </div>
+                    <div class="group-folder-body">
+                        <div class="group-folder-body-inner">
+                            ${studentsHtml}
+                        </div>
+                    </div>
+                </div>
             `;
         }).join('');
+    }
+
+    function toggleGroupFolder(groupId) {
+        const el = document.querySelector(`.group-folder[data-group-id="${groupId}"]`);
+        if (el) el.classList.toggle('open');
     }
 
     function openGroupModal(editId = null) {
         const group = editId ? DB.groups.find(g => g.id === editId) : null;
         const modal = document.getElementById('systemModal');
-        document.getElementById('modalTitle').innerText = group ? "تعديل المجموعة" : "إضافة مجموعة جديدة";
+        document.getElementById('modalTitle').innerHTML = group ? '<i class="fa-solid fa-pen"></i> تعديل مجموعة' : '<i class="fa-solid fa-circle-plus"></i> إضافة مجموعة';
 
-        const stageOptions = DB.stages.map(st => `<option value="${st.id}" ${group && group.stageId === st.id ? 'selected' : ''}>${st.name}</option>`).join('');
+        const stageOptions = '<option value="">-- اختر --</option>' + DB.stages.map(st => `<option value="${st.id}" ${group && group.stageId === st.id ? 'selected' : ''}>${st.name}</option>`).join('');
 
         document.getElementById('modalBody').innerHTML = `
-            <div class="form-group"><label>اختر المرحلة الدراسية</label><select class="form-control" id="mGroupStage">${stageOptions}</select></div>
-            <div class="form-group"><label>اسم المجموعة</label><input type="text" class="form-control" id="mGroupName" value="${group ? group.name : ''}"></div>
-            <div class="form-group"><label>ميعاد المجموعة (الأيام والساعة)</label><input type="text" class="form-control" id="mGroupSchedule" placeholder="مثال: السبت والثلاثاء - ٤:٠٠ مساءً" value="${group ? (group.schedule || '') : ''}"></div>
-            <div class="form-group">
-                <label>نوع نظام الدفع</label>
-                <select class="form-control" id="mGroupPayType">
-                    <option value="شهر" ${group && group.payType === 'شهر' ? 'selected' : ''}>بالشهر</option>
-                    <option value="حصة" ${group && group.payType === 'حصة' ? 'selected' : ''}>بالحصة</option>
-                </select>
+            <div class="gmodal-grid full">
+                <div class="gmodal-field">
+                    <label>اسم المجموعة</label>
+                    <input type="text" id="mGroupName" placeholder="مثال: مجموعة السبت صباحاً" value="${group ? group.name : ''}">
+                </div>
             </div>
-            <div class="form-group"><label>قيمة الاشتراك / الحصة (ج.م)</label><input type="number" class="form-control" id="mGroupFee" value="${group ? group.fee : 0}"></div>
-            <div class="form-group"><label>ثمن الملزمة / المذكرة (ج.م)</label><input type="number" class="form-control" id="mGroupBooklet" value="${group ? (group.bookletFee || 0) : 0}"></div>
-            <div class="form-group">
-                <label><i class="fa-brands fa-telegram" style="color:#229ED9;"></i> معرف مجموعة/قناة التليجرام (Chat ID)</label>
-                <input type="text" class="form-control" id="mGroupTelegram" placeholder="مثال: -1001234567890" value="${group ? (group.telegramChatId || '') : ''}">
-                <span class="field-hint"><i class="fa-solid fa-circle-info"></i> أنشئ مجموعة تليجرام لهذه الفصول، أضف البوت فيها كعضو، ثم احصل على الـ Chat ID (راجع تبويب الإعدادات لمعرفة الخطوات).</span>
+            <div class="gmodal-grid">
+                <div class="gmodal-field">
+                    <label>📘 المادة</label>
+                    <input type="text" id="mGroupSubject" placeholder="مثال: رياضيات" value="${group ? (group.subject || '') : ''}">
+                </div>
+                <div class="gmodal-field">
+                    <label>المرحلة</label>
+                    <select id="mGroupStage">${stageOptions}</select>
+                </div>
+            </div>
+            <div class="gmodal-grid">
+                <div class="gmodal-field">
+                    <label>📕 سعر الملزمة (ج.م)</label>
+                    <input type="number" id="mGroupBooklet" placeholder="سعر الملزمة" value="${group ? (group.bookletFee || 0) : ''}">
+                </div>
+                <div class="gmodal-field">
+                    <label>🪙 سعر الحصة (ج.م)</label>
+                    <input type="number" id="mGroupFee" placeholder="سعر الحصة الواحدة" value="${group ? group.fee : ''}">
+                </div>
+            </div>
+            <div class="gmodal-grid">
+                <div class="gmodal-field">
+                    <label>نوع الدفع</label>
+                    <select id="mGroupPayType">
+                        <option value="حصة" ${group && group.payType === 'حصة' ? 'selected' : ''}>لكل حصة</option>
+                        <option value="شهر" ${group && group.payType === 'شهر' ? 'selected' : ''}>شهري</option>
+                    </select>
+                </div>
+                <div class="gmodal-field">
+                    <label>💳 سعر الاشتراك الشهري (اختياري)</label>
+                    <input type="number" id="mGroupMonthlyFee" placeholder="سعر الشهر" value="${group ? (group.monthlyFee || 0) : ''}">
+                </div>
+            </div>
+            <div class="gmodal-grid full">
+                <div class="gmodal-field">
+                    <label>يوم ووقت المجموعة</label>
+                    <input type="text" id="mGroupSchedule" placeholder="مثال: السبت 4-6 مساء" value="${group ? (group.schedule || '') : ''}">
+                </div>
+            </div>
+            <div class="gmodal-grid full">
+                <div class="gmodal-field">
+                    <label><i class="fa-brands fa-telegram" style="color:#229ED9;"></i> معرف مجموعة/قناة التليجرام (Chat ID) — اختياري</label>
+                    <input type="text" id="mGroupTelegram" placeholder="مثال: -1001234567890" value="${group ? (group.telegramChatId || '') : ''}">
+                    <span class="field-hint"><i class="fa-solid fa-circle-info"></i> أنشئ مجموعة تليجرام لهذه الفصول، أضف البوت فيها كعضو، ثم احصل على الـ Chat ID (راجع تبويب الإعدادات لمعرفة الخطوات).</span>
+                </div>
             </div>
         `;
 
         document.getElementById('modalSaveBtn').onclick = function () {
             const stageId = parseInt(document.getElementById('mGroupStage').value);
             const name = document.getElementById('mGroupName').value.trim();
+            const subject = document.getElementById('mGroupSubject').value.trim();
             const schedule = document.getElementById('mGroupSchedule').value.trim();
             const payType = document.getElementById('mGroupPayType').value;
             const fee = parseFloat(document.getElementById('mGroupFee').value) || 0;
+            const monthlyFee = parseFloat(document.getElementById('mGroupMonthlyFee').value) || 0;
             const bookletFee = parseFloat(document.getElementById('mGroupBooklet').value) || 0;
             const telegramChatId = document.getElementById('mGroupTelegram').value.trim();
 
             if (!name) return;
 
             if (group) {
-                group.stageId = stageId; group.name = name; group.schedule = schedule; group.payType = payType; group.fee = fee; group.bookletFee = bookletFee;
+                group.stageId = stageId; group.name = name; group.subject = subject; group.schedule = schedule;
+                group.payType = payType; group.fee = fee; group.monthlyFee = monthlyFee; group.bookletFee = bookletFee;
                 group.telegramChatId = telegramChatId;
             } else {
-                DB.groups.push({ id: (DB.groups.length ? Math.max(...DB.groups.map(g => g.id)) : 0) + 1, stageId, name, schedule, payType, fee, bookletFee, telegramChatId });
+                DB.groups.push({ id: (DB.groups.length ? Math.max(...DB.groups.map(g => g.id)) : 0) + 1, stageId, name, subject, schedule, payType, fee, monthlyFee, bookletFee, telegramChatId });
             }
             closeModal();
             renderAllTabs();
@@ -1231,12 +1433,97 @@
                         <button class="btn btn-success btn-xs" onclick="openPaymentModal(${s.id})"><i class="fa-solid fa-money-bill-wave"></i> دفع</button>
                     </td>
                     <td class="no-print">
+                        <button class="btn btn-outline btn-xs" onclick="printStudentReport(${s.id})"><i class="fa-solid fa-print"></i> تقرير شامل</button>
+                    </td>
+                    <td class="no-print">
                         <button class="btn btn-primary btn-xs" onclick="openStudentModal(${s.id})"><i class="fa-solid fa-pen"></i> تعديل</button>
                         <button class="btn btn-danger btn-xs" onclick="deleteStudent(${s.id})"><i class="fa-solid fa-trash"></i> حذف</button>
                     </td>
                 </tr>
             `;
         }).join('');
+    }
+
+    // --- تقرير شامل مطبوع لكل طالب: حضور وغياب ومدفوعات وواجبات وامتحانات ---
+    function printStudentReport(studentId) {
+        const s = DB.students.find(x => x.id === studentId);
+        if (!s) return;
+        const stg = DB.stages.find(st => st.id === s.stageId);
+        const grp = DB.groups.find(g => g.id === s.groupId);
+
+        const attendance = DB.attendanceLogs.filter(a => a.studentId === studentId);
+        const absence = DB.absenceLogs.filter(a => a.studentId === studentId || a.studentName === s.name);
+        const payments = DB.treasuryLogs.filter(t => t.studentId === studentId);
+        const hwResults = DB.homeworkResults.filter(r => r.studentId === studentId).map(r => {
+            const hw = DB.homeworks.find(h => h.id === r.homeworkId);
+            return { title: hw ? hw.title : '---', date: hw ? hw.date : '---', done: r.done };
+        });
+        const examResults = DB.examResults.filter(r => r.studentId === studentId).map(r => {
+            const ex = DB.exams.find(e => e.id === r.examId);
+            return { title: ex ? ex.title : '---', date: ex ? ex.date : '---', type: ex ? ex.type : '', degree: r.degree, maxDegree: ex ? ex.maxDegree : 0 };
+        });
+
+        const totalPaid = payments.reduce((a, t) => a + t.amount, 0);
+        const sessionExams = examResults.filter(e => e.type !== 'يومي');
+        const dailyExams = examResults.filter(e => e.type === 'يومي');
+
+        const container = document.getElementById('studentReportPrintArea');
+        container.innerHTML = `
+            <div style="text-align:right; margin-bottom:14px; padding-bottom:10px; border-bottom:2px dashed #999;">
+                <table style="width:100%; border:none;">
+                    <tr>
+                        <td style="border:none; text-align:right; padding:3px 0;"><strong>اسم الطالب:</strong> ${s.name}</td>
+                        <td style="border:none; text-align:right; padding:3px 0;"><strong>الكود:</strong> ${toArDigits(s.code)}</td>
+                    </tr>
+                    <tr>
+                        <td style="border:none; text-align:right; padding:3px 0;"><strong>المرحلة:</strong> ${stg ? stg.name : '---'}</td>
+                        <td style="border:none; text-align:right; padding:3px 0;"><strong>المجموعة:</strong> ${grp ? grp.name : '---'}</td>
+                    </tr>
+                    <tr>
+                        <td style="border:none; text-align:right; padding:3px 0;"><strong>الهاتف:</strong> ${toArDigits(s.phone || '')}</td>
+                        <td style="border:none; text-align:right; padding:3px 0;"><strong>إجمالي المدفوعات:</strong> ${toArDigits(totalPaid)} ج.م</td>
+                    </tr>
+                </table>
+            </div>
+
+            <h4><i class="fa-solid fa-check"></i> سجل الحضور (${toArDigits(attendance.length)} حصة)</h4>
+            <table>
+                <thead><tr><th>التاريخ</th><th>الوقت</th><th>المجموعة</th></tr></thead>
+                <tbody>${attendance.length ? attendance.map(a => `<tr><td>${toArDigits(a.date)}</td><td>${toArDigits(a.time)}</td><td>${a.groupName}</td></tr>`).join('') : '<tr><td colspan="3">لا يوجد سجل حضور</td></tr>'}</tbody>
+            </table>
+
+            <h4><i class="fa-solid fa-user-xmark"></i> سجل الغياب (${toArDigits(absence.length)} يوم)</h4>
+            <table>
+                <thead><tr><th>التاريخ</th><th>المجموعة</th></tr></thead>
+                <tbody>${absence.length ? absence.map(a => `<tr><td>${toArDigits(a.date)}</td><td>${a.groupName}</td></tr>`).join('') : '<tr><td colspan="2">لا يوجد سجل غياب</td></tr>'}</tbody>
+            </table>
+
+            <h4><i class="fa-solid fa-money-bill-wave"></i> السجل المالي (إجمالي المسدد: ${toArDigits(totalPaid)} ج.م)</h4>
+            <table>
+                <thead><tr><th>التاريخ والوقت</th><th>البيان</th><th>المبلغ</th></tr></thead>
+                <tbody>${payments.length ? payments.map(t => `<tr><td>${toArDigits(t.dateTime)}</td><td>${t.payType}</td><td>${toArDigits(t.amount)} ج.م</td></tr>`).join('') : '<tr><td colspan="3">لا يوجد سجل مدفوعات</td></tr>'}</tbody>
+            </table>
+
+            <h4><i class="fa-solid fa-book-open"></i> سجل الواجبات</h4>
+            <table>
+                <thead><tr><th>عنوان الواجب</th><th>التاريخ</th><th>الحالة</th></tr></thead>
+                <tbody>${hwResults.length ? hwResults.map(h => `<tr><td>${h.title}</td><td>${toArDigits(h.date)}</td><td>${h.done ? 'تم الحل' : 'لم يُحل'}</td></tr>`).join('') : '<tr><td colspan="3">لا يوجد سجل واجبات</td></tr>'}</tbody>
+            </table>
+
+            <h4><i class="fa-solid fa-calendar-day"></i> الامتحانات اليومية (${toArDigits(dailyExams.length)})</h4>
+            <table>
+                <thead><tr><th>عنوان الامتحان</th><th>التاريخ</th><th>الدرجة</th></tr></thead>
+                <tbody>${dailyExams.length ? dailyExams.map(e => `<tr><td>${e.title}</td><td>${toArDigits(e.date)}</td><td>${toArDigits(e.degree)} / ${toArDigits(e.maxDegree)}</td></tr>`).join('') : '<tr><td colspan="3">لا يوجد امتحانات يومية</td></tr>'}</tbody>
+            </table>
+
+            <h4><i class="fa-solid fa-pen"></i> امتحانات الحصص الشهرية</h4>
+            <table>
+                <thead><tr><th>عنوان الامتحان</th><th>التاريخ</th><th>الدرجة</th></tr></thead>
+                <tbody>${sessionExams.length ? sessionExams.map(e => `<tr><td>${e.title}</td><td>${toArDigits(e.date)}</td><td>${toArDigits(e.degree)} / ${toArDigits(e.maxDegree)}</td></tr>`).join('') : '<tr><td colspan="3">لا يوجد امتحانات حصص</td></tr>'}</tbody>
+            </table>
+        `;
+
+        printSection('studentReportPrintArea', 'تقرير شامل للطالب - ' + s.name);
     }
 
     function updateBookletHint() {
@@ -1451,7 +1738,7 @@
 
     // --- 6. الحضور والغياب ---
     // يوزّع ألوان زاهية متنوعة على شارات المراحل/المجموعات بالتناوب، عشان الصفحة تبقى مليانة حيوية وألوان
-    const VIVID_PALETTE = ['#f2a13a', '#2dd4a7', '#6c63e0', '#ff8fb1', '#4fd1e8', '#ffcf5c', '#ff9f6b', '#5cc8ff', '#b39ddb'];
+    const VIVID_PALETTE = ['#FFD166', '#06D6A0', '#118AB2', '#EF476F', '#9B5DE5', '#ff9f6b', '#5cc8ff', '#b39ddb', '#4fd1e8'];
     function vividColor(seed) {
         const n = typeof seed === 'number' ? seed : String(seed).split('').reduce((a, c) => a + c.charCodeAt(0), 0);
         return VIVID_PALETTE[n % VIVID_PALETTE.length];
@@ -1577,6 +1864,7 @@
 
         DB.absenceLogs.unshift({
             id: nextId(DB.absenceLogs),
+            studentId: student.id,
             studentName: student.name,
             groupName: grp ? grp.name : '---',
             date: dateNow,
@@ -1759,7 +2047,7 @@
                 <div class="card" style="background:var(--bg-input); margin-bottom:12px;">
                     <div class="card-head">
                         <h4 style="margin:0;">${ex.title} <span style="color:var(--text-muted); font-size:12px;">(الدرجة الكلية: ${toArDigits(ex.maxDegree)} - ${toArDigits(ex.date)})</span></h4>
-                        <div>
+                        <div class="no-print">
                             <button class="btn btn-outline btn-sm" onclick="toggleExamDegrees(${ex.id})"><i class="fa-solid fa-list"></i> تسجيل الدرجات</button>
                             <button class="btn btn-danger btn-sm" onclick="deleteExam(${ex.id})"><i class="fa-solid fa-trash"></i> حذف</button>
                         </div>
@@ -1892,13 +2180,13 @@
         const homeworks = DB.homeworks.filter(h => h.groupId === groupId);
         listBody.innerHTML = homeworks.length ? `
             <table>
-                <thead><tr><th>عنوان الواجب</th><th>التاريخ</th><th>الإجراء</th></tr></thead>
+                <thead><tr><th>عنوان الواجب</th><th>التاريخ</th><th class="no-print">الإجراء</th></tr></thead>
                 <tbody>
                     ${homeworks.map(h => `
                         <tr>
                             <td><strong>${h.title}</strong></td>
                             <td>${toArDigits(h.date)}</td>
-                            <td>
+                            <td class="no-print">
                                 <button class="btn btn-outline btn-sm" onclick="viewHomeworkDetail(${h.id})"><i class="fa-solid fa-list-check"></i> تسجيل الحل</button>
                                 <button class="btn btn-danger btn-sm" onclick="deleteHomework(${h.id})"><i class="fa-solid fa-trash"></i> حذف</button>
                             </td>
@@ -2015,7 +2303,7 @@
                     <td>${grp ? grp.name : '---'}</td>
                     <td>${toArDigits(b.phone)}</td>
                     <td>${toArDigits(b.parentPhone || '---')}</td>
-                    <td>
+                    <td class="no-print">
                         <button class="btn btn-gold btn-sm" onclick="acceptBookingReq(${b.id})"><i class="fa-solid fa-check"></i> قبول الطالب</button>
                         <button class="btn btn-danger btn-sm" onclick="rejectBookingReq(${b.id})"><i class="fa-solid fa-xmark"></i> رفض</button>
                     </td>
@@ -2204,27 +2492,89 @@
         document.getElementById('systemModal').classList.remove('active');
     }
 
-    // --- 10. الطباعة كـ PDF بإطار كامل للصفحة ---
-    function printSection(id, title) {
-        document.querySelectorAll('.print-header-block, .print-footer-block').forEach(el => el.remove());
-        document.querySelectorAll('.printable').forEach(el => el.classList.remove('printable'));
-
-        const el = document.getElementById(id);
-        if (!el) return;
-
-        const header = document.createElement('div');
-        header.className = 'print-header-block';
-        header.innerHTML = `<h1>${DB.masterName}</h1><h2>${title}</h2><p>تاريخ الطباعة: ${toArDigits(new Date().toLocaleDateString('ar-EG'))} — ${toArDigits(new Date().toLocaleTimeString('ar-EG'))}</p>`;
-        el.insertBefore(header, el.firstChild);
-
-        const footer = document.createElement('div');
-        footer.className = 'print-footer-block';
-        footer.innerText = 'مستر / علاء الحفني - نظام إدارة المراكز التعليمية';
-        el.appendChild(footer);
-
-        el.classList.add('printable');
-        window.print();
+    // --- 10. الطباعة كـ PDF بإطار كامل مقفول على صفحة واحدة (عن طريق نسخ المحتوى فى حاوية معزولة) ---
+    function cleanupPrintables() {
+        document.body.classList.remove('printing');
+        const root = document.getElementById('printRoot');
+        if (root) root.innerHTML = '';
     }
+
+    function printSection(id, title) {
+        cleanupPrintables();
+
+        const src = document.getElementById(id);
+        const root = document.getElementById('printRoot');
+        if (!src || !root) return;
+
+        const frame = document.createElement('div');
+        frame.className = 'print-frame';
+
+        // بنبني الفريم كـ"جدول شامل" واحد: العنوان فى thead والختم فى tfoot،
+        // عشان يتكررا تلقائياً فى أول وآخر كل صفحة لو المحتوى امتد لأكتر من صفحة واحدة
+        const shell = document.createElement('table');
+        shell.className = 'print-page-shell';
+
+        const thead = document.createElement('thead');
+        const theadTr = document.createElement('tr');
+        const theadTd = document.createElement('td');
+        theadTd.innerHTML = `<div class="print-header-block"><h1>${DB.masterName}</h1><h2>${title}</h2><p>تاريخ الطباعة: ${toArDigits(new Date().toLocaleDateString('ar-EG'))} — ${toArDigits(new Date().toLocaleTimeString('ar-EG'))}</p></div>`;
+        theadTr.appendChild(theadTd);
+        thead.appendChild(theadTr);
+        shell.appendChild(thead);
+
+        const tbody = document.createElement('tbody');
+        const tbodyTr = document.createElement('tr');
+        const tbodyTd = document.createElement('td');
+        const clone = src.cloneNode(true);
+        clone.style.display = '';
+        clone.querySelectorAll('.no-print').forEach(el => el.remove());
+        tbodyTd.appendChild(clone);
+        tbodyTr.appendChild(tbodyTd);
+        tbody.appendChild(tbodyTr);
+        shell.appendChild(tbody);
+
+        const tfoot = document.createElement('tfoot');
+        const tfootTr = document.createElement('tr');
+        const tfootTd = document.createElement('td');
+        tfootTd.innerHTML = `<div class="print-footer-block">مستر / علاء الحفني - نظام إدارة المراكز التعليمية</div>`;
+        tfootTr.appendChild(tfootTd);
+        tfoot.appendChild(tfootTr);
+        shell.appendChild(tfoot);
+
+        frame.appendChild(shell);
+        root.appendChild(frame);
+
+        // العرض ثابت دايماً على أقصى مساحة متاحة فى الصفحة عشان الجدول يملأ الورقة بالكامل بدون هوامش زيادة
+        const maxW = 680; // أقصى عرض متاح للطباعة (A4 بورتريه بعد هامش ٨مم) مع هامش أمان إضافي
+        const maxH = 970; // أقصى ارتفاع متاح للطباعة مع هامش أمان يمنع الامتداد لصفحة تانية فى أي متصفح
+        const baseFontPx = 12;
+        frame.style.width = maxW + 'px';
+        frame.style.fontSize = baseFontPx + 'px';
+
+        // ننتظر تحميل الخطوط بالكامل الأول (عشان قياس الطول يكون مطابق تماماً لما هيُطبع فعلياً)
+        const measureAndPrint = () => {
+            requestAnimationFrame(() => {
+                // العرض يفضل ثابت دايماً (يملأ الصفحة بالكامل)؛ لو المحتوى طويل قوي نصغّر حجم الخط والحشو بس
+                // (مش الفريم كله) عشان يقفل فى صفحة واحدة من غير ما يضيّع عرض الصفحة
+                const naturalHeight = frame.getBoundingClientRect().height;
+                if (naturalHeight > maxH) {
+                    const ratio = (maxH / naturalHeight) * 0.95; // هامش أمان ٥٪
+                    const newFontPx = Math.max(7.5, baseFontPx * ratio);
+                    frame.style.fontSize = newFontPx + 'px';
+                }
+                document.body.classList.add('printing');
+                requestAnimationFrame(() => window.print());
+            });
+        };
+
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(measureAndPrint).catch(measureAndPrint);
+        } else {
+            measureAndPrint();
+        }
+    }
+
+    window.addEventListener('afterprint', cleanupPrintables);
 
     // تهيئة التطبيق عند بدء التشغيل
     (function init() {
